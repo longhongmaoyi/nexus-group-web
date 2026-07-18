@@ -1,0 +1,21 @@
+===== NEXUS GROUP WEBSITE FOUNDATION VERIFICATION =====
+Date: 2026-07-18
+Project: nexus-group-web
+Stack: Next.js 14.2.35, React 18.3.1, TypeScript, Tailwind CSS, Prisma 6.7.0, PostgreSQL
+Frontend languages: English (default), Chinese, French
+Admin languages: English, Chinese
+
+TYPECHECK: PASS
+PRODUCTION BUILD: PASS
+STATIC ROUTES GENERATED: 33
+HTTP SMOKE TESTS:
+  /en          200 PASS
+  /zh          200 PASS
+  /fr          200 PASS
+  /admin       200 PASS
+  /en/contact  200 PASS
+
+NOTES:
+- Next.js was kept on the 14.2 technology line but pinned to patched 14.2.35.
+- Prisma engine generation could not be completed in the isolated build container because binaries.prisma.sh was unreachable. On a normal internet-connected Mac, npm postinstall runs `prisma generate`.
+- Admin authentication and production contact/legal details remain intentionally unconfigured.
