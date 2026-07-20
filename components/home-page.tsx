@@ -1,19 +1,20 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
 import {
   ArrowRight,
   BadgeCheck,
-  Boxes,
-  BriefcaseBusiness,
   Building2,
   CheckCircle2,
+  ChevronRight,
   ClipboardCheck,
   Code2,
   Factory,
   FileCheck2,
   Globe2,
   GraduationCap,
-  Handshake,
   HardHat,
   Home,
   Hotel,
@@ -21,13 +22,11 @@ import {
   PackageCheck,
   Search,
   ShieldCheck,
-  Sparkles,
   Truck,
   Users,
   Wrench,
 } from 'lucide-react'
 
-import { HeroSlideshow } from '@/components/hero-slideshow'
 import { InquiryForm } from '@/components/inquiry-form'
 import type { Locale } from '@/lib/i18n'
 
@@ -37,382 +36,310 @@ type IconType = typeof Globe2
 const t = (en: string, zh: string, fr: string): Localized => ({ en, zh, fr })
 
 const copy = {
-  heroEyebrow: t('Canada × Global Innovation', '加拿大 × 全球创新', 'Canada × Innovation mondiale'),
-  heroTitle1: t('Global Innovation.', '全球创新。', 'Innovation mondiale.'),
-  heroTitle2: t('Canadian Execution.', '加拿大落地执行。', 'Exécution canadienne.'),
+  heroEyebrow: t('Canada × Global Business Solutions', '加拿大 × 全球商业解决方案', 'Canada × Solutions d’affaires mondiales'),
+  heroTitle1: t('Global Capability.', '全球能力。', 'Capacité mondiale.'),
+  heroTitle2: t('Built for Canadian Business.', '服务加拿大商业。', 'Conçue pour les entreprises canadiennes.'),
   heroBody: t(
-    'NEXUS GROUP helps Canadian businesses, developers and institutions discover, evaluate, adapt and deploy innovative modular infrastructure, technology and business solutions from China and other global markets.',
-    'NEXUS 集团帮助加拿大企业、开发商和机构从中国及其他全球市场发现、评估、本地化并落地创新的模块化基础设施、技术及商业解决方案。',
-    'NEXUS GROUP aide les entreprises, promoteurs et institutions du Canada à découvrir, évaluer, adapter et déployer des solutions modulaires, technologiques et commerciales provenant de Chine et d’autres marchés mondiaux.',
+    'From modular infrastructure and global sourcing to digital transformation, NEXUS connects Canadian organizations with innovative international solutions and manages the path from discovery to local delivery.',
+    '从模块化基础设施和全球寻源到数字化转型，NEXUS 把加拿大机构与全球创新方案连接起来，并管理从发现到本地交付的完整路径。',
+    'De l’infrastructure modulaire à l’approvisionnement mondial et à la transformation numérique, NEXUS relie les organisations canadiennes aux solutions internationales et gère le parcours jusqu’à la livraison locale.',
   ),
-  primaryCta: t('Start Your Assessment', '开始项目评估', 'Commencer l’évaluation'),
-  secondaryCta: t('Explore Solutions', '探索解决方案', 'Explorer les solutions'),
-  trust: [
-    t('Global Resource Network', '全球资源网络', 'Réseau mondial'),
-    t('Supplier & System Verification', '供应商与系统核验', 'Vérification des fournisseurs'),
-    t('Project-Specific Compliance', '项目专项合规', 'Conformité propre au projet'),
-    t('Canadian Delivery Support', '加拿大本地交付支持', 'Soutien à la livraison au Canada'),
-  ],
-  sectorsEyebrow: t('Who We Help', '我们服务的客户', 'Nos clients'),
-  sectorsTitle: t('Business solutions designed around real operating needs.', '围绕真实运营需求设计的商业解决方案。', 'Des solutions conçues autour des besoins réels des opérations.'),
-  sectorsBody: t(
-    'We begin with the client’s business challenge—not with a product catalogue.',
-    '我们从客户的业务挑战出发，而不是从产品目录出发。',
-    'Nous partons du défi d’affaires du client, et non d’un simple catalogue.',
-  ),
-  processEyebrow: t('The NEXUS Delivery Model', 'NEXUS 交付模式', 'Le modèle de livraison NEXUS'),
-  processTitle: t('From business problem to operating solution.', '从业务问题到可运营的解决方案。', 'Du problème d’affaires à une solution opérationnelle.'),
-  processBody: t(
-    'NEXUS serves as the coordination bridge between Canadian clients, global manufacturers, local professionals, logistics providers and project sites.',
-    'NEXUS 是加拿大客户、全球制造商、本地专业人士、物流服务商与项目现场之间的协调桥梁。',
-    'NEXUS agit comme pont de coordination entre les clients canadiens, les fabricants mondiaux, les professionnels locaux, la logistique et les sites de projet.',
-  ),
-  launchEyebrow: t('Recommended Launch Focus', '建议首发重点', 'Priorités de lancement'),
-  launchTitle: t('Three clear solutions that demonstrate immediate value.', '三类能够立即体现价值的清晰解决方案。', 'Trois solutions claires qui démontrent une valeur immédiate.'),
+  primaryCta: t('Start Your Project Assessment', '开始项目评估', 'Commencer l’évaluation du projet'),
+  secondaryCta: t('Explore Our Solutions', '探索解决方案', 'Explorer nos solutions'),
+  modelEyebrow: t('The NEXUS Business Model', 'NEXUS 商业模式', 'Le modèle NEXUS'),
+  modelTitle: t('One accountable bridge from business need to operating solution.', '从业务需求到运营方案的一体化责任桥梁。', 'Un pont responsable du besoin d’affaires à la solution opérationnelle.'),
+  sectorsEyebrow: t('Solutions by Operating Need', '按运营需求提供方案', 'Solutions selon le besoin opérationnel'),
+  sectorsTitle: t('Choose the problem your organization needs to solve.', '选择您的机构需要解决的问题。', 'Choisissez le problème que votre organisation doit résoudre.'),
+  processEyebrow: t('How We Deliver', '我们的交付方式', 'Notre approche'),
+  processTitle: t('A structured six-stage delivery and evidence system.', '结构化六阶段交付与证明体系。', 'Un système structuré de livraison et de preuves en six étapes.'),
   complianceEyebrow: t('Canada Compliance Centre', '加拿大合规中心', 'Centre de conformité Canada'),
-  complianceTitle: t('A transparent pathway through requirements, documentation and approvals.', '清晰透明地协调要求、文件与审批流程。', 'Un parcours transparent à travers les exigences, les documents et les approbations.'),
-  complianceBody: t(
-    'NEXUS coordinates project-specific compliance through qualified Canadian professionals, testing and certification organizations, licensed trades, municipalities and responsible authorities. Requirements are confirmed according to jurisdiction, intended use, product configuration and site conditions.',
-    'NEXUS 通过合格的加拿大专业人士、检测认证机构、持牌工种、市政部门及主管机构协调项目专项合规。具体要求依据司法辖区、预期用途、产品配置及现场条件确认。',
-    'NEXUS coordonne la conformité propre à chaque projet avec des professionnels canadiens qualifiés, des organismes d’essai et de certification, des métiers autorisés, les municipalités et les autorités responsables.',
-  ),
-  complianceDisclaimer: t(
-    'NEXUS manages and documents the pathway. Licences, permits, professional seals, certifications and inspection records are issued by the responsible qualified party or authority—not automatically by NEXUS.',
-    'NEXUS 负责管理并记录流程。许可证、许可、专业盖章、认证及检查记录由相应的合格专业方或主管机构签发，并非由 NEXUS 自动签发。',
-    'NEXUS gère et documente le parcours. Les licences, permis, sceaux professionnels, certifications et rapports d’inspection sont délivrés par la partie qualifiée ou l’autorité responsable.',
-  ),
-  platformEyebrow: t('Platform Roadmap', '平台路线图', 'Feuille de route'),
-  platformTitle: t('The website becomes a project decision platform—not only a brochure.', '让网站成为项目决策平台，而不只是宣传册。', 'Le site devient une plateforme de décision de projet, pas seulement une brochure.'),
-  projectsEyebrow: t('Project Evidence', '项目证据', 'Preuves de projet'),
-  projectsTitle: t('Clear status. Verified information. Measurable results.', '状态清晰、信息可核验、结果可衡量。', 'Statut clair, information vérifiée et résultats mesurables.'),
-  partnersEyebrow: t('Integrated Partner Ecosystem', '一体化合作生态', 'Écosystème intégré de partenaires'),
-  partnersTitle: t('Global capability connected to Canadian responsibility.', '全球能力与加拿大本地责任体系相连接。', 'Capacité mondiale reliée à la responsabilité canadienne.'),
+  complianceTitle: t('Understand the approval pathway before committing to a product.', '在决定产品之前先了解审批路径。', 'Comprendre le parcours d’approbation avant de choisir un produit.'),
+  proofEyebrow: t('Evidence Before Claims', '先有证据，再做声明', 'Des preuves avant les affirmations'),
+  proofTitle: t('Every opportunity is shown with a clear and honest status.', '每个机会都以清晰、真实的状态展示。', 'Chaque occasion est présentée avec un statut clair et honnête.'),
   assessmentEyebrow: t('Start With the Facts', '从事实开始', 'Commencer par les faits'),
   assessmentTitle: t('Tell us what your organization needs to build, improve or deploy.', '告诉我们您的机构需要建设、改进或部署什么。', 'Dites-nous ce que votre organisation doit construire, améliorer ou déployer.'),
-  assessmentBody: t(
-    'The guided intake captures the information required for a useful first review, including sector, jurisdiction, site, capacity, budget, timeline and commercial model.',
-    '引导式表单收集首次有效评估所需的信息，包括行业、辖区、场地、容量、预算、时间及合作模式。',
-    'Le formulaire guidé recueille les renseignements nécessaires à une première analyse utile : secteur, juridiction, site, capacité, budget, échéancier et modèle commercial.',
-  ),
 }
 
-const sectors: Array<{ icon: IconType; title: Localized; body: Localized; needs: Localized }> = [
+const modelSteps: Array<{ icon: IconType; title: Localized; body: Localized }> = [
+  { icon: Users, title: t('Canadian Business Need', '加拿大业务需求', 'Besoin d’affaires canadien'), body: t('A real operating, housing, infrastructure or digital challenge.', '真实的运营、住宿、基础设施或数字化挑战。', 'Un défi réel d’exploitation, de logement, d’infrastructure ou numérique.') },
+  { icon: ClipboardCheck, title: t('NEXUS Assessment', 'NEXUS 评估', 'Évaluation NEXUS'), body: t('Location, use, capacity, site, budget, timeline and commercial model.', '地点、用途、容量、场地、预算、时间及合作模式。', 'Emplacement, usage, capacité, site, budget, échéancier et modèle commercial.') },
+  { icon: Search, title: t('Global Discovery', '全球发现', 'Découverte mondiale'), body: t('Products, factories, technology, expertise and partnership options.', '产品、工厂、技术、专业能力及合作选择。', 'Produits, usines, technologies, expertise et options de partenariat.') },
+  { icon: BadgeCheck, title: t('Verification', '核验', 'Vérification'), body: t('Capability, quality, documents, references and commercial risk.', '能力、质量、文件、案例及商业风险。', 'Capacité, qualité, documents, références et risques commerciaux.') },
+  { icon: ShieldCheck, title: t('Canadian Adaptation', '加拿大本地化', 'Adaptation canadienne'), body: t('Qualified design, compliance, permitting and local delivery coordination.', '合格设计、合规、许可及本地交付协调。', 'Conception qualifiée, conformité, permis et coordination locale.') },
+  { icon: Wrench, title: t('Delivery & Support', '交付与支持', 'Livraison et soutien'), body: t('Import, assembly, installation, commissioning, IT and lifecycle service.', '进口、组装、安装、调试、IT 及全生命周期服务。', 'Importation, assemblage, installation, mise en service, TI et soutien du cycle de vie.') },
+]
+
+const sectors: Array<{
+  key: string
+  icon: IconType
+  title: Localized
+  short: Localized
+  headline: Localized
+  description: Localized
+  solutions: Localized[]
+  approvals: Localized[]
+  image: string
+}> = [
   {
-    icon: HardHat,
-    title: t('Mining & Remote Operations', '采矿与偏远运营', 'Mines et opérations éloignées'),
-    body: t('Workforce camps, offices, dining, sanitation, storage, utilities and digital connectivity.', '工人营地、办公室、餐饮、卫生、仓储、公用系统及数字连接。', 'Camps de travailleurs, bureaux, restauration, installations sanitaires, entreposage et connectivité.'),
-    needs: t('Keep remote teams safe, productive and supported.', '保障偏远团队安全、高效并获得持续支持。', 'Soutenir des équipes éloignées, sécuritaires et productives.'),
+    key: 'mining', icon: HardHat,
+    title: t('Remote Operations', '偏远运营', 'Opérations éloignées'),
+    short: t('Mining, resources and remote construction', '采矿、资源及偏远施工', 'Mines, ressources et construction éloignée'),
+    headline: t('Complete environments for teams working far from cities.', '为远离城市工作的团队打造完整环境。', 'Des environnements complets pour les équipes loin des villes.'),
+    description: t('NEXUS coordinates accommodation, dining, sanitation, site offices, storage, utilities, connectivity and lifecycle support as one operational system.', 'NEXUS 将住宿、餐饮、卫生、现场办公室、仓储、公用系统、连接及生命周期支持整合为一个运营体系。', 'NEXUS coordonne l’hébergement, la restauration, les installations sanitaires, les bureaux, l’entreposage, les services, la connectivité et le soutien.'),
+    solutions: [t('Workforce accommodation and camp facilities', '员工住宿与营地设施', 'Hébergement et installations de camp'), t('Site offices, storage and support buildings', '现场办公室、仓储及配套建筑', 'Bureaux, entreposage et bâtiments de soutien'), t('Connectivity, security and digital operations', '连接、安全及数字化运营', 'Connectivité, sécurité et opérations numériques')],
+    approvals: [t('Land use, site and building review', '土地用途、场地及建筑审查', 'Examen du terrain, du site et du bâtiment'), t('Fire, occupancy, utilities and public-health requirements', '消防、占用、公用设施及公共卫生要求', 'Exigences incendie, occupation, services et santé publique'), t('Transportation, worker safety and inspection records', '运输、员工安全及检查记录', 'Transport, sécurité des travailleurs et inspections')],
+    image: '/images/industrial.jpg',
   },
   {
-    icon: Building2,
-    title: t('Construction', '建筑施工', 'Construction'),
-    body: t('Relocatable site offices, worker facilities, temporary accommodation and project technology.', '可迁移现场办公室、工人设施、临时住宿及项目技术系统。', 'Bureaux de chantier relocalisables, installations pour travailleurs et technologies de projet.'),
-    needs: t('Deploy infrastructure without distracting the core project team.', '部署配套基础设施，不分散核心项目团队精力。', 'Déployer l’infrastructure sans détourner l’équipe du projet principal.'),
+    key: 'education', icon: GraduationCap,
+    title: t('Education & Housing', '教育与住宿', 'Éducation et logement'),
+    short: t('Student residences and institutional expansion', '学生公寓与机构扩建', 'Résidences étudiantes et expansion institutionnelle'),
+    headline: t('Accommodation partnerships that let institutions focus on education.', '让教育机构专注教学的住宿合作方案。', 'Des partenariats de logement qui permettent aux établissements de se concentrer sur l’éducation.'),
+    description: t('NEXUS can structure phased accommodation programs with schools, colleges, universities, landowners, investors and local delivery partners.', 'NEXUS 可与学校、学院、大学、土地所有者、投资方及本地伙伴共同构建分阶段住宿项目。', 'NEXUS peut structurer des programmes de logement par phases avec établissements, propriétaires, investisseurs et partenaires locaux.'),
+    solutions: [t('Student residences and micro-apartments', '学生公寓与微型住宅', 'Résidences et micro-logements'), t('Shared kitchens, study and community spaces', '共享厨房、学习及社区空间', 'Cuisines, études et espaces communs'), t('Digital resident and facility-management systems', '数字化住户与设施管理系统', 'Systèmes numériques de gestion')],
+    approvals: [t('Zoning, development and building review', '分区、开发及建筑审查', 'Zonage, développement et bâtiment'), t('Fire, accessibility and occupancy requirements', '消防、无障碍及占用要求', 'Incendie, accessibilité et occupation'), t('Institutional, tenancy, privacy and operating requirements', '机构、租赁、隐私及运营要求', 'Exigences institutionnelles, locatives et de confidentialité')],
+    image: '/images/community.jpg',
   },
   {
-    icon: GraduationCap,
-    title: t('Education & Student Housing', '教育与学生住宿', 'Éducation et logement étudiant'),
-    body: t('Student residences, micro-apartments, shared spaces and phased campus expansion.', '学生公寓、微型住宅、共享空间及分阶段校园扩建。', 'Résidences étudiantes, micro-logements, espaces communs et expansion par phases.'),
-    needs: t('Help institutions solve accommodation pressure through partnerships.', '通过合作帮助教育机构缓解住宿压力。', 'Aider les établissements à répondre à la pression sur le logement.'),
+    key: 'construction', icon: Building2,
+    title: t('Construction Infrastructure', '施工基础设施', 'Infrastructure de construction'),
+    short: t('Fast, relocatable support for project sites', '快速、可迁移的项目现场支持', 'Soutien rapide et relocalisable'),
+    headline: t('Deploy site infrastructure without distracting the core project team.', '部署现场基础设施，不分散核心项目团队精力。', 'Déployer l’infrastructure sans détourner l’équipe du projet principal.'),
+    description: t('Reusable offices, worker facilities, temporary accommodation, storage, access control and project technology can be delivered as one coordinated package.', '可重复使用的办公室、员工设施、临时住宿、仓储、门禁及项目技术可作为一个协调方案交付。', 'Bureaux réutilisables, installations, hébergement temporaire, entreposage, contrôle d’accès et technologie livrés comme un ensemble coordonné.'),
+    solutions: [t('Relocatable site offices and meeting rooms', '可迁移现场办公室与会议室', 'Bureaux et salles relocalisables'), t('Worker welfare, storage and security units', '员工福利、仓储及安保单元', 'Unités de bien-être, stockage et sécurité'), t('Project portals, access control and connectivity', '项目门户、门禁及连接', 'Portails, contrôle d’accès et connectivité')],
+    approvals: [t('Temporary-use and site permissions', '临时用途及场地许可', 'Autorisations temporaires et de site'), t('Building, fire, electrical and plumbing requirements', '建筑、消防、电气及给排水要求', 'Exigences bâtiment, incendie, électricité et plomberie'), t('Transport, lifting, safety and occupancy records', '运输、吊装、安全及占用记录', 'Transport, levage, sécurité et occupation')],
+    image: '/images/industrial.jpg',
   },
   {
-    icon: Home,
-    title: t('Residential Development', '住宅开发', 'Développement résidentiel'),
-    body: t('Cabins, small homes, multi-unit concepts and adaptable living systems.', '小屋、小型住宅、多单元方案及可适应居住系统。', 'Chalets, petites maisons, concepts multiunités et systèmes résidentiels adaptables.'),
-    needs: t('Create repeatable solutions with a managed delivery pathway.', '通过可管理的交付路径打造可复制方案。', 'Créer des solutions reproductibles avec un parcours de livraison géré.'),
+    key: 'commercial', icon: Hotel,
+    title: t('Commercial Growth', '商业增长', 'Croissance commerciale'),
+    short: t('Retail, food, office, tourism and hospitality', '零售、餐饮、办公、旅游及酒店', 'Commerce, restauration, bureaux et tourisme'),
+    headline: t('Turn a business concept into a deployable operating space.', '把商业构想转化为可部署运营空间。', 'Transformer un concept d’affaires en espace opérationnel déployable.'),
+    description: t('NEXUS connects modular spaces, equipment layouts, utilities, local installation and optional digital operating systems.', 'NEXUS 将模块化空间、设备布局、公用系统、本地安装及可选数字运营系统连接起来。', 'NEXUS relie espaces modulaires, équipements, services, installation locale et systèmes numériques.'),
+    solutions: [t('Coffee, food and retail units', '咖啡、餐饮及零售单元', 'Unités café, restauration et commerce'), t('Offices, showrooms and hospitality cabins', '办公室、展厅及酒店小屋', 'Bureaux, salles d’exposition et cabines'), t('POS, booking, Wi-Fi and business automation', 'POS、预订、Wi-Fi 及商业自动化', 'PDV, réservation, Wi-Fi et automatisation')],
+    approvals: [t('Business, zoning and building permissions', '商业、分区及建筑许可', 'Autorisations commerciales, zonage et bâtiment'), t('Fire, accessibility and occupancy requirements', '消防、无障碍及占用要求', 'Incendie, accessibilité et occupation'), t('Food, signage, equipment and utility approvals where applicable', '适用的食品、标识、设备及公用设施审批', 'Approbations alimentaires, affichage, équipement et services')],
+    image: '/images/commercial.jpg',
   },
   {
-    icon: Hotel,
-    title: t('Commercial & Hospitality', '商业与酒店旅游', 'Commerce et hôtellerie'),
-    body: t('Kiosks, retail units, modular offices, tourism cabins and operating technology.', '商业亭、零售单元、模块化办公室、旅游小屋及运营技术。', 'Kiosques, commerces, bureaux modulaires, unités touristiques et technologies d’exploitation.'),
-    needs: t('Turn a business concept into a deployable operating space.', '把商业构想转化为可部署的运营空间。', 'Transformer un concept d’affaires en espace opérationnel déployable.'),
+    key: 'residential', icon: Home,
+    title: t('Housing & Communities', '住房与社区', 'Logement et collectivités'),
+    short: t('Modular living and community-use facilities', '模块化居住与社区设施', 'Habitation modulaire et installations communautaires'),
+    headline: t('Adaptable living systems delivered through a managed Canadian pathway.', '通过受管理的加拿大路径交付适应性居住系统。', 'Des systèmes résidentiels adaptables livrés par un parcours canadien géré.'),
+    description: t('NEXUS connects selected global systems with site review, Canadian professional coordination, import, assembly, installation and support.', 'NEXUS 将精选全球系统与场地审查、加拿大专业协调、进口、组装、安装及支持连接起来。', 'NEXUS relie les systèmes mondiaux sélectionnés à l’examen du site, aux professionnels canadiens, à l’importation, à l’assemblage et au soutien.'),
+    solutions: [t('Small homes, cabins and backyard studios', '小型住宅、小屋及后院工作室', 'Petites maisons, chalets et studios'), t('Multi-unit and community-use concepts', '多单元及社区用途概念', 'Concepts multiunités et communautaires'), t('Smart-home, energy and facility systems', '智能家居、能源及设施系统', 'Maison intelligente, énergie et installations')],
+    approvals: [t('Zoning, development and building permits', '分区、开发及建筑许可', 'Zonage, développement et permis'), t('Professional design, product conformity and utilities', '专业设计、产品符合性及公用设施', 'Conception, conformité du produit et services'), t('Inspections, occupancy, warranty and consumer requirements', '检查、占用、质保及消费者要求', 'Inspections, occupation, garantie et consommation')],
+    image: '/images/modular-living.jpg',
   },
   {
-    icon: Code2,
-    title: t('IT & Digital Transformation', 'IT 与数字化转型', 'TI et transformation numérique'),
-    body: t('Web platforms, CRM, automation, cloud systems, AI workflows and managed support.', '网站平台、CRM、自动化、云系统、AI 工作流及托管支持。', 'Plateformes web, CRM, automatisation, nuage, flux d’IA et soutien géré.'),
-    needs: t('Connect physical projects with secure digital operations.', '把实体项目与安全的数字化运营连接起来。', 'Relier les projets physiques à des opérations numériques sécurisées.'),
+    key: 'digital', icon: Code2,
+    title: t('Digital Transformation', '数字化转型', 'Transformation numérique'),
+    short: t('IT systems for projects and business operations', '项目及企业运营 IT 系统', 'Systèmes TI pour projets et opérations'),
+    headline: t('Connect physical infrastructure with secure digital operations.', '把实体基础设施与安全数字化运营连接起来。', 'Relier l’infrastructure physique aux opérations numériques sécurisées.'),
+    description: t('NEXUS provides websites, platforms, CRM, supplier portals, automation, cloud systems, AI workflows and managed technical support.', 'NEXUS 提供网站、平台、CRM、供应商门户、自动化、云系统、AI 工作流及托管技术支持。', 'NEXUS fournit sites, plateformes, CRM, portails fournisseurs, automatisation, nuage, IA et soutien géré.'),
+    solutions: [t('Web platforms, portals and CRM', '网站平台、门户及 CRM', 'Plateformes web, portails et CRM'), t('Automation, cloud and AI-enabled workflows', '自动化、云及 AI 工作流', 'Automatisation, nuage et flux alimentés par l’IA'), t('Cybersecurity coordination and managed support', '网络安全协调及托管支持', 'Coordination cybersécurité et soutien géré')],
+    approvals: [t('Privacy, consent and data-governance requirements', '隐私、同意及数据治理要求', 'Confidentialité, consentement et gouvernance'), t('Software licensing and intellectual-property controls', '软件许可及知识产权控制', 'Licences logicielles et propriété intellectuelle'), t('Accessibility, security and sector-specific records obligations', '无障碍、安全及行业记录义务', 'Accessibilité, sécurité et dossiers sectoriels')],
+    image: '/images/hero.jpg',
   },
 ]
 
-const process: Array<{ icon: IconType; key: string; title: Localized; body: Localized }> = [
-  { icon: ClipboardCheck, key: '01', title: t('Assess', '评估', 'Évaluer'), body: t('Define the business problem, site, capacity, budget and target outcome.', '明确业务问题、场地、容量、预算及目标成果。', 'Définir le problème, le site, la capacité, le budget et le résultat visé.') },
-  { icon: Search, key: '02', title: t('Source', '寻源', 'Rechercher'), body: t('Identify suitable global products, factories, systems and technology partners.', '识别合适的全球产品、工厂、系统及技术伙伴。', 'Identifier les produits, usines, systèmes et partenaires technologiques adaptés.') },
-  { icon: BadgeCheck, key: '03', title: t('Verify', '核验', 'Vérifier'), body: t('Review capability, quality, documentation, references and commercial risk.', '审查能力、质量、文件、案例及商业风险。', 'Examiner la capacité, la qualité, les documents, les références et les risques.') },
-  { icon: ShieldCheck, key: '04', title: t('Canadianize', '加拿大本地化', 'Adapter au Canada'), body: t('Coordinate project-specific design, compliance and qualified local partners.', '协调项目专项设计、合规及合格本地伙伴。', 'Coordonner la conception, la conformité et les partenaires locaux qualifiés.') },
-  { icon: Truck, key: '05', title: t('Deliver', '交付', 'Livrer'), body: t('Manage import, logistics, assembly, installation and commissioning.', '管理进口、物流、组装、安装及调试。', 'Gérer l’importation, la logistique, l’assemblage, l’installation et la mise en service.') },
-  { icon: Wrench, key: '06', title: t('Support', '支持', 'Soutenir'), body: t('Coordinate warranties, spare parts, IT, service and lifecycle support.', '协调质保、备件、IT、服务及全生命周期支持。', 'Coordonner les garanties, pièces, TI, services et soutien du cycle de vie.') },
+const deliveryStages: Array<{ icon: IconType; key: string; title: Localized; body: Localized; evidence: Localized }> = [
+  { icon: ClipboardCheck, key: '01', title: t('Assess', '评估', 'Évaluer'), body: t('Define the problem, location, use, capacity, site, budget and outcome.', '明确问题、地点、用途、容量、场地、预算及成果。', 'Définir le problème, le lieu, l’usage, la capacité, le site, le budget et le résultat.'), evidence: t('Project brief and preliminary responsibility matrix', '项目简报与初步责任矩阵', 'Dossier de projet et matrice préliminaire') },
+  { icon: Search, key: '02', title: t('Discover', '发现', 'Découvrir'), body: t('Identify suitable global products, factories, technology and expertise.', '识别合适的全球产品、工厂、技术及专业能力。', 'Identifier les produits, usines, technologies et expertises appropriés.'), evidence: t('Longlist, comparison and sourcing rationale', '候选清单、比较及寻源依据', 'Liste, comparaison et justification') },
+  { icon: BadgeCheck, key: '03', title: t('Verify', '核验', 'Vérifier'), body: t('Review capability, quality, documents, references and commercial risk.', '审查能力、质量、文件、案例及商业风险。', 'Examiner capacité, qualité, documents, références et risques.'), evidence: t('Supplier and product verification record', '供应商与产品核验记录', 'Dossier de vérification') },
+  { icon: ShieldCheck, key: '04', title: t('Canadianize', '加拿大本地化', 'Adapter au Canada'), body: t('Coordinate qualified design, product conformity, permits and local partners.', '协调合格设计、产品符合性、许可及本地伙伴。', 'Coordonner conception qualifiée, conformité, permis et partenaires locaux.'), evidence: t('Project-specific compliance and design dossier', '项目专项合规与设计档案', 'Dossier de conformité et conception') },
+  { icon: Truck, key: '05', title: t('Deliver', '交付', 'Livrer'), body: t('Manage import, assembly, transport, installation, inspection and commissioning.', '管理进口、组装、运输、安装、检查及调试。', 'Gérer importation, assemblage, transport, installation, inspection et mise en service.'), evidence: t('Inspection, installation and commissioning records', '检查、安装及调试记录', 'Dossiers d’inspection, installation et mise en service') },
+  { icon: Wrench, key: '06', title: t('Support', '支持', 'Soutenir'), body: t('Coordinate warranty, parts, maintenance, upgrades, IT and lifecycle service.', '协调质保、备件、维护、升级、IT 及生命周期服务。', 'Coordonner garantie, pièces, entretien, mises à niveau, TI et cycle de vie.'), evidence: t('Warranty, service and lifecycle register', '质保、服务及生命周期登记表', 'Registre de garantie, service et cycle de vie') },
 ]
 
-const launchSolutions = [
-  {
-    image: '/images/hero-slide-02.jpg',
-    title: t('Remote Workforce Infrastructure', '偏远员工基础设施', 'Infrastructure pour main-d’œuvre éloignée'),
-    body: t('Integrated accommodation, site offices and supporting facilities for mining, construction and remote operations.', '面向采矿、建筑和偏远运营的一体化住宿、现场办公室及配套设施。', 'Hébergement, bureaux et installations intégrés pour les mines, la construction et les opérations éloignées.'),
-  },
-  {
-    image: '/images/hero-slide-03.jpg',
-    title: t('Student Accommodation Partnerships', '学生住宿合作项目', 'Partenariats de logement étudiant'),
-    body: t('Phased housing programs developed with institutions, landowners, investors and local delivery partners.', '与教育机构、土地所有者、投资方及本地交付伙伴共同开发分阶段住宿项目。', 'Programmes de logement par phases avec établissements, propriétaires, investisseurs et partenaires locaux.'),
-  },
-  {
-    image: '/images/hero-slide-01.jpg',
-    title: t('Commercial Deployment Kits', '商业快速部署方案', 'Solutions commerciales déployables'),
-    body: t('Configurable kiosks, retail spaces, offices, hospitality units and optional digital operating systems.', '可配置商业亭、零售空间、办公室、酒店单元及可选数字运营系统。', 'Kiosques, commerces, bureaux, unités d’hôtellerie et systèmes numériques configurables.'),
-  },
-]
-
-const complianceAreas: Array<{ icon: IconType; title: Localized; body: Localized }> = [
-  { icon: BriefcaseBusiness, title: t('Business & Operating Authority', '商业与运营许可', 'Autorité commerciale'), body: t('Corporate registration, tax, insurance, contracts, local licences and sector-specific permissions.', '公司注册、税务、保险、合同、本地执照及行业专项许可。', 'Immatriculation, fiscalité, assurance, contrats, licences locales et autorisations sectorielles.') },
-  { icon: Globe2, title: t('Import & Customs', '进口与海关', 'Importation et douanes'), body: t('Importer setup, tariff classification, origin, customs records and product-specific import requirements.', '进口商设置、税则归类、原产地、海关记录及产品专项进口要求。', 'Configuration de l’importateur, classement tarifaire, origine, dossiers douaniers et exigences propres au produit.') },
-  { icon: PackageCheck, title: t('Product Conformity', '产品符合性', 'Conformité du produit'), body: t('Applicable testing, certification marks, factory records, material reports and manuals.', '适用检测、认证标志、工厂记录、材料报告及说明书。', 'Essais applicables, marques de certification, dossiers d’usine, rapports de matériaux et manuels.') },
-  { icon: FileCheck2, title: t('Canadian Design Responsibility', '加拿大设计责任', 'Responsabilité de conception'), body: t('Qualified review for structure, climate loads, fire, energy, accessibility, foundations and site conditions.', '针对结构、气候荷载、防火、能效、无障碍、基础及现场条件的合格审查。', 'Examen qualifié de la structure, des charges climatiques, du feu, de l’énergie, de l’accessibilité et du site.') },
-  { icon: MapPinned, title: t('Site & Municipal Approvals', '场地与市政审批', 'Approbations du site'), body: t('Zoning, development, building, servicing, environmental, transport, fire and occupancy reviews as applicable.', '根据项目需要进行分区、开发、建筑、市政服务、环境、运输、消防及占用审查。', 'Zonage, développement, bâtiment, services, environnement, transport, incendie et occupation selon le projet.') },
-  { icon: CheckCircle2, title: t('Inspection & Handover Dossier', '检查与交付档案', 'Inspection et remise'), body: t('Issued permits, professional seals, inspection records, commissioning, warranties and operating manuals.', '已签发许可、专业盖章、检查记录、调试、质保及运营手册。', 'Permis délivrés, sceaux professionnels, inspections, mise en service, garanties et manuels.') },
-]
-
-const platformModules = [
-  t('Canada Compliance Centre', '加拿大合规中心', 'Centre de conformité Canada'),
-  t('Project Intake Wizard', '项目引导表单', 'Assistant d’admission de projet'),
-  t('Landed-Cost & Timeline Estimator', '落地成本与时间估算器', 'Estimateur de coût rendu et d’échéancier'),
-  t('Verified Document Library', '核验文件资料库', 'Bibliothèque de documents vérifiés'),
-  t('Canadian Partner Directory', '加拿大合作伙伴目录', 'Répertoire de partenaires canadiens'),
-  t('Verified Projects & Case Studies', '核验项目与案例研究', 'Projets vérifiés et études de cas'),
+const complianceCategories = [
+  { icon: MapPinned, title: t('Land Use & Site', '土地用途与场地', 'Usage du sol et site'), body: t('Zoning, development, servicing, environmental and site-access considerations.', '分区、开发、市政服务、环境及场地通行因素。', 'Zonage, développement, services, environnement et accès.') },
+  { icon: FileCheck2, title: t('Design Responsibility', '设计责任', 'Responsabilité de conception'), body: t('Qualified architecture and engineering for structure, climate loads, fire, energy and accessibility.', '合格建筑与工程审查结构、气候荷载、防火、能效及无障碍。', 'Architecture et ingénierie qualifiées pour structure, climat, incendie, énergie et accessibilité.') },
+  { icon: PackageCheck, title: t('Product Conformity', '产品符合性', 'Conformité du produit'), body: t('Testing, certification marks, listings, factory records and field evaluation where permitted.', '检测、认证标志、名录、工厂记录及允许情况下的现场评估。', 'Essais, marques, inscriptions, dossiers d’usine et évaluations sur place.') },
+  { icon: Globe2, title: t('Import & Transport', '进口与运输', 'Importation et transport'), body: t('Importer setup, customs, classification, origin, freight and oversize transport requirements.', '进口商设置、海关、归类、原产地、货运及超限运输要求。', 'Importateur, douanes, classement, origine, fret et transport hors gabarit.') },
+  { icon: ShieldCheck, title: t('Permits & Inspections', '许可与检查', 'Permis et inspections'), body: t('Building, fire, electrical, plumbing, gas, occupancy and other project-specific reviews.', '建筑、消防、电气、给排水、燃气、占用及其他项目专项审查。', 'Bâtiment, incendie, électricité, plomberie, gaz, occupation et autres examens.') },
+  { icon: CheckCircle2, title: t('Handover Evidence', '交付证明', 'Preuves de remise'), body: t('Issued permits, professional seals, inspection records, commissioning, warranties and manuals.', '已签发许可、专业盖章、检查记录、调试、质保及手册。', 'Permis, sceaux, inspections, mise en service, garanties et manuels.') },
 ]
 
 const projectStatuses = [
-  { label: t('Verified Projects', '已核验项目', 'Projets vérifiés'), body: t('Real client-approved scope, location, specifications, responsibilities, timeline and results.', '经客户认可的真实范围、地点、规格、责任、时间及成果。', 'Portée, emplacement, spécifications, responsabilités, échéancier et résultats approuvés.') },
-  { label: t('Projects in Development', '开发中项目', 'Projets en développement'), body: t('Active opportunities with a clearly stated stage and no suggestion of completion.', '明确标注当前阶段的在推进机会，不暗示已经完成。', 'Occasions actives avec une étape clairement indiquée, sans laisser croire à leur achèvement.') },
-  { label: t('Design Concepts', '设计概念', 'Concepts de design'), body: t('Exploratory ideas visibly labelled as concepts, not presented as delivered work.', '清晰标注为概念的探索性方案，不作为已交付项目展示。', 'Idées exploratoires clairement identifiées comme concepts et non comme projets livrés.') },
-]
-
-const partners = [
-  { icon: Factory, label: t('Global manufacturers', '全球制造商', 'Fabricants mondiaux') },
-  { icon: FileCheck2, label: t('Canadian engineers & architects', '加拿大工程师与建筑师', 'Ingénieurs et architectes canadiens') },
-  { icon: BadgeCheck, label: t('Testing & certification organizations', '检测与认证机构', 'Organismes d’essai et de certification') },
-  { icon: Truck, label: t('Logistics & transportation partners', '物流与运输伙伴', 'Partenaires logistiques et transport') },
-  { icon: Wrench, label: t('Licensed contractors & trades', '持牌承包商与工种', 'Entrepreneurs et métiers autorisés') },
-  { icon: Code2, label: t('Technology & IT partners', '技术与 IT 伙伴', 'Partenaires technologiques et TI') },
+  { title: t('Verified Projects', '已核验项目', 'Projets vérifiés'), body: t('Client-approved facts, scope, location, responsibilities, timeline and measurable results.', '客户认可的事实、范围、地点、责任、时间及可衡量成果。', 'Faits approuvés, portée, emplacement, responsabilités, échéancier et résultats.') },
+  { title: t('Projects in Development', '开发中项目', 'Projets en développement'), body: t('Active opportunities with a clearly stated stage and no suggestion of completion.', '明确当前阶段的在推进机会，不暗示已完成。', 'Occasions actives avec une étape clairement indiquée, sans prétendre être terminées.') },
+  { title: t('Design Concepts', '设计概念', 'Concepts de design'), body: t('Exploratory ideas visibly labelled as concepts—not presented as delivered NEXUS work.', '清晰标注为概念的探索性方案，不作为 NEXUS 已交付项目。', 'Idées exploratoires clairement identifiées comme concepts, non comme projets livrés.') },
 ]
 
 export function HomePage({ locale }: { locale: Locale }) {
   const localized = (value: Localized) => value[locale]
+  const [sectorIndex, setSectorIndex] = useState(0)
+  const [stageIndex, setStageIndex] = useState(0)
+  const activeSector = sectors[sectorIndex]
+  const activeStage = deliveryStages[stageIndex]
+  const SectorIcon = activeSector.icon
+  const StageIcon = activeStage.icon
 
   return (
     <main>
-      <section className="relative min-h-[720px] overflow-hidden bg-ink text-white">
-        <HeroSlideshow />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,27,43,.98)_0%,rgba(7,27,43,.9)_40%,rgba(7,27,43,.45)_68%,rgba(7,27,43,.2)_100%)]" />
-        <div className="relative mx-auto flex min-h-[720px] max-w-8xl flex-col justify-between px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
-          <div className="max-w-[780px]">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] backdrop-blur">
-              <Sparkles className="h-4 w-4" /> {localized(copy.heroEyebrow)}
+      <section className="overflow-hidden bg-[#f4f6f7]">
+        <div className="mx-auto grid min-h-[690px] max-w-8xl gap-10 px-5 py-12 sm:px-8 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:px-12 lg:py-16">
+          <div className="max-w-3xl">
+            <span className="inline-flex rounded-full border border-ink/15 bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.17em] text-ink shadow-sm">
+              {localized(copy.heroEyebrow)}
             </span>
-            <h1 className="mt-7 text-5xl font-semibold leading-[0.96] tracking-[-0.055em] sm:text-6xl lg:text-[5.35rem]">
+            <h1 className="mt-7 text-5xl font-semibold leading-[0.97] tracking-[-0.055em] text-ink sm:text-6xl lg:text-[5.35rem]">
               <span className="block">{localized(copy.heroTitle1)}</span>
-              <span className="block text-white/88">{localized(copy.heroTitle2)}</span>
+              <span className="block text-[#2b83b4]">{localized(copy.heroTitle2)}</span>
             </h1>
-            <p className="mt-7 max-w-[720px] text-base leading-8 text-white/72 sm:text-lg">{localized(copy.heroBody)}</p>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600">{localized(copy.heroBody)}</p>
             <div className="mt-9 flex flex-wrap gap-3">
-              <Link href={`/${locale}/contact`} className="inline-flex items-center gap-2 rounded-full bg-[#26688f] px-6 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#1e5879]">
+              <Link href={`/${locale}/contact`} className="inline-flex items-center gap-2 rounded-full bg-[#2b83b4] px-6 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#236f99]">
                 {localized(copy.primaryCta)} <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link href={`/${locale}/products`} className="inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/10 px-6 py-3.5 text-sm font-bold text-white backdrop-blur transition hover:bg-white hover:text-ink">
+              <Link href={`/${locale}/products`} className="inline-flex items-center gap-2 rounded-full border border-ink/15 bg-white px-6 py-3.5 text-sm font-bold text-ink transition hover:border-ink/35">
                 {localized(copy.secondaryCta)}
               </Link>
             </div>
-          </div>
 
-          <div className="mt-14 grid overflow-hidden rounded-3xl border border-white/15 bg-black/25 backdrop-blur-xl sm:grid-cols-2 lg:grid-cols-4">
-            {copy.trust.map((item, index) => {
-              const icons = [Globe2, BadgeCheck, ShieldCheck, Truck]
-              const Icon = icons[index]
-              return (
-                <div key={item.en} className="flex items-center gap-3 border-white/15 px-5 py-5 sm:border-r last:border-r-0">
-                  <Icon className="h-6 w-6 text-[#a8c36b]" />
-                  <span className="text-sm font-semibold">{localized(item)}</span>
+            <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {[t('Global Network', '全球网络', 'Réseau mondial'), t('Verified Capability', '能力核验', 'Capacité vérifiée'), t('Canadian Coordination', '加拿大协调', 'Coordination canadienne'), t('Lifecycle Support', '生命周期支持', 'Soutien du cycle de vie')].map((item, index) => (
+                <div key={item.en} className="rounded-2xl border border-ink/10 bg-white p-4 shadow-sm">
+                  <span className="text-xs font-black text-[#2b83b4]">0{index + 1}</span>
+                  <p className="mt-2 text-sm font-bold text-ink">{localized(item)}</p>
                 </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section id="industries" className="bg-white py-20 lg:py-28">
-        <div className="mx-auto max-w-8xl px-5 sm:px-8 lg:px-12">
-          <div className="max-w-3xl">
-            <p className="eyebrow">{localized(copy.sectorsEyebrow)}</p>
-            <h2 className="section-title">{localized(copy.sectorsTitle)}</h2>
-            <p className="section-copy">{localized(copy.sectorsBody)}</p>
-          </div>
-          <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {sectors.map((sector) => {
-              const Icon = sector.icon
-              return (
-                <article key={sector.title.en} className="group rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#26688f]/30 hover:shadow-lift">
-                  <div className="flex items-center justify-between gap-4">
-                    <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#eef5f8] text-[#26688f]"><Icon className="h-6 w-6" /></span>
-                    <ArrowRight className="h-5 w-5 text-slate-300 transition group-hover:translate-x-1 group-hover:text-[#26688f]" />
-                  </div>
-                  <h3 className="mt-7 text-xl font-bold tracking-tight text-ink">{localized(sector.title)}</h3>
-                  <p className="mt-3 text-sm font-semibold leading-6 text-[#26688f]">{localized(sector.needs)}</p>
-                  <p className="mt-3 text-sm leading-6 text-slate-600">{localized(sector.body)}</p>
-                </article>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section id="delivery" className="relative overflow-hidden bg-ink py-20 text-white lg:py-28">
-        <div className="absolute -right-40 top-0 h-[520px] w-[520px] rounded-full bg-[#26688f]/25 blur-3xl" />
-        <div className="relative mx-auto max-w-8xl px-5 sm:px-8 lg:px-12">
-          <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
-            <div>
-              <p className="eyebrow text-[#a8c36b]">{localized(copy.processEyebrow)}</p>
-              <h2 className="section-title text-white">{localized(copy.processTitle)}</h2>
+              ))}
             </div>
-            <p className="max-w-2xl text-base leading-8 text-white/65 lg:justify-self-end">{localized(copy.processBody)}</p>
           </div>
-          <div className="mt-14 grid gap-4 md:grid-cols-2 xl:grid-cols-6">
-            {process.map((step) => {
+
+          <div className="relative lg:pl-4">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[2.5rem] bg-ink shadow-lift sm:aspect-[5/4] lg:aspect-[4/5]">
+              <Image src={activeSector.image} alt={localized(activeSector.title)} fill priority quality={100} className="object-cover transition duration-700" sizes="(max-width: 1024px) 100vw, 48vw" />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_35%,rgba(7,27,43,.94)_100%)]" />
+              <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8">
+                <div className="flex items-center gap-3 text-xs font-black uppercase tracking-[0.15em] text-[#8dc8e8]">
+                  <SectorIcon className="h-5 w-5" /> {localized(activeSector.title)}
+                </div>
+                <h2 className="mt-4 max-w-xl text-2xl font-bold tracking-tight sm:text-3xl">{localized(activeSector.headline)}</h2>
+              </div>
+            </div>
+
+            <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-6 lg:absolute lg:-bottom-5 lg:-left-5 lg:right-5 lg:mt-0">
+              {sectors.map((sector, index) => {
+                const Icon = sector.icon
+                return (
+                  <button key={sector.key} type="button" onClick={() => setSectorIndex(index)} aria-label={localized(sector.title)} className={`grid min-h-14 place-items-center rounded-2xl border transition ${sectorIndex === index ? 'border-[#2b83b4] bg-[#2b83b4] text-white shadow-soft' : 'border-slate-200 bg-white text-slate-500 hover:border-slate-400 hover:text-ink'}`}>
+                    <Icon className="h-5 w-5" />
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-ink py-16 text-white lg:py-20">
+        <div className="mx-auto max-w-8xl px-5 sm:px-8 lg:px-12">
+          <div className="max-w-4xl">
+            <p className="eyebrow text-[#8dc8e8]">{localized(copy.modelEyebrow)}</p>
+            <h2 className="section-title text-white">{localized(copy.modelTitle)}</h2>
+          </div>
+          <div className="mt-10 grid gap-3 md:grid-cols-3 xl:grid-cols-6">
+            {modelSteps.map((step, index) => {
               const Icon = step.icon
               return (
-                <article key={step.key} className="rounded-3xl border border-white/12 bg-white/[0.055] p-6 backdrop-blur transition hover:bg-white/[0.09]">
-                  <div className="flex items-center justify-between"><Icon className="h-7 w-7 text-[#a8c36b]" /><span className="text-xs font-bold text-white/35">{step.key}</span></div>
-                  <h3 className="mt-8 text-lg font-bold">{localized(step.title)}</h3>
+                <div key={step.title.en} className="relative rounded-3xl border border-white/10 bg-white/[0.055] p-5">
+                  <div className="flex items-center justify-between"><Icon className="h-6 w-6 text-[#8dc8e8]" /><span className="text-xs font-black text-white/30">0{index + 1}</span></div>
+                  <h3 className="mt-6 text-lg font-bold">{localized(step.title)}</h3>
                   <p className="mt-3 text-sm leading-6 text-white/58">{localized(step.body)}</p>
-                </article>
+                  {index < modelSteps.length - 1 && <ChevronRight className="absolute -right-3 top-1/2 z-10 hidden h-5 w-5 text-white/25 xl:block" />}
+                </div>
               )
             })}
           </div>
         </div>
       </section>
 
-      <section id="solutions" className="bg-cream py-20 lg:py-28">
+      <section className="bg-white py-20 lg:py-28">
         <div className="mx-auto max-w-8xl px-5 sm:px-8 lg:px-12">
-          <div className="max-w-3xl">
-            <p className="eyebrow">{localized(copy.launchEyebrow)}</p>
-            <h2 className="section-title">{localized(copy.launchTitle)}</h2>
-          </div>
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            {launchSolutions.map((solution, index) => (
-              <article key={solution.title.en} className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <Image src={solution.image} alt={localized(solution.title)} fill quality={100} className="object-cover transition duration-700 group-hover:scale-105" sizes="(max-width: 1024px) 100vw, 33vw" />
-                  <span className="absolute left-4 top-4 rounded-full bg-ink/85 px-3 py-1.5 text-[0.65rem] font-bold uppercase tracking-[0.13em] text-white backdrop-blur">0{index + 1}</span>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold tracking-tight text-ink">{localized(solution.title)}</h3>
-                  <p className="mt-3 text-sm leading-6 text-slate-600">{localized(solution.body)}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="compliance" className="bg-white py-20 lg:py-28">
-        <div className="mx-auto max-w-8xl px-5 sm:px-8 lg:px-12">
-          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <div className="lg:sticky lg:top-32">
-              <p className="eyebrow">{localized(copy.complianceEyebrow)}</p>
-              <h2 className="section-title">{localized(copy.complianceTitle)}</h2>
-              <p className="section-copy">{localized(copy.complianceBody)}</p>
-              <div className="mt-7 rounded-3xl border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-950">
-                <strong className="block">Important</strong>
-                <span className="mt-1 block">{localized(copy.complianceDisclaimer)}</span>
+          <div className="grid gap-10 lg:grid-cols-[0.36fr_0.64fr]">
+            <div>
+              <p className="eyebrow">{localized(copy.sectorsEyebrow)}</p>
+              <h2 className="section-title">{localized(copy.sectorsTitle)}</h2>
+              <div className="mt-8 space-y-2">
+                {sectors.map((sector, index) => {
+                  const Icon = sector.icon
+                  return (
+                    <button key={sector.key} type="button" onClick={() => setSectorIndex(index)} className={`flex w-full items-center justify-between rounded-2xl border px-4 py-4 text-left transition ${sectorIndex === index ? 'border-ink bg-ink text-white' : 'border-slate-200 bg-white text-ink hover:border-slate-400'}`}>
+                      <span className="flex items-center gap-3"><Icon className={`h-5 w-5 ${sectorIndex === index ? 'text-[#8dc8e8]' : 'text-forest'}`} /><span><strong className="block text-sm">{localized(sector.title)}</strong><span className={`mt-1 block text-xs ${sectorIndex === index ? 'text-white/50' : 'text-slate-500'}`}>{localized(sector.short)}</span></span></span>
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  )
+                })}
               </div>
-              <Link href={`/${locale}/assembly-centre`} className="mt-7 inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[#26688f]">
-                {localized(t('View the delivery process', '查看交付流程', 'Voir le processus de livraison'))} <ArrowRight className="h-4 w-4" />
-              </Link>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {complianceAreas.map((area, index) => {
-                const Icon = area.icon
-                return (
-                  <article key={area.title.en} className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
-                    <div className="flex items-center justify-between"><span className="grid h-11 w-11 place-items-center rounded-2xl bg-white text-[#26688f] shadow-sm"><Icon className="h-5 w-5" /></span><span className="text-xs font-black text-slate-300">0{index + 1}</span></div>
-                    <h3 className="mt-6 text-lg font-bold text-ink">{localized(area.title)}</h3>
-                    <p className="mt-3 text-sm leading-6 text-slate-600">{localized(area.body)}</p>
-                  </article>
-                )
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section className="border-y border-slate-200 bg-slate-50 py-20 lg:py-24">
-        <div className="mx-auto max-w-8xl px-5 sm:px-8 lg:px-12">
-          <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-center">
-            <div>
-              <p className="eyebrow">{localized(copy.platformEyebrow)}</p>
-              <h2 className="section-title">{localized(copy.platformTitle)}</h2>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {platformModules.map((module, index) => (
-                <div key={module.en} className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4">
-                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#eef5f8] text-xs font-black text-[#26688f]">{index + 1}</span>
-                  <span className="text-sm font-bold text-ink">{localized(module)}</span>
+            <div className="overflow-hidden rounded-[2.25rem] border border-slate-200 bg-slate-50">
+              <div className="relative aspect-[16/8] overflow-hidden">
+                <Image src={activeSector.image} alt={localized(activeSector.title)} fill quality={100} className="object-cover" sizes="(max-width: 1024px) 100vw, 64vw" />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8"><span className="text-xs font-black uppercase tracking-[0.16em] text-[#8dc8e8]">{localized(activeSector.title)}</span><h3 className="mt-3 max-w-3xl text-3xl font-bold tracking-tight">{localized(activeSector.headline)}</h3></div>
+              </div>
+              <div className="grid gap-6 p-6 sm:p-8 md:grid-cols-2">
+                <div><p className="text-base leading-8 text-slate-600">{localized(activeSector.description)}</p><Link href={`/${locale}/industries`} className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#2b83b4]">{t('Explore sector pathway', '探索行业路径', 'Explorer le parcours sectoriel')[locale]} <ArrowRight className="h-4 w-4" /></Link></div>
+                <div className="grid gap-4">
+                  <div className="rounded-3xl bg-white p-5"><h4 className="text-sm font-bold text-ink">{t('Solution components', '方案组成', 'Composantes de solution')[locale]}</h4><ul className="mt-3 space-y-2">{activeSector.solutions.map((item) => <li key={item.en} className="flex gap-2 text-sm leading-6 text-slate-600"><CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-forest" />{localized(item)}</li>)}</ul></div>
+                  <div className="rounded-3xl bg-white p-5"><h4 className="text-sm font-bold text-ink">{t('Approval areas to confirm', '需确认的审批领域', 'Domaines à confirmer')[locale]}</h4><ul className="mt-3 space-y-2">{activeSector.approvals.map((item) => <li key={item.en} className="flex gap-2 text-sm leading-6 text-slate-600"><ShieldCheck className="mt-1 h-4 w-4 shrink-0 text-[#2b83b4]" />{localized(item)}</li>)}</ul></div>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="projects" className="bg-white py-20 lg:py-28">
+      <section className="bg-[#f3f1e9] py-20 lg:py-28">
         <div className="mx-auto max-w-8xl px-5 sm:px-8 lg:px-12">
-          <div className="max-w-3xl">
-            <p className="eyebrow">{localized(copy.projectsEyebrow)}</p>
-            <h2 className="section-title">{localized(copy.projectsTitle)}</h2>
-          </div>
-          <div className="mt-12 grid gap-5 lg:grid-cols-3">
-            {projectStatuses.map((item, index) => (
-              <article key={item.label.en} className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
-                <span className={`inline-flex rounded-full px-3 py-1.5 text-[0.66rem] font-black uppercase tracking-[0.13em] ${index === 0 ? 'bg-emerald-50 text-emerald-800' : index === 1 ? 'bg-blue-50 text-blue-800' : 'bg-slate-100 text-slate-700'}`}>{localized(item.label)}</span>
-                <p className="mt-6 text-sm leading-7 text-slate-600">{localized(item.body)}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="partners" className="bg-ink py-20 text-white lg:py-24">
-        <div className="mx-auto max-w-8xl px-5 sm:px-8 lg:px-12">
-          <div className="grid gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:items-center">
+          <div className="grid gap-10 lg:grid-cols-[0.38fr_0.62fr]">
             <div>
-              <p className="eyebrow text-[#a8c36b]">{localized(copy.partnersEyebrow)}</p>
-              <h2 className="section-title text-white">{localized(copy.partnersTitle)}</h2>
+              <p className="eyebrow">{localized(copy.processEyebrow)}</p>
+              <h2 className="section-title">{localized(copy.processTitle)}</h2>
+              <p className="section-copy">{t('Select a stage to see what happens and which evidence should exist before the project advances.', '选择阶段，了解推进前的工作与应有证明。', 'Sélectionnez une étape pour voir les actions et les preuves requises avant d’avancer.')[locale]}</p>
+              <div className="mt-8 grid grid-cols-3 gap-2 sm:grid-cols-6 lg:grid-cols-3">
+                {deliveryStages.map((stage, index) => <button key={stage.key} type="button" onClick={() => setStageIndex(index)} className={`rounded-2xl border px-3 py-3 text-xs font-black transition ${stageIndex === index ? 'border-ink bg-ink text-white' : 'border-ink/10 bg-white text-slate-500 hover:border-ink/30'}`}>{stage.key}</button>)}
+              </div>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {partners.map((partner) => {
-                const Icon = partner.icon
-                return (
-                  <div key={partner.label.en} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.055] p-4">
-                    <Icon className="h-5 w-5 shrink-0 text-[#a8c36b]" />
-                    <span className="text-sm font-semibold text-white/80">{localized(partner.label)}</span>
-                  </div>
-                )
-              })}
+
+            <div className="overflow-hidden rounded-[2.25rem] border border-ink/10 bg-white shadow-soft">
+              <div className="grid lg:grid-cols-[0.38fr_0.62fr]">
+                <div className="bg-ink p-7 text-white sm:p-9"><StageIcon className="h-9 w-9 text-[#8dc8e8]" /><span className="mt-8 block text-xs font-black tracking-[0.17em] text-white/35">STAGE {activeStage.key}</span><h3 className="mt-3 text-4xl font-bold tracking-tight">{localized(activeStage.title)}</h3></div>
+                <div className="p-7 sm:p-9"><p className="text-lg leading-8 text-slate-600">{localized(activeStage.body)}</p><div className="mt-7 rounded-3xl bg-slate-50 p-6"><p className="text-xs font-black uppercase tracking-[0.15em] text-slate-400">{t('Evidence before advancing', '推进前的证明', 'Preuves avant de progresser')[locale]}</p><p className="mt-3 font-bold leading-7 text-ink">{localized(activeStage.evidence)}</p></div><Link href={`/${locale}/assembly-centre`} className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-[#2b83b4]">{t('Open the full interactive delivery system', '打开完整互动交付体系', 'Ouvrir le système interactif complet')[locale]} <ArrowRight className="h-4 w-4" /></Link></div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="assessment" className="bg-cream py-20 lg:py-28">
-        <div className="mx-auto grid max-w-8xl gap-12 px-5 sm:px-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-start lg:px-12">
-          <div className="lg:sticky lg:top-32">
-            <p className="eyebrow">{localized(copy.assessmentEyebrow)}</p>
-            <h2 className="section-title">{localized(copy.assessmentTitle)}</h2>
-            <p className="section-copy">{localized(copy.assessmentBody)}</p>
-            <div className="mt-8 space-y-3">
-              {[t('A qualified first conversation', '高质量的首次沟通', 'Une première conversation qualifiée'), t('A preliminary project pathway', '初步项目路径', 'Un parcours préliminaire'), t('Clear next actions and responsibilities', '清晰的下一步与责任', 'Des prochaines étapes et responsabilités claires')].map((item) => (
-                <div key={item.en} className="flex items-center gap-3 text-sm font-semibold text-slate-700"><CheckCircle2 className="h-5 w-5 text-forest" />{localized(item)}</div>
-              ))}
-            </div>
-          </div>
+      <section className="bg-ink py-20 text-white lg:py-28">
+        <div className="mx-auto max-w-8xl px-5 sm:px-8 lg:px-12">
+          <div className="grid gap-8 lg:grid-cols-[0.42fr_0.58fr] lg:items-end"><div><p className="eyebrow text-[#8dc8e8]">{localized(copy.complianceEyebrow)}</p><h2 className="section-title text-white">{localized(copy.complianceTitle)}</h2></div><p className="max-w-3xl text-base leading-8 text-white/62">{t('NEXUS coordinates project-specific requirements through qualified professionals, certification organizations, licensed trades, municipalities and responsible authorities. Final requirements depend on jurisdiction, intended use, product configuration and site conditions.', 'NEXUS 通过合格专业人士、认证机构、持牌工种、市政部门及主管机构协调项目专项要求。最终要求取决于辖区、用途、产品配置及场地条件。', 'NEXUS coordonne les exigences propres au projet avec les professionnels, organismes de certification, métiers autorisés, municipalités et autorités responsables.')[locale]}</p></div>
+          <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3">{complianceCategories.map((item, index) => { const Icon = item.icon; return <div key={item.title.en} className="rounded-3xl border border-white/10 bg-white/[0.055] p-6"><div className="flex items-center justify-between"><Icon className="h-7 w-7 text-[#8dc8e8]" /><span className="text-xs font-black text-white/25">0{index + 1}</span></div><h3 className="mt-7 text-xl font-bold">{localized(item.title)}</h3><p className="mt-3 text-sm leading-7 text-white/58">{localized(item.body)}</p></div>})}</div>
+          <div className="mt-8 rounded-3xl border border-amber-300/20 bg-amber-300/10 p-6 text-sm leading-7 text-amber-50"><strong>{t('Important:', '重要说明：', 'Important :')[locale]}</strong> {t('NEXUS manages and documents the pathway. Licences, permits, professional seals, certifications and inspection records are issued by the responsible qualified party or authority—not automatically by NEXUS.', 'NEXUS 管理并记录流程。执照、许可、专业盖章、认证及检查记录由相应合格方或主管机构签发，并非由 NEXUS 自动签发。', 'NEXUS gère et documente le parcours. Les licences, permis, sceaux, certifications et inspections sont délivrés par les parties ou autorités responsables.')[locale]}</div>
+        </div>
+      </section>
+
+      <section className="bg-white py-20 lg:py-28">
+        <div className="mx-auto max-w-8xl px-5 sm:px-8 lg:px-12">
+          <div className="max-w-4xl"><p className="eyebrow">{localized(copy.proofEyebrow)}</p><h2 className="section-title">{localized(copy.proofTitle)}</h2></div>
+          <div className="mt-12 grid gap-5 md:grid-cols-3">{projectStatuses.map((status, index) => <div key={status.title.en} className="rounded-[2rem] border border-slate-200 bg-slate-50 p-7"><span className={`inline-flex rounded-full px-3 py-1.5 text-xs font-black ${index === 0 ? 'bg-emerald-100 text-emerald-800' : index === 1 ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800'}`}>0{index + 1}</span><h3 className="mt-6 text-2xl font-bold tracking-tight text-ink">{localized(status.title)}</h3><p className="mt-4 text-sm leading-7 text-slate-600">{localized(status.body)}</p></div>)}</div>
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">{[
+            [Factory, t('Global manufacturers', '全球制造商', 'Fabricants mondiaux')],
+            [FileCheck2, t('Canadian engineers', '加拿大工程师', 'Ingénieurs canadiens')],
+            [BadgeCheck, t('Testing organizations', '检测机构', 'Organismes d’essai')],
+            [Truck, t('Logistics partners', '物流伙伴', 'Partenaires logistiques')],
+            [Wrench, t('Licensed trades', '持牌工种', 'Métiers autorisés')],
+            [Code2, t('Technology partners', '技术伙伴', 'Partenaires technologiques')],
+          ].map(([Icon, label]) => { const PartnerIcon = Icon as IconType; const partnerLabel = label as Localized; return <div key={partnerLabel.en} className="rounded-2xl border border-slate-200 bg-white p-4 text-center"><PartnerIcon className="mx-auto h-5 w-5 text-[#2b83b4]" /><p className="mt-3 text-xs font-bold text-slate-600">{localized(partnerLabel)}</p></div> })}</div>
+        </div>
+      </section>
+
+      <section className="border-t border-slate-200 bg-[#f4f6f7] py-20 lg:py-28">
+        <div className="mx-auto grid max-w-8xl gap-10 px-5 sm:px-8 lg:grid-cols-[0.42fr_0.58fr] lg:px-12">
+          <div><p className="eyebrow">{localized(copy.assessmentEyebrow)}</p><h2 className="section-title">{localized(copy.assessmentTitle)}</h2><p className="section-copy">{t('The guided intake captures sector, jurisdiction, site, capacity, budget, timeline and the preferred commercial model so the first conversation is useful.', '引导式表单收集行业、辖区、场地、容量、预算、时间及合作模式，使首次沟通更有效。', 'Le formulaire recueille secteur, juridiction, site, capacité, budget, échéancier et modèle commercial pour rendre la première conversation utile.')[locale]}</p><div className="mt-8 space-y-3">{[t('A qualified first conversation', '高质量首次沟通', 'Une première conversation qualifiée'), t('A preliminary project and compliance pathway', '初步项目与合规路径', 'Un parcours préliminaire de projet et conformité'), t('Clear next actions and responsibilities', '明确下一步与责任', 'Des prochaines étapes et responsabilités claires')].map((item) => <div key={item.en} className="flex items-center gap-3 rounded-2xl bg-white p-4 text-sm font-bold text-ink shadow-sm"><CheckCircle2 className="h-5 w-5 text-forest" />{localized(item)}</div>)}</div></div>
           <InquiryForm locale={locale} />
         </div>
       </section>
