@@ -156,7 +156,7 @@ export function HomePage({ locale }: { locale: Locale }) {
             </div>
           </div>
 
-          <div className="grid gap-3 border-t border-white/18 pt-6 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="grid gap-3 pt-6 sm:grid-cols-2 lg:grid-cols-5">
             {values.map((item) => {
               const Icon = item.icon
               return (

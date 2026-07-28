@@ -15,8 +15,8 @@ export function BrandMark({ href = '/en' }: { href?: string }) {
         height={415}
         priority
         unoptimized
-        sizes="(max-width: 640px) 220px, (max-width: 1280px) 270px, 300px"
-        className="h-10 w-auto max-w-[220px] object-contain sm:h-11 sm:max-w-[270px] xl:h-12 xl:max-w-[300px]"
+        sizes="(max-width: 640px) 180px, (max-width: 1280px) 205px, 220px"
+        className="h-8 w-auto max-w-[180px] object-contain sm:h-9 sm:max-w-[205px] xl:h-10 xl:max-w-[220px]"
       />
     </Link>
   )
