@@ -17,7 +17,7 @@ html {
 body {
   margin: 0;
   background: #ffffff;
-  color: #071b2b;
+  color: #0b2528;
   font-family: "Avenir Next", Avenir, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
   letter-spacing: -0.008em;
@@ -50,7 +50,7 @@ h6 {
 }
 
 ::selection {
-  background: #708a3d;
+  background: #57734f;
   color: white;
 }
 

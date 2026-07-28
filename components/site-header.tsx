@@ -1,38 +1,27 @@
 import Link from 'next/link'
-import { ArrowUpRight, MapPin, Menu } from 'lucide-react'
+import { ArrowUpRight, Menu } from 'lucide-react'
 
 import { BrandMark } from '@/components/brand-mark'
 import { LocaleSwitcher } from '@/components/locale-switcher'
 import type { Locale } from '@/lib/i18n'
 
 type Localized = Record<Locale, string>
-
 const t = (en: string, zh: string, fr: string): Localized => ({ en, zh, fr })
 
 const navigation = [
-  { slug: 'products', label: t('Solutions', '解决方案', 'Solutions') },
-  { slug: 'industries', label: t('Industries', '行业', 'Secteurs') },
-  {
-    slug: 'assembly-centre',
-    label: t('Delivery & Compliance', '交付与合规', 'Livraison et conformité'),
-  },
+  { slug: 'products', label: t('Living Spaces', '生活空间', 'Espaces de vie') },
+  { slug: 'industries', label: t('Solutions', '解决方案', 'Solutions') },
   { slug: 'projects', label: t('Projects', '项目', 'Projets') },
-  { slug: 'suppliers', label: t('Partners', '合作伙伴', 'Partenaires') },
-  { slug: 'about', label: t('About', '关于我们', 'À propos') },
+  { slug: 'news', label: t('Innovation', '创新', 'Innovation') },
+  { slug: 'about', label: t('Sustainability', '可持续发展', 'Durabilité') },
+  { slug: 'about', label: t('About Us', '关于我们', 'À propos') },
+  { slug: 'news', label: t('News', '新闻', 'Actualités') },
+  { slug: 'contact', label: t('Contact', '联系', 'Contact') },
 ]
 
 const copy = {
-  utility: t(
-    'Global capability. Coordinated for Canadian delivery.',
-    '全球能力，加拿大本地化协调与交付。',
-    'Capacité mondiale. Coordination pour une livraison au Canada.',
-  ),
-  location: t(
-    'Canada · China · Global Network',
-    '加拿大 · 中国 · 全球网络',
-    'Canada · Chine · Réseau mondial',
-  ),
-  cta: t('Start a Project', '启动项目', 'Démarrer un projet'),
+  tagline: t('Building Spaces. Creating Life.', '构筑空间，创造生活。', 'Bâtir des espaces. Créer la vie.'),
+  cta: t('Get in Touch', '联系我们', 'Nous contacter'),
   menu: t('Menu', '菜单', 'Menu'),
 }
 
@@ -40,69 +29,36 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   const localized = (value: Localized) => value[locale]
 
   return (
-    <>
-      <div className="bg-ink text-white">
-        <div className="mx-auto flex max-w-8xl items-center justify-between px-5 py-2 text-[0.7rem] tracking-wide sm:px-8 lg:px-12">
-          <span>{localized(copy.utility)}</span>
-          <span className="hidden items-center gap-2 text-white/65 md:flex">
-            <MapPin className="h-3.5 w-3.5" /> {localized(copy.location)}
-          </span>
+    <header className="absolute inset-x-0 top-0 z-50 border-b border-white/12 bg-[linear-gradient(180deg,rgba(3,17,21,.72),rgba(3,17,21,.18))] text-white">
+      <div className="mx-auto flex min-h-[88px] max-w-[1760px] items-center justify-between gap-4 px-5 py-3 sm:px-8 lg:px-12">
+        <div className="flex shrink-0 items-center gap-4">
+          <div className="rounded-lg bg-white/95 px-2 py-1 shadow-sm"><BrandMark href={`/${locale}`} /></div>
+          <span className="hidden max-w-28 border-l border-white/25 pl-4 text-[0.62rem] font-medium leading-4 text-white/76 lg:block">{localized(copy.tagline)}</span>
+        </div>
+
+        <nav className="hidden items-center gap-5 2xl:flex" aria-label="Primary navigation">
+          {navigation.map((item, index) => (
+            <Link key={`${item.slug}-${index}`} href={`/${locale}/${item.slug}`} className="text-[0.72rem] font-medium text-white/78 transition hover:text-white">
+              {localized(item.label)}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <div className="hidden rounded-full bg-white/95 text-[#0b2528] sm:block"><LocaleSwitcher locale={locale} /></div>
+          <Link href={`/${locale}/contact`} className="hidden items-center gap-2 rounded-full border border-white/45 bg-white/8 px-5 py-2.5 text-xs font-semibold text-white backdrop-blur transition hover:bg-white hover:text-[#0b2528] sm:inline-flex">
+            {localized(copy.cta)} <ArrowUpRight className="h-3.5 w-3.5" />
+          </Link>
+          <details className="relative 2xl:hidden">
+            <summary className="flex cursor-pointer list-none items-center gap-2 rounded-full border border-white/35 bg-black/15 px-4 py-2.5 text-xs font-semibold"><Menu className="h-4 w-4" /> {localized(copy.menu)}</summary>
+            <div className="absolute right-0 top-14 w-80 rounded-2xl border border-white/15 bg-[#0b2528] p-3 shadow-lift">
+              <div className="mb-2 rounded-xl bg-white text-[#0b2528] sm:hidden"><LocaleSwitcher locale={locale} /></div>
+              {navigation.map((item, index) => <Link key={`${item.slug}-${index}`} href={`/${locale}/${item.slug}`} className="block rounded-xl px-4 py-3 text-sm font-medium text-white/72 hover:bg-white/8 hover:text-white">{localized(item.label)}</Link>)}
+              <Link href={`/${locale}/contact`} className="mt-2 flex items-center justify-between rounded-xl bg-white px-4 py-3 text-sm font-bold text-[#0b2528]">{localized(copy.cta)} <ArrowUpRight className="h-4 w-4" /></Link>
+            </div>
+          </details>
         </div>
       </div>
-
-      <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur-xl">
-        <div className="mx-auto flex min-h-[76px] max-w-8xl items-center justify-between gap-5 px-5 py-3 sm:px-8 lg:px-12">
-          <div className="shrink-0 origin-left scale-[0.92] lg:scale-100">
-            <BrandMark href={`/${locale}`} />
-          </div>
-
-          <nav className="hidden items-center gap-5 xl:flex" aria-label="Primary navigation">
-            {navigation.map((item) => (
-              <Link
-                key={item.slug}
-                href={`/${locale}/${item.slug}`}
-                className="group relative py-2 text-[0.8rem] font-semibold text-slate-700 transition hover:text-ink"
-              >
-                <span>{localized(item.label)}</span>
-                <span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-ink transition-transform duration-300 group-hover:scale-x-100" />
-              </Link>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-2">
-            <LocaleSwitcher locale={locale} />
-            <Link
-              href={`/${locale}/contact`}
-              className="hidden items-center gap-2 rounded-full bg-ink px-5 py-3 text-xs font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#173b58] sm:inline-flex"
-            >
-              {localized(copy.cta)} <ArrowUpRight className="h-4 w-4" />
-            </Link>
-
-            <details className="relative xl:hidden">
-              <summary className="flex cursor-pointer list-none items-center gap-2 rounded-full border border-slate-200 px-4 py-2.5 text-xs font-bold">
-                <Menu className="h-4 w-4" /> {localized(copy.menu)}
-              </summary>
-              <div className="absolute right-0 top-14 w-80 rounded-3xl border border-slate-200 bg-white p-3 shadow-lift">
-                {navigation.map((item) => (
-                  <Link
-                    key={item.slug}
-                    href={`/${locale}/${item.slug}`}
-                    className="block rounded-2xl px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:text-ink"
-                  >
-                    {localized(item.label)}
-                  </Link>
-                ))}
-                <Link
-                  href={`/${locale}/contact`}
-                  className="mt-2 flex items-center justify-between rounded-2xl bg-ink px-4 py-3 text-sm font-bold text-white"
-                >
-                  {localized(copy.cta)} <ArrowUpRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </details>
-          </div>
-        </div>
-      </header>
-    </>
+    </header>
   )
 }

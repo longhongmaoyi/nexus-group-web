@@ -308,7 +308,7 @@ export function SectionPage({ locale, section }: { locale: Locale; section: Sect
     <main>
       <section className="relative overflow-hidden bg-ink text-white">
         <div className="absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(circle_at_70%_35%,rgba(45,130,176,.28),transparent_60%)]" />
-        <div className="relative mx-auto grid max-w-8xl gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[1fr_0.42fr] lg:items-end lg:px-12 lg:py-24">
+        <div className="relative mx-auto grid max-w-8xl gap-10 px-5 pb-16 pt-36 sm:px-8 lg:grid-cols-[1fr_0.42fr] lg:items-end lg:px-12 lg:pb-24 lg:pt-40">
           <div>
             <p className="eyebrow text-[#8dc8e8]">{localized(page.eyebrow, locale)}</p>
             <h1 className="mt-5 max-w-5xl text-5xl font-semibold leading-[1.02] tracking-[-0.05em] sm:text-6xl lg:text-7xl">
