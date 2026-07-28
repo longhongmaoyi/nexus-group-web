@@ -16,8 +16,8 @@ html {
 
 body {
   margin: 0;
-  background: #ffffff;
-  color: #071b2b;
+  background: #fbfaf6;
+  color: #1d352e;
   font-family: "Avenir Next", Avenir, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
   letter-spacing: -0.008em;
@@ -25,6 +25,29 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-synthesis: none;
+}
+
+.community-display {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 500;
+  letter-spacing: -0.052em;
+}
+
+.community-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2.35rem, 4.6vw, 4.3rem);
+  font-weight: 500;
+  letter-spacing: -0.047em;
+  line-height: 1.02;
+  color: #1d352e;
+}
+
+.community-eyebrow {
+  color: #66895e;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
 }
 
 h1,
