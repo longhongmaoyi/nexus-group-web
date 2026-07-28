@@ -25,7 +25,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
     <footer className="border-t border-white/10 bg-[#06191d] text-white">
       <div className="mx-auto grid max-w-[1760px] gap-9 px-5 py-10 sm:px-8 lg:grid-cols-[1.2fr_1fr_0.8fr] lg:px-12">
         <div>
-          <div className="inline-flex rounded-lg bg-white px-2 py-1"><BrandMark href={`/${locale}`} /></div>
+          <BrandMark href={`/${locale}`} adaptive />
           <p className="mt-4 max-w-lg text-sm leading-6 text-white/58">{localized(copy.body)}</p>
         </div>
         <div className="grid gap-7 sm:grid-cols-2">

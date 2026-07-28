@@ -77,7 +77,7 @@ const categories: Array<{ icon: IconType; title: Localized; body: Localized; ima
   { icon: Building2, title: t('Business', '商业', 'Affaires'), body: t('Commercial spaces that grow with you', '与业务共同成长的商业空间', 'Des espaces commerciaux évolutifs'), image: '/images/commercial.jpg', href: 'products' },
   { icon: Wrench, title: t('Work', '工作', 'Travail'), body: t('Workspaces that support people', '支持团队的工作空间', 'Des espaces qui soutiennent les équipes'), image: '/images/industrial.jpg', href: 'industries' },
   { icon: Heart, title: t('Wellness', '康养', 'Bien-être'), body: t('Spaces for health and care', '健康与关怀空间', 'Des espaces de santé et de soins'), image: '/images/project-cabin.jpg', href: 'products' },
-  { icon: Users, title: t('Community', '社区', 'Collectivité'), body: t('Places for connection and belonging', '连接与归属的场所', 'Des lieux de lien et d’appartenance'), image: '/images/nexus-community-evening-v1.png', href: 'industries' },
+  { icon: Users, title: t('Community', '社区', 'Collectivité'), body: t('Places for connection and belonging', '连接与归属的场所', 'Des lieux de lien et d’appartenance'), image: '/images/nexus-community-evening-v1.jpg', href: 'industries' },
 ]
 
 const metrics = [
@@ -160,7 +160,7 @@ export function HomePage({ locale }: { locale: Locale }) {
             {values.map((item) => {
               const Icon = item.icon
               return (
-                <div key={item.title.en} className="flex items-center gap-3 rounded-2xl bg-black/10 px-3 py-2 backdrop-blur-sm">
+                <div key={item.title.en} className="flex items-center gap-3 px-3 py-2">
                   <Icon className="h-6 w-6 shrink-0 text-[#b8d683]" />
                   <div><p className="text-sm font-semibold">{localized(item.title)}</p><p className="mt-0.5 text-[0.7rem] text-white/58">{localized(item.body)}</p></div>
                 </div>
@@ -231,7 +231,7 @@ export function HomePage({ locale }: { locale: Locale }) {
             <h2 className="text-sm font-bold text-[#0b2528]">{localized(copy.featured)}</h2>
             <div className="mt-5 grid gap-5 sm:grid-cols-[1.15fr_0.85fr] sm:items-center">
               <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
-                <Image src="/images/project-lake.jpg" alt={t('Lakeview Retreat design concept', '湖景度假区设计概念', 'Concept du refuge Lakeview')[locale]} fill quality={90} className="object-cover" sizes="(max-width: 1024px) 100vw, 22vw" />
+                <Image src="/images/project-lake-hd-v1.jpg" alt={t('Lakeview Retreat design concept', '湖景度假区设计概念', 'Concept du refuge Lakeview')[locale]} fill quality={92} className="object-cover" sizes="(max-width: 1024px) 100vw, 22vw" />
               </div>
               <div>
                 <p className="text-base font-semibold text-[#0b2528]">Lakeview Retreat</p>

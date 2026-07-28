@@ -31,7 +31,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
     <header className="absolute inset-x-0 top-0 z-50 bg-[linear-gradient(180deg,rgba(3,17,21,.76),rgba(3,17,21,.22))] text-white">
       <div className="mx-auto flex min-h-[76px] max-w-[1760px] items-center justify-between gap-3 px-5 py-2.5 sm:px-8 lg:px-12">
         <div className="flex shrink-0 items-center gap-4">
-          <div className="rounded-lg bg-white/95 px-2 py-1 shadow-sm"><BrandMark href={`/${locale}`} /></div>
+          <BrandMark href={`/${locale}`} adaptive />
           <span className="hidden max-w-24 border-l border-white/25 pl-4 text-[0.58rem] font-medium leading-4 text-white/76 2xl:block">{localized(copy.tagline)}</span>
         </div>
 
