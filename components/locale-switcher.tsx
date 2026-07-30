@@ -19,7 +19,7 @@ export function LocaleSwitcher({ locale, dark = false }: { locale: Locale; dark?
   }
 
   return (
-    <label className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold ${dark ? 'border-white/25 text-white' : 'border-slate-200 text-slate-700'}`}>
+    <label className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm font-semibold ${dark ? 'border-white/25 text-white' : 'border-slate-200 text-slate-700'}`}>
       <Languages className="h-4 w-4" aria-hidden="true" />
       <span className="sr-only">Language</span>
       <select

@@ -204,7 +204,7 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
               return (
                 <div key={item.title.en} className="flex items-center gap-3 px-3 py-2">
                   <Icon className="h-6 w-6 shrink-0 text-[#b8d683]" />
-                  <div><p className="text-sm font-semibold">{localized(item.title)}</p><p className="mt-0.5 text-[0.7rem] text-white/58">{localized(item.body)}</p></div>
+                  <div><p className="text-base font-semibold">{localized(item.title)}</p><p className="mt-0.5 text-[0.8rem] leading-5 text-white/64">{localized(item.body)}</p></div>
                 </div>
               )
             })}
@@ -215,8 +215,8 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
       <section className="relative z-10 bg-white pb-8 pt-5">
         <div className="mx-auto max-w-[1760px] px-5 sm:px-8 lg:px-12">
           <div className="mb-4 flex items-end justify-between gap-4">
-            <h2 className="text-sm font-bold text-[#0b2528]">{localized(pageCopy.categories)}</h2>
-            <Link href={`/${locale}/products`} className="text-xs font-semibold text-[#5e735b] hover:text-[#0b2528]">{t('View all solutions', '查看全部方案', 'Voir toutes les solutions')[locale]} →</Link>
+            <h2 className="text-base font-bold text-[#0b2528]">{localized(pageCopy.categories)}</h2>
+            <Link href={`/${locale}/products`} className="text-sm font-semibold text-[#5e735b] hover:text-[#0b2528]">{t('View all solutions', '查看全部方案', 'Voir toutes les solutions')[locale]} →</Link>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
             {categoryCards.map((item) => {
@@ -229,7 +229,7 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
                     <Icon className="h-5 w-5 text-[#d2e5ad]" />
                     <div className="mt-auto">
                       <p className="text-base font-semibold">{localized(item.title)}</p>
-                      <p className="mt-1 text-xs leading-5 text-white/68">{localized(item.body)}</p>
+                      <p className="mt-1 text-sm leading-5 text-white/72">{localized(item.body)}</p>
                     </div>
                     <span className="absolute bottom-4 right-4 grid h-8 w-8 place-items-center rounded-full bg-white text-[#0b2528] transition group-hover:translate-x-1"><ArrowRight className="h-4 w-4" /></span>
                   </div>
@@ -243,25 +243,25 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
       <section className="border-y border-slate-200 bg-[#fbfcfa] py-10">
         <div className="mx-auto grid max-w-[1760px] gap-10 px-5 sm:px-8 lg:grid-cols-[0.9fr_1.2fr_1.25fr] lg:px-12">
           <div>
-            <h2 className="text-sm font-bold text-[#0b2528]">{localized(pageCopy.numbers)}</h2>
+            <h2 className="text-base font-bold text-[#0b2528]">{localized(pageCopy.numbers)}</h2>
             <div className="mt-6 grid grid-cols-3 gap-x-4 gap-y-7">
-              {metricCards.map((item) => <div key={item.label.en}><p className="text-2xl font-semibold tracking-tight text-[#0b2528]">{item.value}</p><p className="mt-1 text-[0.68rem] leading-4 text-slate-500">{localized(item.label)}</p></div>)}
+              {metricCards.map((item) => <div key={item.label.en}><p className="text-2xl font-semibold tracking-tight text-[#0b2528]">{item.value}</p><p className="mt-1 text-[0.8rem] leading-5 text-slate-500">{localized(item.label)}</p></div>)}
             </div>
-            <Link href={`/${locale}/about`} className="mt-7 inline-flex items-center gap-2 rounded-full border border-[#b8c5b4] px-4 py-2 text-xs font-semibold text-[#29473c] hover:bg-[#edf2e8]">
+            <Link href={`/${locale}/about`} className="mt-7 inline-flex items-center gap-2 rounded-full border border-[#b8c5b4] px-4 py-2 text-sm font-semibold text-[#29473c] hover:bg-[#edf2e8]">
               {t('Discover More', '了解更多', 'En découvrir davantage')[locale]} <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
 
           <div className="border-y border-slate-200 py-8 lg:border-x lg:border-y-0 lg:px-8 lg:py-0">
-            <h2 className="text-sm font-bold text-[#0b2528]">{localized(pageCopy.ecosystem)}</h2>
-            <p className="mt-2 max-w-md text-xs leading-5 text-slate-500">{localized(pageCopy.ecosystemBody)}</p>
+            <h2 className="text-base font-bold text-[#0b2528]">{localized(pageCopy.ecosystem)}</h2>
+            <p className="mt-2 max-w-md text-sm leading-6 text-slate-500">{localized(pageCopy.ecosystemBody)}</p>
             <div className="mt-8 flex items-start justify-between gap-1">
               {ecosystemCards.map((item, index) => {
                 const Icon = item.icon
                 return (
                   <div key={item.title.en} className="relative flex flex-1 flex-col items-center text-center">
                     <span className="grid h-10 w-10 place-items-center rounded-full border border-[#cbd5c6] bg-white text-[#506b52]"><Icon className="h-4 w-4" /></span>
-                    <p className="mt-2 text-[0.62rem] font-semibold leading-4 text-[#42574c]">{localized(item.title)}</p>
+                    <p className="mt-2 text-[0.75rem] font-semibold leading-4 text-[#42574c]">{localized(item.title)}</p>
                     {index < ecosystemCards.length - 1 && <span className="absolute left-[64%] top-5 h-px w-[72%] bg-[#cbd5c6]" />}
                   </div>
                 )
@@ -270,17 +270,17 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
           </div>
 
           <div>
-            <h2 className="text-sm font-bold text-[#0b2528]">{localized(pageCopy.featured)}</h2>
+            <h2 className="text-base font-bold text-[#0b2528]">{localized(pageCopy.featured)}</h2>
             <div className="mt-5 grid gap-5 sm:grid-cols-[1.15fr_0.85fr] sm:items-center">
               <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
                 <Image src={featuredContent?.image || '/images/project-lake-hd-v1.jpg'} alt={localized(featuredContent?.title || t('Lakeview Retreat design concept', '湖景度假区设计概念', 'Concept du refuge Lakeview'))} fill quality={92} className="object-cover" sizes="(max-width: 1024px) 100vw, 22vw" />
               </div>
               <div>
                 <p className="text-base font-semibold text-[#0b2528]">{localized(featuredContent?.title || t('Lakeview Retreat', '湖景度假区', 'Refuge Lakeview'))}</p>
-                <p className="mt-1 text-xs font-medium text-[#5f745d]">{t('Modular community · Design concept', '模块化社区 · 设计概念', 'Collectivité modulaire · Concept')[locale]}</p>
-                <p className="mt-3 flex items-center gap-1.5 text-[0.7rem] text-slate-500"><MapPin className="h-3 w-3" /> {t('Canada · Proposed', '加拿大 · 拟建', 'Canada · Projet proposé')[locale]}</p>
-                <p className="mt-3 text-xs leading-5 text-slate-500">{localized(featuredContent?.body || t('A nature-connected modular retreat designed around comfort, belonging and the landscape.', '围绕舒适、归属与自然景观打造的模块化度假社区。', 'Une retraite modulaire liée à la nature, pensée autour du confort et de l’appartenance.'))}</p>
-                <Link href={localHref(featuredContent?.ctaHref || `/${locale}/projects`)} className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#b8c5b4] px-4 py-2 text-xs font-semibold text-[#29473c] hover:bg-[#edf2e8]">{localized(featuredContent?.ctaLabel || t('View Concept', '查看概念', 'Voir le concept'))} <ArrowRight className="h-3.5 w-3.5" /></Link>
+                <p className="mt-1 text-sm font-medium text-[#5f745d]">{t('Modular community · Design concept', '模块化社区 · 设计概念', 'Collectivité modulaire · Concept')[locale]}</p>
+                <p className="mt-3 flex items-center gap-1.5 text-[0.8rem] text-slate-500"><MapPin className="h-3.5 w-3.5" /> {t('Canada · Proposed', '加拿大 · 拟建', 'Canada · Projet proposé')[locale]}</p>
+                <p className="mt-3 text-sm leading-6 text-slate-500">{localized(featuredContent?.body || t('A nature-connected modular retreat designed around comfort, belonging and the landscape.', '围绕舒适、归属与自然景观打造的模块化度假社区。', 'Une retraite modulaire liée à la nature, pensée autour du confort et de l’appartenance.'))}</p>
+                <Link href={localHref(featuredContent?.ctaHref || `/${locale}/projects`)} className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#b8c5b4] px-4 py-2 text-sm font-semibold text-[#29473c] hover:bg-[#edf2e8]">{localized(featuredContent?.ctaLabel || t('View Concept', '查看概念', 'Voir le concept'))} <ArrowRight className="h-3.5 w-3.5" /></Link>
               </div>
             </div>
           </div>
@@ -293,13 +293,13 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
         <div className="relative mx-auto grid min-h-[260px] max-w-[1760px] gap-8 px-5 py-10 sm:px-8 lg:grid-cols-[0.32fr_0.68fr] lg:items-center lg:px-12">
           <div>
             <h2 className="text-3xl font-semibold leading-tight">{localized(pageCopy.closingTitle)}</h2>
-            <p className="mt-3 text-sm text-white/65">{localized(pageCopy.closingBody)}</p>
-            <Link href={localHref(closingContent?.ctaHref || `/${locale}/contact`)} className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/35 px-5 py-2.5 text-xs font-semibold hover:bg-white hover:text-[#0b2528]">{localized(pageCopy.partner)} <ArrowRight className="h-3.5 w-3.5" /></Link>
+            <p className="mt-3 text-base text-white/70">{localized(pageCopy.closingBody)}</p>
+            <Link href={localHref(closingContent?.ctaHref || `/${locale}/contact`)} className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/35 px-5 py-2.5 text-sm font-semibold hover:bg-white hover:text-[#0b2528]">{localized(pageCopy.partner)} <ArrowRight className="h-3.5 w-3.5" /></Link>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {closingCards.map((item, index) => {
               const Icon = [Globe2, Users, Leaf, Boxes, Heart][index]
-              return <div key={item.en} className="border-l border-white/18 pl-4"><Icon className="h-5 w-5 text-[#c7df95]" /><p className="mt-4 text-xs font-semibold leading-5 text-white/82">{localized(item)}</p></div>
+              return <div key={item.en} className="border-l border-white/18 pl-4"><Icon className="h-5 w-5 text-[#c7df95]" /><p className="mt-4 text-sm font-semibold leading-6 text-white/84">{localized(item)}</p></div>
             })}
           </div>
         </div>
