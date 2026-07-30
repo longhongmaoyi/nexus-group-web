@@ -5,6 +5,21 @@ const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'mail.nexuslife.ca',
+          },
+        ],
+        destination: 'https://mail.hostinger.com',
+        permanent: false,
+      },
+    ]
+  },
   async headers() {
     return [
       {
