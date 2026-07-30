@@ -9,6 +9,31 @@ declare module '@/lib/cms-media-core.mjs' {
     altZh: string
     altFr: string
   }
+  export type MediaUploadTokenPayload = ValidatedMediaUpload & {
+    uploadedById: string
+  }
+  export type BlobUploadDetails = {
+    contentType?: string | null
+    size: number
+  }
+  export type BlobUploadResult = {
+    downloadUrl: string
+    pathname: string
+    etag: string
+  }
+  export type MediaAssetPersistenceData = {
+    downloadUrl: string
+    pathname: string
+    originalName: string
+    contentType: string
+    sizeBytes: number
+    altEn: string
+    altZh: string
+    altFr: string
+    storageProvider: 'VERCEL_BLOB'
+    etag: string
+    createdById: string | null
+  }
   export type ExtractedMediaReference = {
     assetId: string
     sectionKey: string
@@ -16,5 +41,12 @@ declare module '@/lib/cms-media-core.mjs' {
   }
   export function sanitizeMediaFilename(value: unknown, contentType?: string): string
   export function validateMediaUploadInput(value: unknown): ValidatedMediaUpload
+  export function serializeMediaUploadTokenPayload(input: ValidatedMediaUpload, uploadedById?: string): string
+  export function parseMediaUploadTokenPayload(value: unknown): MediaUploadTokenPayload
+  export function buildMediaAssetPersistenceData(input: {
+    input: MediaUploadTokenPayload
+    blob: BlobUploadResult
+    details: BlobUploadDetails
+  }): MediaAssetPersistenceData
   export function extractMediaReferences(sections: unknown): ExtractedMediaReference[]
 }

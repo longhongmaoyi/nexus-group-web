@@ -5,7 +5,10 @@ import { getAdminSession, isSameOrigin } from '@/lib/admin-auth'
 import { enforceRateLimit, requestFingerprint, writeAuditLog } from '@/lib/admin-security'
 import {
   ALLOWED_IMAGE_TYPES,
+  buildMediaAssetPersistenceData,
   MAX_IMAGE_SIZE_BYTES,
+  parseMediaUploadTokenPayload,
+  serializeMediaUploadTokenPayload,
   validateMediaUploadInput,
 } from '@/lib/cms-media-core.mjs'
 import { getPrisma } from '@/lib/prisma'
@@ -33,41 +36,30 @@ export async function POST(request: Request) {
           addRandomSuffix: true,
           allowOverwrite: false,
           cacheControlMaxAge: 31_536_000,
-          tokenPayload: JSON.stringify({ ...input, uploadedById: session.sub }),
+          tokenPayload: serializeMediaUploadTokenPayload(input, session.sub),
         }
       },
       onUploadCompleted: async ({ blob, tokenPayload }) => {
-        const payload = JSON.parse(tokenPayload || '{}') as Record<string, unknown>
-        const input = validateMediaUploadInput(payload)
-        const uploadedById = String(payload.uploadedById || '')
+        const input = parseMediaUploadTokenPayload(tokenPayload)
         const details = await head(blob.url)
         const prisma = await getPrisma()
+        const persistenceData = buildMediaAssetPersistenceData({ input, blob, details })
         const asset = await prisma.mediaAsset.upsert({
           where: { url: blob.url },
           create: {
             url: blob.url,
-            downloadUrl: blob.downloadUrl,
-            pathname: blob.pathname,
-            originalName: input.originalName,
-            contentType: details.contentType || input.contentType,
-            sizeBytes: details.size,
-            altEn: input.altEn,
-            altZh: input.altZh,
-            altFr: input.altFr,
-            storageProvider: 'VERCEL_BLOB',
-            etag: blob.etag,
-            createdById: uploadedById || null,
+            ...persistenceData,
           },
           update: {
-            downloadUrl: blob.downloadUrl,
-            pathname: blob.pathname,
-            contentType: details.contentType || input.contentType,
-            sizeBytes: details.size,
-            etag: blob.etag,
+            downloadUrl: persistenceData.downloadUrl,
+            pathname: persistenceData.pathname,
+            contentType: persistenceData.contentType,
+            sizeBytes: persistenceData.sizeBytes,
+            etag: persistenceData.etag,
           },
         })
         await writeAuditLog({
-          actorAdminId: uploadedById || null,
+          actorAdminId: input.uploadedById || null,
           action: 'MEDIA_UPLOADED',
           entityType: 'MediaAsset',
           entityId: asset.id,
