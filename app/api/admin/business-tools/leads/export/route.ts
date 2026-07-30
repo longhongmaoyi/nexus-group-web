@@ -5,7 +5,7 @@ import { getPrisma } from '@/lib/prisma'
 import { isPhase3AdminEnabled, NEXUS_ORGANIZATION_KEY, safeCsvCell } from '@/lib/phase3-core.mjs'
 
 export async function GET() {
-  const session = getAdminSession()
+  const session = await getAdminSession()
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   if (!isPhase3AdminEnabled()) return NextResponse.json({ error: 'Not found' }, { status: 404 })
   const prisma = await getPrisma()

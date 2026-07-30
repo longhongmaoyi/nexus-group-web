@@ -6,7 +6,7 @@ import { validateSectionInput } from '@/lib/cms-validation'
 import { getPrisma } from '@/lib/prisma'
 
 export async function GET() {
-  if (!getAdminSession()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await getAdminSession())) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const prisma = await getPrisma()
   const templates = await prisma.cmsSectionTemplate.findMany({
     orderBy: [{ system: 'desc' }, { name: 'asc' }],
@@ -25,7 +25,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const session = getAdminSession()
+  const session = await getAdminSession()
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   if (!isSameOrigin(request)) return NextResponse.json({ error: 'Invalid origin' }, { status: 403 })
   const limit = await enforceRateLimit(requestFingerprint(request, `template-create:${session.sub}`), 20, 60_000)

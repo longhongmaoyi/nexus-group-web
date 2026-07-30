@@ -6,14 +6,16 @@ import { validatePageInput } from '@/lib/cms-validation'
 import { replaceMediaReferences } from '@/lib/media'
 import { getPrisma } from '@/lib/prisma'
 
-export async function GET(_: Request, { params }: { params: { slug: string } }) {
-  if (!getAdminSession()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+export async function GET(_: Request, props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params
+  if (!(await getAdminSession())) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const page = await getCmsPageDraft(params.slug)
   return page ? NextResponse.json(page) : NextResponse.json({ error: 'Not found' }, { status: 404 })
 }
 
-export async function PUT(request: Request, { params }: { params: { slug: string } }) {
-  const session = getAdminSession()
+export async function PUT(request: Request, props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params
+  const session = await getAdminSession()
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   if (!isSameOrigin(request)) return NextResponse.json({ error: 'Invalid origin' }, { status: 403 })
   try {

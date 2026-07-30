@@ -11,8 +11,11 @@ import {
 
 export const dynamic = 'force-dynamic'
 
-export default async function LeadsPage({ searchParams }: { searchParams: { status?: string; type?: string; q?: string } }) {
-  requireAdmin()
+export default async function LeadsPage(
+  props: { searchParams: Promise<{ status?: string; type?: string; q?: string }> }
+) {
+  const searchParams = await props.searchParams
+  await requireAdmin()
   const enabled = isPhase3AdminEnabled()
   const prisma = await getPrisma()
   const query = String(searchParams.q || '').trim().slice(0, 100)

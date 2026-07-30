@@ -8,8 +8,9 @@ import { isLocale } from '@/lib/i18n'
 
 export const dynamic = 'force-dynamic'
 
-export default async function Page({ params }: { params: { locale: string; slug: string } }) {
-  requireAdmin()
+export default async function Page(props: { params: Promise<{ locale: string; slug: string }> }) {
+  const params = await props.params
+  await requireAdmin()
   if (!isLocale(params.locale)) notFound()
   const draft = await getCmsPageDraft(params.slug)
   if (!draft) notFound()

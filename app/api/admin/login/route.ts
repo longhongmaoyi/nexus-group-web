@@ -30,7 +30,7 @@ export async function POST(request: Request) {
       })
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
     }
-    setAdminSession(user)
+    await setAdminSession(user)
     await clearRateLimit(rateLimitKey)
     await writeAuditLog({
       actorAdminId: user.id,

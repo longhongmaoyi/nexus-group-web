@@ -7,8 +7,9 @@ import { getPrisma } from '@/lib/prisma'
 
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
-export async function POST(request: Request, { params }: { params: { slug: string } }) {
-  const session = getAdminSession()
+export async function POST(request: Request, props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params
+  const session = await getAdminSession()
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   if (!isSameOrigin(request)) return NextResponse.json({ error: 'Invalid origin' }, { status: 403 })
   const limit = await enforceRateLimit(requestFingerprint(request, `page-duplicate:${session.sub}`), 10, 60_000)

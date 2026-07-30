@@ -6,7 +6,7 @@ import { getCmsPages } from '@/lib/cms'
 export const dynamic = 'force-dynamic'
 
 export default async function AdminPage() {
-  const session = requireAdmin()
+  const session = await requireAdmin()
   let pages: Awaited<ReturnType<typeof getCmsPages>> = []
   let databaseReady = true
   try {

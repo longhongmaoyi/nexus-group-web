@@ -14,7 +14,7 @@ export async function POST(request: Request) {
   if (!isPhase3PublicEnabled()) return NextResponse.json({ error: 'Not found' }, { status: 404 })
   if (!isSameOrigin(request)) return NextResponse.json({ error: 'Invalid origin' }, { status: 403 })
   const csrfToken = request.headers.get('x-nexus-csrf-token') || ''
-  const csrfHash = cookies().get('nexus_public_csrf')?.value || ''
+  const csrfHash = (await cookies()).get('nexus_public_csrf')?.value || ''
   const secret = process.env.PHASE3_FORM_SECRET || process.env.ADMIN_SESSION_SECRET || ''
   if (!verifyCsrfToken(csrfToken, csrfHash, secret)) {
     return NextResponse.json({ error: 'The form session expired. Refresh and try again.' }, { status: 403 })

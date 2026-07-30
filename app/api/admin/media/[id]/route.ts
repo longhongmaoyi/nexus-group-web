@@ -6,8 +6,9 @@ import { getPrisma } from '@/lib/prisma'
 
 const clean = (value: unknown) => String(value || '').trim().slice(0, 300)
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
-  const session = getAdminSession()
+export async function PATCH(request: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params
+  const session = await getAdminSession()
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   if (!isSameOrigin(request)) return NextResponse.json({ error: 'Invalid origin' }, { status: 403 })
   const limit = await enforceRateLimit(requestFingerprint(request, `media-edit:${session.sub}`), 60, 60_000)

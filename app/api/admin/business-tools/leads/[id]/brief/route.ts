@@ -7,8 +7,9 @@ import { isPhase3AdminEnabled, NEXUS_ORGANIZATION_KEY } from '@/lib/phase3-core.
 
 export const runtime = 'nodejs'
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
-  const session = getAdminSession()
+export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params
+  const session = await getAdminSession()
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   if (!isPhase3AdminEnabled()) return NextResponse.json({ error: 'Not found' }, { status: 404 })
   const locale = new URL(request.url).searchParams.get('locale') || 'en'

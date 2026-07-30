@@ -7,7 +7,7 @@ import { isPhase3AdminEnabled, LEAD_PRIORITIES, LEAD_STATUSES, LEAD_TYPES, NEXUS
 export const dynamic = 'force-dynamic'
 
 export async function GET(request: Request) {
-  const session = getAdminSession()
+  const session = await getAdminSession()
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   if (!isPhase3AdminEnabled()) return NextResponse.json({ error: 'Not found' }, { status: 404 })
   const url = new URL(request.url)

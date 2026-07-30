@@ -2,8 +2,9 @@ import { NextResponse } from 'next/server'
 import { getAdminSession } from '@/lib/admin-auth'
 import { getPrisma } from '@/lib/prisma'
 
-export async function GET(_: Request, { params }: { params: { slug: string } }) {
-  if (!getAdminSession()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+export async function GET(_: Request, props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params
+  if (!(await getAdminSession())) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const prisma = await getPrisma()
   const page = await prisma.cmsPage.findUnique({
     where: { slug: params.slug },

@@ -11,12 +11,10 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-    outputFileTracingIncludes: {
-      '/api/admin/business-tools/leads/[id]/brief': [
-        './node_modules/@fontpkg/noto-sans-cjk-sc/NotoSansCJKsc-Regular.otf',
-      ],
-    },
+  outputFileTracingIncludes: {
+    '/api/admin/business-tools/leads/[id]/brief': [
+      './node_modules/@fontpkg/noto-sans-cjk-sc/NotoSansCJKsc-Regular.otf',
+    ],
   },
   async redirects() {
     return [

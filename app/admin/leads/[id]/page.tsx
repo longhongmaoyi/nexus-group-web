@@ -8,8 +8,9 @@ import { isPhase3AdminEnabled, NEXUS_ORGANIZATION_KEY } from '@/lib/phase3-core.
 
 export const dynamic = 'force-dynamic'
 
-export default async function LeadDetailPage({ params }: { params: { id: string } }) {
-  requireAdmin()
+export default async function LeadDetailPage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params
+  await requireAdmin()
   if (!isPhase3AdminEnabled()) notFound()
   const prisma = await getPrisma()
   const [lead, admins] = await Promise.all([

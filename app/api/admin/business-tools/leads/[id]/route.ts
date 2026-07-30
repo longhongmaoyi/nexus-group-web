@@ -5,8 +5,9 @@ import { asJson } from '@/lib/cms'
 import { getPrisma } from '@/lib/prisma'
 import { isPhase3AdminEnabled, NEXUS_ORGANIZATION_KEY, validateLeadUpdate } from '@/lib/phase3-core.mjs'
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
-  if (!getAdminSession()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+export async function GET(_: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params
+  if (!(await getAdminSession())) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   if (!isPhase3AdminEnabled()) return NextResponse.json({ error: 'Not found' }, { status: 404 })
   const prisma = await getPrisma()
   const lead = await prisma.businessLead.findFirst({
@@ -33,8 +34,9 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
   return lead ? NextResponse.json(lead) : NextResponse.json({ error: 'Not found' }, { status: 404 })
 }
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
-  const session = getAdminSession()
+export async function PATCH(request: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params
+  const session = await getAdminSession()
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   if (!isPhase3AdminEnabled()) return NextResponse.json({ error: 'Not found' }, { status: 404 })
   if (!isSameOrigin(request)) return NextResponse.json({ error: 'Invalid origin' }, { status: 403 })

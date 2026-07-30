@@ -7,7 +7,8 @@ import { getPublishedCmsPage } from '@/lib/cms'
 
 export const dynamic = 'force-dynamic'
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const params = await props.params
   if (!isLocale(params.locale)) return {}
   const locale = params.locale as Locale
   const cms = await getPublishedCmsPage('home')
@@ -20,7 +21,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   }
 }
 
-export default async function Page({ params }: { params: { locale: string } }) {
+export default async function Page(props: { params: Promise<{ locale: string }> }) {
+  const params = await props.params
   if (!isLocale(params.locale)) notFound()
   const cms = await getPublishedCmsPage('home')
   return <HomePage locale={params.locale} cms={cms} />

@@ -23,7 +23,7 @@ export async function POST(request: Request) {
       request,
       body,
       onBeforeGenerateToken: async (pathname, clientPayload) => {
-        const session = getAdminSession()
+        const session = await getAdminSession()
         if (!session) throw new Error('Unauthorized')
         if (!isSameOrigin(request)) throw new Error('Invalid origin')
         const limit = await enforceRateLimit(requestFingerprint(request, `media-upload:${session.sub}`), 20, 60_000)

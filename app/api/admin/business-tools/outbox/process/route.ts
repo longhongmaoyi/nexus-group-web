@@ -5,7 +5,7 @@ import { processEmailOutbox } from '@/lib/email-outbox'
 import { isPhase3AdminEnabled } from '@/lib/phase3-core.mjs'
 
 export async function POST(request: Request) {
-  const session = getAdminSession()
+  const session = await getAdminSession()
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   if (session.role !== 'ADMIN') return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   if (!isPhase3AdminEnabled()) return NextResponse.json({ error: 'Not found' }, { status: 404 })

@@ -9,7 +9,8 @@ export async function GET() {
   const secret = process.env.PHASE3_FORM_SECRET || process.env.ADMIN_SESSION_SECRET || ''
   try {
     const token = createCsrfToken(secret)
-    cookies().set('nexus_public_csrf', hashCsrfToken(token), {
+    const cookieStore = await cookies()
+    cookieStore.set('nexus_public_csrf', hashCsrfToken(token), {
       httpOnly: true,
       sameSite: 'strict',
       secure: process.env.NODE_ENV === 'production',

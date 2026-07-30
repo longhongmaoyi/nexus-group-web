@@ -10,9 +10,10 @@ import { getPrisma } from '@/lib/prisma'
 
 export async function POST(
   request: Request,
-  { params }: { params: { slug: string; publicationId: string } },
+  props: { params: Promise<{ slug: string; publicationId: string }> }
 ) {
-  const session = getAdminSession()
+  const params = await props.params
+  const session = await getAdminSession()
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   if (!isSameOrigin(request)) return NextResponse.json({ error: 'Invalid origin' }, { status: 403 })
   const limit = await enforceRateLimit(requestFingerprint(request, `page-rollback:${session.sub}`), 5, 60_000)

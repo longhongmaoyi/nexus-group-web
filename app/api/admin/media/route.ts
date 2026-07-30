@@ -4,7 +4,7 @@ import { mediaSelect } from '@/lib/media'
 import { getPrisma } from '@/lib/prisma'
 
 export async function GET(request: Request) {
-  if (!getAdminSession()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!(await getAdminSession())) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const url = new URL(request.url)
   const query = String(url.searchParams.get('q') || '').trim().slice(0, 100)
   const includeArchived = url.searchParams.get('archived') === '1'

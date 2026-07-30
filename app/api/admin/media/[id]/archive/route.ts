@@ -3,8 +3,9 @@ import { getAdminSession, isSameOrigin } from '@/lib/admin-auth'
 import { enforceRateLimit, requestFingerprint, writeAuditLog } from '@/lib/admin-security'
 import { getPrisma } from '@/lib/prisma'
 
-export async function POST(request: Request, { params }: { params: { id: string } }) {
-  const session = getAdminSession()
+export async function POST(request: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params
+  const session = await getAdminSession()
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   if (!isSameOrigin(request)) return NextResponse.json({ error: 'Invalid origin' }, { status: 403 })
   const limit = await enforceRateLimit(requestFingerprint(request, `media-archive:${session.sub}`), 20, 60_000)
