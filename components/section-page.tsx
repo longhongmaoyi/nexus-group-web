@@ -22,6 +22,7 @@ import {
 
 import { InquiryForm } from '@/components/inquiry-form'
 import { homeCopy, localized, sectionPages, type SectionSlug } from '@/lib/content'
+import type { CmsPageSnapshot } from '@/lib/cms-types'
 import type { Locale } from '@/lib/i18n'
 
 type Localized = Record<Locale, string>
@@ -278,8 +279,19 @@ function List({ items, locale }: { items: Localized[]; locale: Locale }) {
   )
 }
 
-export function SectionPage({ locale, section }: { locale: Locale; section: SectionSlug }) {
-  const page = sectionPages[section]
+export function SectionPage({ locale, section, cms }: { locale: Locale; section: SectionSlug; cms?: CmsPageSnapshot | null }) {
+  const staticPage = sectionPages[section]
+  const hero = cms?.sections.find((item) => item.key === 'hero')?.content
+  const cmsBlocks = cms?.sections.filter((item) => item.key !== 'hero' && item.enabled).map((item) => ({
+    title: item.content.title,
+    body: item.content.body,
+  }))
+  const page = {
+    eyebrow: hero?.eyebrow || cms?.label || staticPage.eyebrow,
+    title: hero?.title || staticPage.title,
+    intro: hero?.body || staticPage.intro,
+    blocks: cmsBlocks?.length ? cmsBlocks : staticPage.blocks,
+  }
   const [active, setActive] = useState(0)
   const isAssembly = section === 'assembly-centre'
   const enhancement = sectionContext[section]

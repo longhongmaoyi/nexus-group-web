@@ -25,6 +25,7 @@ import {
 } from 'lucide-react'
 
 import type { Locale } from '@/lib/i18n'
+import type { CmsPageSnapshot } from '@/lib/cms-types'
 
 type Localized = Record<Locale, string>
 type IconType = typeof Home
@@ -105,21 +106,62 @@ const closingValues = [
   t('People and communities at the centre.', '以人为本，以社区为核心。', 'Les personnes et les collectivités au centre.'),
 ]
 
-export function HomePage({ locale }: { locale: Locale }) {
+export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapshot | null }) {
   const localized = (value: Localized) => value[locale]
+  const localHref = (href: string) => href.replace(/^\/(en|zh|fr)(?=\/|$)/, `/${locale}`)
+  const cmsSection = (key: string) => cms?.sections.find((section) => section.key === key && section.enabled)?.content
+  const heroContent = cmsSection('hero')
+  const categoriesContent = cmsSection('categories')
+  const metricsContent = cmsSection('metrics')
+  const ecosystemContent = cmsSection('ecosystem')
+  const featuredContent = cmsSection('featured')
+  const closingContent = cmsSection('closing')
+  const pageCopy = {
+    ...copy,
+    title: heroContent?.title || copy.title,
+    body: heroContent?.body || copy.body,
+    story: heroContent?.ctaLabel || copy.story,
+    categories: categoriesContent?.title || copy.categories,
+    numbers: metricsContent?.title || copy.numbers,
+    ecosystem: ecosystemContent?.title || copy.ecosystem,
+    ecosystemBody: ecosystemContent?.body || copy.ecosystemBody,
+    featured: featuredContent?.title || copy.featured,
+    closingTitle: closingContent?.title || copy.closingTitle,
+    closingBody: closingContent?.body || copy.closingBody,
+    partner: closingContent?.ctaLabel || copy.partner,
+  }
+  const slides = heroContent?.items?.length
+    ? heroContent.items.filter((item) => item.image).map((item) => ({ image: item.image!, label: item.title }))
+    : heroSlides
+  const categoryCards = categoriesContent?.items?.length
+    ? categoriesContent.items.filter((item) => item.image).map((item, index) => ({
+        icon: categories[index % categories.length].icon,
+        title: item.title,
+        body: item.body,
+        image: item.image!,
+        href: item.href?.replace(/^\/(en|zh|fr)\//, '') || categories[index % categories.length].href,
+      }))
+    : categories
+  const metricCards = metricsContent?.items?.length
+    ? metricsContent.items.map((item) => ({ value: item.value || '—', label: item.title }))
+    : metrics
+  const ecosystemCards = ecosystemContent?.items?.length
+    ? ecosystemContent.items.map((item, index) => ({ icon: ecosystem[index % ecosystem.length].icon, title: item.title }))
+    : ecosystem
+  const closingCards = closingContent?.items?.length ? closingContent.items.map((item) => item.title) : closingValues
   const [slide, setSlide] = useState(0)
 
   useEffect(() => {
-    const timer = window.setInterval(() => setSlide((current) => (current + 1) % heroSlides.length), 5000)
+    const timer = window.setInterval(() => setSlide((current) => (current + 1) % slides.length), 5000)
     return () => window.clearInterval(timer)
-  }, [])
+  }, [slides.length])
 
-  const changeSlide = (next: number) => setSlide((next + heroSlides.length) % heroSlides.length)
+  const changeSlide = (next: number) => setSlide((next + slides.length) % slides.length)
 
   return (
     <main className="bg-white">
       <section className="relative min-h-[680px] overflow-hidden bg-[#071b21] text-white lg:min-h-[610px]">
-        {heroSlides.map((item, index) => (
+        {slides.map((item, index) => (
           <Image
             key={item.image}
             src={item.image}
@@ -137,19 +179,19 @@ export function HomePage({ locale }: { locale: Locale }) {
         <div className="relative mx-auto flex min-h-[680px] max-w-[1760px] flex-col justify-end px-5 pb-7 pt-32 sm:px-8 lg:min-h-[610px] lg:px-12 lg:pt-28">
           <div className="mb-auto max-w-2xl pt-5 lg:pt-2">
             <h1 className="text-5xl font-semibold leading-[0.98] tracking-[-0.05em] sm:text-6xl lg:text-[4rem]">
-              {localized(copy.title)}
+              {localized(pageCopy.title)}
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-7 text-white/82 sm:text-lg">{localized(copy.body)}</p>
-            <Link href={`/${locale}/about`} className="mt-7 inline-flex items-center gap-3 text-sm font-semibold text-white transition hover:text-[#b8d683]">
+            <p className="mt-6 max-w-xl text-base leading-7 text-white/82 sm:text-lg">{localized(pageCopy.body)}</p>
+            <Link href={localHref(heroContent?.ctaHref || `/${locale}/about`)} className="mt-7 inline-flex items-center gap-3 text-sm font-semibold text-white transition hover:text-[#b8d683]">
               <span className="grid h-11 w-11 place-items-center rounded-full bg-white text-[#173b34] shadow-lg"><Play className="ml-0.5 h-4 w-4 fill-current" /></span>
-              {localized(copy.story)}
+              {localized(pageCopy.story)}
             </Link>
           </div>
 
           <div className="absolute right-5 top-1/2 hidden -translate-y-1/2 flex-col items-center gap-3 sm:right-8 lg:flex lg:right-12">
             <span className="text-xs font-bold">{String(slide + 1).padStart(2, '0')}</span>
             <div className="h-20 w-px bg-white/25"><div className="w-px bg-white transition-all duration-700" style={{ height: `${((slide + 1) / heroSlides.length) * 100}%` }} /></div>
-            <span className="text-xs text-white/55">{String(heroSlides.length).padStart(2, '0')}</span>
+            <span className="text-xs text-white/55">{String(slides.length).padStart(2, '0')}</span>
             <div className="mt-2 flex gap-2">
               <button onClick={() => changeSlide(slide - 1)} aria-label="Previous hero image" className="grid h-8 w-8 place-items-center rounded-full border border-white/30 hover:bg-white/10"><ChevronLeft className="h-4 w-4" /></button>
               <button onClick={() => changeSlide(slide + 1)} aria-label="Next hero image" className="grid h-8 w-8 place-items-center rounded-full border border-white/30 hover:bg-white/10"><ChevronRight className="h-4 w-4" /></button>
@@ -173,11 +215,11 @@ export function HomePage({ locale }: { locale: Locale }) {
       <section className="relative z-10 bg-white pb-8 pt-5">
         <div className="mx-auto max-w-[1760px] px-5 sm:px-8 lg:px-12">
           <div className="mb-4 flex items-end justify-between gap-4">
-            <h2 className="text-sm font-bold text-[#0b2528]">{localized(copy.categories)}</h2>
+            <h2 className="text-sm font-bold text-[#0b2528]">{localized(pageCopy.categories)}</h2>
             <Link href={`/${locale}/products`} className="text-xs font-semibold text-[#5e735b] hover:text-[#0b2528]">{t('View all solutions', '查看全部方案', 'Voir toutes les solutions')[locale]} →</Link>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-            {categories.map((item) => {
+            {categoryCards.map((item) => {
               const Icon = item.icon
               return (
                 <Link key={item.title.en} href={`/${locale}/${item.href}`} className="group relative min-h-[180px] overflow-hidden rounded-xl bg-[#0b2528] shadow-sm">
@@ -201,9 +243,9 @@ export function HomePage({ locale }: { locale: Locale }) {
       <section className="border-y border-slate-200 bg-[#fbfcfa] py-10">
         <div className="mx-auto grid max-w-[1760px] gap-10 px-5 sm:px-8 lg:grid-cols-[0.9fr_1.2fr_1.25fr] lg:px-12">
           <div>
-            <h2 className="text-sm font-bold text-[#0b2528]">{localized(copy.numbers)}</h2>
+            <h2 className="text-sm font-bold text-[#0b2528]">{localized(pageCopy.numbers)}</h2>
             <div className="mt-6 grid grid-cols-3 gap-x-4 gap-y-7">
-              {metrics.map((item) => <div key={item.label.en}><p className="text-2xl font-semibold tracking-tight text-[#0b2528]">{item.value}</p><p className="mt-1 text-[0.68rem] leading-4 text-slate-500">{localized(item.label)}</p></div>)}
+              {metricCards.map((item) => <div key={item.label.en}><p className="text-2xl font-semibold tracking-tight text-[#0b2528]">{item.value}</p><p className="mt-1 text-[0.68rem] leading-4 text-slate-500">{localized(item.label)}</p></div>)}
             </div>
             <Link href={`/${locale}/about`} className="mt-7 inline-flex items-center gap-2 rounded-full border border-[#b8c5b4] px-4 py-2 text-xs font-semibold text-[#29473c] hover:bg-[#edf2e8]">
               {t('Discover More', '了解更多', 'En découvrir davantage')[locale]} <ArrowRight className="h-3.5 w-3.5" />
@@ -211,16 +253,16 @@ export function HomePage({ locale }: { locale: Locale }) {
           </div>
 
           <div className="border-y border-slate-200 py-8 lg:border-x lg:border-y-0 lg:px-8 lg:py-0">
-            <h2 className="text-sm font-bold text-[#0b2528]">{localized(copy.ecosystem)}</h2>
-            <p className="mt-2 max-w-md text-xs leading-5 text-slate-500">{localized(copy.ecosystemBody)}</p>
+            <h2 className="text-sm font-bold text-[#0b2528]">{localized(pageCopy.ecosystem)}</h2>
+            <p className="mt-2 max-w-md text-xs leading-5 text-slate-500">{localized(pageCopy.ecosystemBody)}</p>
             <div className="mt-8 flex items-start justify-between gap-1">
-              {ecosystem.map((item, index) => {
+              {ecosystemCards.map((item, index) => {
                 const Icon = item.icon
                 return (
                   <div key={item.title.en} className="relative flex flex-1 flex-col items-center text-center">
                     <span className="grid h-10 w-10 place-items-center rounded-full border border-[#cbd5c6] bg-white text-[#506b52]"><Icon className="h-4 w-4" /></span>
                     <p className="mt-2 text-[0.62rem] font-semibold leading-4 text-[#42574c]">{localized(item.title)}</p>
-                    {index < ecosystem.length - 1 && <span className="absolute left-[64%] top-5 h-px w-[72%] bg-[#cbd5c6]" />}
+                    {index < ecosystemCards.length - 1 && <span className="absolute left-[64%] top-5 h-px w-[72%] bg-[#cbd5c6]" />}
                   </div>
                 )
               })}
@@ -228,17 +270,17 @@ export function HomePage({ locale }: { locale: Locale }) {
           </div>
 
           <div>
-            <h2 className="text-sm font-bold text-[#0b2528]">{localized(copy.featured)}</h2>
+            <h2 className="text-sm font-bold text-[#0b2528]">{localized(pageCopy.featured)}</h2>
             <div className="mt-5 grid gap-5 sm:grid-cols-[1.15fr_0.85fr] sm:items-center">
               <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
-                <Image src="/images/project-lake-hd-v1.jpg" alt={t('Lakeview Retreat design concept', '湖景度假区设计概念', 'Concept du refuge Lakeview')[locale]} fill quality={92} className="object-cover" sizes="(max-width: 1024px) 100vw, 22vw" />
+                <Image src={featuredContent?.image || '/images/project-lake-hd-v1.jpg'} alt={localized(featuredContent?.title || t('Lakeview Retreat design concept', '湖景度假区设计概念', 'Concept du refuge Lakeview'))} fill quality={92} className="object-cover" sizes="(max-width: 1024px) 100vw, 22vw" />
               </div>
               <div>
-                <p className="text-base font-semibold text-[#0b2528]">Lakeview Retreat</p>
+                <p className="text-base font-semibold text-[#0b2528]">{localized(featuredContent?.title || t('Lakeview Retreat', '湖景度假区', 'Refuge Lakeview'))}</p>
                 <p className="mt-1 text-xs font-medium text-[#5f745d]">{t('Modular community · Design concept', '模块化社区 · 设计概念', 'Collectivité modulaire · Concept')[locale]}</p>
                 <p className="mt-3 flex items-center gap-1.5 text-[0.7rem] text-slate-500"><MapPin className="h-3 w-3" /> {t('Canada · Proposed', '加拿大 · 拟建', 'Canada · Projet proposé')[locale]}</p>
-                <p className="mt-3 text-xs leading-5 text-slate-500">{t('A nature-connected modular retreat designed around comfort, belonging and the landscape.', '围绕舒适、归属与自然景观打造的模块化度假社区。', 'Une retraite modulaire liée à la nature, pensée autour du confort et de l’appartenance.')[locale]}</p>
-                <Link href={`/${locale}/projects`} className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#b8c5b4] px-4 py-2 text-xs font-semibold text-[#29473c] hover:bg-[#edf2e8]">{t('View Concept', '查看概念', 'Voir le concept')[locale]} <ArrowRight className="h-3.5 w-3.5" /></Link>
+                <p className="mt-3 text-xs leading-5 text-slate-500">{localized(featuredContent?.body || t('A nature-connected modular retreat designed around comfort, belonging and the landscape.', '围绕舒适、归属与自然景观打造的模块化度假社区。', 'Une retraite modulaire liée à la nature, pensée autour du confort et de l’appartenance.'))}</p>
+                <Link href={localHref(featuredContent?.ctaHref || `/${locale}/projects`)} className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#b8c5b4] px-4 py-2 text-xs font-semibold text-[#29473c] hover:bg-[#edf2e8]">{localized(featuredContent?.ctaLabel || t('View Concept', '查看概念', 'Voir le concept'))} <ArrowRight className="h-3.5 w-3.5" /></Link>
               </div>
             </div>
           </div>
@@ -250,12 +292,12 @@ export function HomePage({ locale }: { locale: Locale }) {
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,20,23,.92),rgba(4,20,23,.68)_45%,rgba(4,20,23,.76))]" />
         <div className="relative mx-auto grid min-h-[260px] max-w-[1760px] gap-8 px-5 py-10 sm:px-8 lg:grid-cols-[0.32fr_0.68fr] lg:items-center lg:px-12">
           <div>
-            <h2 className="text-3xl font-semibold leading-tight">{localized(copy.closingTitle)}</h2>
-            <p className="mt-3 text-sm text-white/65">{localized(copy.closingBody)}</p>
-            <Link href={`/${locale}/contact`} className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/35 px-5 py-2.5 text-xs font-semibold hover:bg-white hover:text-[#0b2528]">{localized(copy.partner)} <ArrowRight className="h-3.5 w-3.5" /></Link>
+            <h2 className="text-3xl font-semibold leading-tight">{localized(pageCopy.closingTitle)}</h2>
+            <p className="mt-3 text-sm text-white/65">{localized(pageCopy.closingBody)}</p>
+            <Link href={localHref(closingContent?.ctaHref || `/${locale}/contact`)} className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/35 px-5 py-2.5 text-xs font-semibold hover:bg-white hover:text-[#0b2528]">{localized(pageCopy.partner)} <ArrowRight className="h-3.5 w-3.5" /></Link>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {closingValues.map((item, index) => {
+            {closingCards.map((item, index) => {
               const Icon = [Globe2, Users, Leaf, Boxes, Heart][index]
               return <div key={item.en} className="border-l border-white/18 pl-4"><Icon className="h-5 w-5 text-[#c7df95]" /><p className="mt-4 text-xs font-semibold leading-5 text-white/82">{localized(item)}</p></div>
             })}

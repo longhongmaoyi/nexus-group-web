@@ -2,22 +2,23 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { SectionPage } from '@/components/section-page'
 import { localized, sectionPages, sectionSlugs, type SectionSlug } from '@/lib/content'
-import { isLocale, locales, type Locale } from '@/lib/i18n'
+import { isLocale, type Locale } from '@/lib/i18n'
+import { getPublishedCmsPage } from '@/lib/cms'
 
-export function generateStaticParams() {
-  return locales.flatMap((locale) => sectionSlugs.map((section) => ({ locale, section })))
-}
+export const dynamic = 'force-dynamic'
 
-export function generateMetadata({ params }: { params: { locale: string; section: string } }): Metadata {
+export async function generateMetadata({ params }: { params: { locale: string; section: string } }): Promise<Metadata> {
   if (!isLocale(params.locale) || !sectionSlugs.includes(params.section as SectionSlug)) return {}
   const page = sectionPages[params.section as SectionSlug]
+  const cms = await getPublishedCmsPage(params.section)
   return {
-    title: localized(page.eyebrow, params.locale as Locale),
-    description: localized(page.intro, params.locale as Locale),
+    title: cms?.seoTitle[params.locale as Locale] || localized(page.eyebrow, params.locale as Locale),
+    description: cms?.seoDescription[params.locale as Locale] || localized(page.intro, params.locale as Locale),
   }
 }
 
-export default function Page({ params }: { params: { locale: string; section: string } }) {
+export default async function Page({ params }: { params: { locale: string; section: string } }) {
   if (!isLocale(params.locale) || !sectionSlugs.includes(params.section as SectionSlug)) notFound()
-  return <SectionPage locale={params.locale} section={params.section as SectionSlug} />
+  const cms = await getPublishedCmsPage(params.section)
+  return <SectionPage locale={params.locale} section={params.section as SectionSlug} cms={cms} />
 }
