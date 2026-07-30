@@ -15,6 +15,11 @@ export default async function Page({ params }: { params: { locale: string; slug:
   if (!draft) notFound()
   const snapshot = snapshotFromDraft(draft)
   if (params.slug === 'home') return <HomePage locale={params.locale} cms={snapshot} />
-  if (!sectionSlugs.includes(params.slug as SectionSlug)) notFound()
-  return <SectionPage locale={params.locale} section={params.slug as SectionSlug} cms={snapshot} />
+  return (
+    <SectionPage
+      locale={params.locale}
+      section={sectionSlugs.includes(params.slug as SectionSlug) ? params.slug as SectionSlug : 'about'}
+      cms={snapshot}
+    />
+  )
 }

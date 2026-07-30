@@ -73,7 +73,7 @@ export const getPublishedCmsPage = cache(async (slug: string): Promise<CmsPageSn
 
 export function snapshotFromDraft(page: CmsPageDraft): CmsPageSnapshot {
   return {
-    version: 1,
+    version: 2,
     slug: page.slug,
     pageType: page.pageType,
     label: page.label,

@@ -20,35 +20,46 @@ enum InquiryStatus {
   CLOSED
 }
 
+enum MediaStatus {
+  ACTIVE
+  ARCHIVED
+}
+
 model AdminUser {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  name         String?
-  passwordHash String
-  role         String   @default("EDITOR")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id               String               @id @default(cuid())
+  email            String               @unique
+  name             String?
+  passwordHash     String
+  role             String               @default("EDITOR")
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+  auditLogs        AuditLog[]
+  mediaAssets      MediaAsset[]
+  publications     CmsPublication[]
+  sectionTemplates CmsSectionTemplate[]
 }
 
 model CmsPage {
-  id                 String        @id @default(cuid())
-  slug               String        @unique
-  pageType           String        @default("STANDARD")
-  status             ContentStatus @default(DRAFT)
-  labelEn            String
-  labelZh            String
-  labelFr            String
-  seoTitleEn         String
-  seoTitleZh         String
-  seoTitleFr         String
-  seoDescriptionEn   String        @db.Text
-  seoDescriptionZh   String        @db.Text
-  seoDescriptionFr   String        @db.Text
-  publishedSnapshot  Json?
-  publishedAt        DateTime?
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @updatedAt
-  sections           CmsSection[]
+  id                String           @id @default(cuid())
+  slug              String           @unique
+  pageType          String           @default("STANDARD")
+  status            ContentStatus    @default(DRAFT)
+  labelEn           String
+  labelZh           String
+  labelFr           String
+  seoTitleEn        String
+  seoTitleZh        String
+  seoTitleFr        String
+  seoDescriptionEn  String           @db.Text
+  seoDescriptionZh  String           @db.Text
+  seoDescriptionFr  String           @db.Text
+  publishedSnapshot Json?
+  publishedAt       DateTime?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  sections          CmsSection[]
+  publications      CmsPublication[]
+  mediaReferences   MediaReference[]
 
   @@index([status])
 }
@@ -68,6 +79,111 @@ model CmsSection {
   @@unique([pageId, key])
   @@unique([pageId, position])
   @@index([pageId, position])
+}
+
+model CmsPublication {
+  id                   String           @id @default(cuid())
+  pageId               String
+  version              Int
+  snapshot             Json
+  note                 String?          @db.Text
+  publishedById        String?
+  sourcePublicationId  String?
+  createdAt            DateTime         @default(now())
+  page                 CmsPage          @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  publishedBy          AdminUser?       @relation(fields: [publishedById], references: [id], onDelete: SetNull)
+  sourcePublication    CmsPublication?  @relation("PublicationRollback", fields: [sourcePublicationId], references: [id], onDelete: SetNull)
+  rollbackPublications CmsPublication[] @relation("PublicationRollback")
+  mediaReferences      MediaReference[]
+
+  @@unique([pageId, version])
+  @@index([pageId, createdAt])
+}
+
+model CmsSectionTemplate {
+  id          String     @id @default(cuid())
+  key         String     @unique
+  name        String
+  description String?    @db.Text
+  sectionType String
+  content     Json
+  system      Boolean    @default(false)
+  createdById String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  createdBy   AdminUser? @relation(fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([sectionType])
+}
+
+model MediaAsset {
+  id              String           @id @default(cuid())
+  url             String           @unique
+  downloadUrl     String?
+  pathname        String           @unique
+  originalName    String
+  contentType     String
+  sizeBytes       Int
+  width           Int?
+  height          Int?
+  altEn           String
+  altZh           String
+  altFr           String
+  storageProvider String
+  etag            String?
+  status          MediaStatus      @default(ACTIVE)
+  createdById     String?
+  archivedAt      DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  createdBy       AdminUser?       @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  references      MediaReference[]
+
+  @@index([status, createdAt])
+  @@index([contentType])
+}
+
+model MediaReference {
+  id            String          @id @default(cuid())
+  assetId       String
+  pageId        String
+  publicationId String?
+  source        String
+  sectionKey    String
+  fieldPath     String
+  createdAt     DateTime        @default(now())
+  asset         MediaAsset      @relation(fields: [assetId], references: [id], onDelete: Restrict)
+  page          CmsPage         @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  publication   CmsPublication? @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+
+  @@index([assetId, source])
+  @@index([pageId, source])
+  @@index([publicationId])
+}
+
+model AuditLog {
+  id           String     @id @default(cuid())
+  actorAdminId String?
+  action       String
+  entityType   String
+  entityId     String?
+  metadata     Json?
+  createdAt    DateTime   @default(now())
+  actorAdmin   AdminUser? @relation(fields: [actorAdminId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@index([actorAdminId, createdAt])
+  @@index([entityType, entityId])
+}
+
+model RateLimitBucket {
+  key             String   @id
+  count           Int
+  windowStartedAt DateTime
+  expiresAt       DateTime
+  updatedAt       DateTime @updatedAt
+
+  @@index([expiresAt])
 }
 
 model Product {
@@ -91,24 +207,24 @@ model Product {
 }
 
 model Project {
-  id            String        @id @default(cuid())
-  slug          String        @unique
-  titleEn       String
-  titleZh       String
-  titleFr       String
-  summaryEn     String        @db.Text
-  summaryZh     String        @db.Text
-  summaryFr     String        @db.Text
-  industry      String
-  country       String?
-  region        String?
-  coverImage    String?
-  gallery       Json?
-  concept       Boolean       @default(true)
-  featured      Boolean       @default(false)
-  status        ContentStatus @default(DRAFT)
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  id         String        @id @default(cuid())
+  slug       String        @unique
+  titleEn    String
+  titleZh    String
+  titleFr    String
+  summaryEn  String        @db.Text
+  summaryZh  String        @db.Text
+  summaryFr  String        @db.Text
+  industry   String
+  country    String?
+  region     String?
+  coverImage String?
+  gallery    Json?
+  concept    Boolean       @default(true)
+  featured   Boolean       @default(false)
+  status     ContentStatus @default(DRAFT)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
 }
 
 model NewsPost {

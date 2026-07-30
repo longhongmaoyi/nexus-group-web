@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FileEdit, LogOut, Plus, ShieldCheck } from 'lucide-react'
+import { FileEdit, ImageIcon, LogOut, Plus, ShieldCheck } from 'lucide-react'
 import { requireAdmin } from '@/lib/admin-auth'
 import { getCmsPages } from '@/lib/cms'
 
@@ -26,6 +26,7 @@ export default async function AdminPage() {
           </div>
           <div className="flex flex-wrap gap-2">
             <Link href="/en" className="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-bold">View website</Link>
+            <Link href="/admin/media" className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-bold"><ImageIcon className="h-4 w-4" />Media library</Link>
             <form action="/api/admin/logout" method="post">
               <button className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-bold text-white"><LogOut className="h-4 w-4" />Sign out</button>
             </form>

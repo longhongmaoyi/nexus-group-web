@@ -7,6 +7,7 @@ export type CmsItem = {
   title: LocalizedText
   body: LocalizedText
   image?: string
+  mediaId?: string
   href?: string
   value?: string
 }
@@ -16,6 +17,7 @@ export type CmsSectionContent = {
   title: LocalizedText
   body: LocalizedText
   image?: string
+  mediaId?: string
   ctaLabel?: LocalizedText
   ctaHref?: string
   items?: CmsItem[]
@@ -44,7 +46,7 @@ export type CmsPageDraft = {
 }
 
 export type CmsPageSnapshot = Omit<CmsPageDraft, 'id' | 'status' | 'publishedAt' | 'updatedAt'> & {
-  version: 1
+  version: 1 | 2
   publishedAt: string
 }
 

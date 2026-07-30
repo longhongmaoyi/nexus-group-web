@@ -8,17 +8,21 @@ import { getPublishedCmsPage } from '@/lib/cms'
 export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params }: { params: { locale: string; section: string } }): Promise<Metadata> {
-  if (!isLocale(params.locale) || !sectionSlugs.includes(params.section as SectionSlug)) return {}
-  const page = sectionPages[params.section as SectionSlug]
+  if (!isLocale(params.locale)) return {}
   const cms = await getPublishedCmsPage(params.section)
+  const known = sectionSlugs.includes(params.section as SectionSlug)
+  if (!known && !cms) return {}
+  const page = known ? sectionPages[params.section as SectionSlug] : null
   return {
-    title: cms?.seoTitle[params.locale as Locale] || localized(page.eyebrow, params.locale as Locale),
-    description: cms?.seoDescription[params.locale as Locale] || localized(page.intro, params.locale as Locale),
+    title: cms?.seoTitle[params.locale as Locale] || (page ? localized(page.eyebrow, params.locale as Locale) : ''),
+    description: cms?.seoDescription[params.locale as Locale] || (page ? localized(page.intro, params.locale as Locale) : ''),
   }
 }
 
 export default async function Page({ params }: { params: { locale: string; section: string } }) {
-  if (!isLocale(params.locale) || !sectionSlugs.includes(params.section as SectionSlug)) notFound()
+  if (!isLocale(params.locale)) notFound()
   const cms = await getPublishedCmsPage(params.section)
-  return <SectionPage locale={params.locale} section={params.section as SectionSlug} cms={cms} />
+  const known = sectionSlugs.includes(params.section as SectionSlug)
+  if (!known && !cms) notFound()
+  return <SectionPage locale={params.locale} section={known ? params.section as SectionSlug : 'about'} cms={cms} />
 }

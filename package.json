@@ -18,12 +18,16 @@
     "db:migrate:deploy": "prisma migrate deploy",
     "db:studio": "prisma studio",
     "cms:seed": "node scripts/cms-seed.mjs",
+    "cms:media:index": "node scripts/cms-media-index.mjs",
+    "cms:phase2:seed": "node scripts/cms-phase2-seed.mjs",
+    "test:phase2:routes": "node scripts/test-phase2-routes.mjs",
     "admin:create": "node scripts/admin-create.mjs",
     "test": "node --test tests/*.test.mjs",
     "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "6.7.0",
+    "@vercel/blob": "^2.6.1",
     "@vercel/speed-insights": "^2.0.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.468.0",
