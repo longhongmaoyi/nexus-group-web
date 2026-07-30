@@ -24,5 +24,5 @@ export default async function Page({ params }: { params: { locale: string; secti
   const cms = await getPublishedCmsPage(params.section)
   const known = sectionSlugs.includes(params.section as SectionSlug)
   if (!known && !cms) notFound()
-  return <SectionPage locale={params.locale} section={known ? params.section as SectionSlug : 'about'} cms={cms} />
+  return <SectionPage locale={params.locale} section={known ? params.section as SectionSlug : 'about'} cms={cms} businessToolsEnabled={process.env.PHASE3_BUSINESS_TOOLS_ENABLED === 'true'} />
 }

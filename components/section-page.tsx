@@ -21,6 +21,7 @@ import {
 } from 'lucide-react'
 
 import { InquiryForm } from '@/components/inquiry-form'
+import { BusinessIntakeWizard } from '@/components/business-intake-wizard'
 import { homeCopy, localized, sectionPages, type SectionSlug } from '@/lib/content'
 import type { CmsPageSnapshot } from '@/lib/cms-types'
 import type { Locale } from '@/lib/i18n'
@@ -279,7 +280,7 @@ function List({ items, locale }: { items: Localized[]; locale: Locale }) {
   )
 }
 
-export function SectionPage({ locale, section, cms }: { locale: Locale; section: SectionSlug; cms?: CmsPageSnapshot | null }) {
+export function SectionPage({ locale, section, cms, businessToolsEnabled = false }: { locale: Locale; section: SectionSlug; cms?: CmsPageSnapshot | null; businessToolsEnabled?: boolean }) {
   const staticPage = sectionPages[section]
   const hero = cms?.sections.find((item) => item.key === 'hero')?.content
   const cmsBlocks = cms?.sections.filter((item) => item.key !== 'hero' && item.enabled).map((item) => ({
@@ -477,7 +478,7 @@ export function SectionPage({ locale, section, cms }: { locale: Locale; section:
             </div>
 
             {section === 'contact' ? (
-              <div className="mt-14 max-w-5xl"><InquiryForm locale={locale} /></div>
+              <div className="mt-14 max-w-5xl">{businessToolsEnabled ? <BusinessIntakeWizard locale={locale} /> : <InquiryForm locale={locale} />}</div>
             ) : (
               <div className="mt-14 rounded-[2.25rem] bg-ink p-8 text-white sm:p-10 lg:flex lg:items-center lg:justify-between">
                 <div>

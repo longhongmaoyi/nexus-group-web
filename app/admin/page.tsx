@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FileEdit, ImageIcon, LogOut, Plus, ShieldCheck } from 'lucide-react'
+import { BriefcaseBusiness, FileEdit, ImageIcon, LogOut, Plus, Settings2, ShieldCheck } from 'lucide-react'
 import { requireAdmin } from '@/lib/admin-auth'
 import { getCmsPages } from '@/lib/cms'
 
@@ -27,6 +27,8 @@ export default async function AdminPage() {
           <div className="flex flex-wrap gap-2">
             <Link href="/en" className="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-bold">View website</Link>
             <Link href="/admin/media" className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-bold"><ImageIcon className="h-4 w-4" />Media library</Link>
+            {process.env.PHASE3_ADMIN_TOOLS_ENABLED === 'true' && <Link href="/admin/leads" className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-bold"><BriefcaseBusiness className="h-4 w-4" />Leads</Link>}
+            {process.env.PHASE3_ADMIN_TOOLS_ENABLED === 'true' && <Link href="/admin/business-tools" className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-bold"><Settings2 className="h-4 w-4" />Planning tools</Link>}
             <form action="/api/admin/logout" method="post">
               <button className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-bold text-white"><LogOut className="h-4 w-4" />Sign out</button>
             </form>

@@ -25,6 +25,39 @@ enum MediaStatus {
   ARCHIVED
 }
 
+enum LeadType {
+  GENERAL
+  PROJECT
+  SUPPLIER
+  PARTNER
+  COMPLIANCE
+}
+
+enum LeadStatus {
+  NEW
+  QUALIFYING
+  CONTACTED
+  PROPOSAL
+  WON
+  LOST
+  ARCHIVED
+}
+
+enum LeadPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum EmailOutboxStatus {
+  PENDING
+  PROCESSING
+  SENT
+  FAILED
+  CANCELLED
+}
+
 model AdminUser {
   id               String               @id @default(cuid())
   email            String               @unique
@@ -37,6 +70,10 @@ model AdminUser {
   mediaAssets      MediaAsset[]
   publications     CmsPublication[]
   sectionTemplates CmsSectionTemplate[]
+  assignedLeads     BusinessLead[]       @relation("LeadOwner")
+  leadActivities    LeadActivity[]
+  costVersions      CostAssumptionVersion[]
+  timelineVersions  TimelineAssumptionVersion[]
 }
 
 model CmsPage {
@@ -274,4 +311,154 @@ model Inquiry {
   status    InquiryStatus @default(NEW)
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
+}
+
+model BusinessLead {
+  id                    String           @id @default(cuid())
+  organizationKey       String           @default("nexus")
+  reference             String           @unique
+  type                  LeadType         @default(PROJECT)
+  status                LeadStatus       @default(NEW)
+  priority              LeadPriority     @default(NORMAL)
+  locale                String           @default("en")
+  contactName           String
+  contactEmail          String
+  contactPhone          String?
+  organizationName      String?
+  country               String?
+  province              String?
+  municipality          String?
+  sector                String?
+  projectType           String?
+  intendedUse           String?
+  sizeCapacity          String?
+  budgetRange           String?
+  targetTimeline        String?
+  siteReadiness         String?
+  complianceNeeds       String?
+  notes                 String?          @db.Text
+  consent               Boolean
+  consentAt             DateTime?
+  consentTextVersion    String?
+  source                String           @default("WEBSITE")
+  sourceMetadata        Json?
+  ownerAdminId          String?
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+  owner                 AdminUser?       @relation("LeadOwner", fields: [ownerAdminId], references: [id], onDelete: SetNull)
+  activities            LeadActivity[]
+  estimates             SavedEstimate[]
+  emailMessages         EmailOutbox[]
+
+  @@index([organizationKey, createdAt])
+  @@index([organizationKey, status, priority])
+  @@index([organizationKey, type])
+  @@index([ownerAdminId, status])
+  @@index([contactEmail])
+}
+
+model LeadActivity {
+  id              String        @id @default(cuid())
+  organizationKey String        @default("nexus")
+  leadId          String
+  actorAdminId    String?
+  kind            String
+  body            String?       @db.Text
+  metadata        Json?
+  createdAt       DateTime      @default(now())
+  lead            BusinessLead  @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  actorAdmin      AdminUser?    @relation(fields: [actorAdminId], references: [id], onDelete: SetNull)
+
+  @@index([organizationKey, leadId, createdAt])
+  @@index([actorAdminId, createdAt])
+}
+
+model CostAssumptionVersion {
+  id                String          @id @default(cuid())
+  organizationKey   String          @default("nexus")
+  version           Int
+  name              String
+  currency          String          @default("CAD")
+  assumptions       Json
+  disclaimerEn      String          @db.Text
+  disclaimerZh      String          @db.Text
+  disclaimerFr      String          @db.Text
+  active            Boolean         @default(false)
+  createdById       String?
+  createdAt         DateTime        @default(now())
+  createdBy         AdminUser?      @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  estimates         SavedEstimate[]
+
+  @@unique([organizationKey, version])
+  @@index([organizationKey, active])
+}
+
+model TimelineAssumptionVersion {
+  id                String          @id @default(cuid())
+  organizationKey   String          @default("nexus")
+  version           Int
+  name              String
+  stages            Json
+  uncertaintyPct    Int             @default(20)
+  disclaimerEn      String          @db.Text
+  disclaimerZh      String          @db.Text
+  disclaimerFr      String          @db.Text
+  active            Boolean         @default(false)
+  createdById       String?
+  createdAt         DateTime        @default(now())
+  createdBy         AdminUser?      @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  estimates         SavedEstimate[]
+
+  @@unique([organizationKey, version])
+  @@index([organizationKey, active])
+}
+
+model SavedEstimate {
+  id                       String                     @id @default(cuid())
+  organizationKey          String                     @default("nexus")
+  reference                String                     @unique
+  leadId                   String?
+  locale                   String                     @default("en")
+  input                    Json
+  costResult               Json?
+  timelineResult           Json?
+  costAssumptionVersionId  String?
+  timelineVersionId        String?
+  createdAt                DateTime                   @default(now())
+  lead                     BusinessLead?              @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  costAssumptionVersion    CostAssumptionVersion?     @relation(fields: [costAssumptionVersionId], references: [id], onDelete: Restrict)
+  timelineVersion          TimelineAssumptionVersion? @relation(fields: [timelineVersionId], references: [id], onDelete: Restrict)
+
+  @@index([organizationKey, createdAt])
+  @@index([leadId, createdAt])
+  @@index([costAssumptionVersionId])
+  @@index([timelineVersionId])
+}
+
+model EmailOutbox {
+  id              String            @id @default(cuid())
+  organizationKey String            @default("nexus")
+  leadId          String?
+  dedupeKey       String            @unique
+  templateKey     String
+  locale          String            @default("en")
+  recipient       String
+  replyTo         String?
+  subject         String
+  textBody        String            @db.Text
+  htmlBody        String            @db.Text
+  status          EmailOutboxStatus @default(PENDING)
+  attempts        Int               @default(0)
+  maxAttempts     Int               @default(5)
+  nextAttemptAt   DateTime          @default(now())
+  lockedAt        DateTime?
+  sentAt          DateTime?
+  lastError       String?           @db.Text
+  providerMessageId String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  lead            BusinessLead?     @relation(fields: [leadId], references: [id], onDelete: SetNull)
+
+  @@index([organizationKey, status, nextAttemptAt])
+  @@index([leadId, createdAt])
 }

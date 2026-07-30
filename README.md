@@ -200,6 +200,147 @@ admin login rate limiter and audit log use the new tables.
 - Vercel Blob is an external service and requires a connected store; no paid
   plan is required at low Hobby usage, but plan limits apply.
 
+## Phase 3 business tools
+
+Release 2 adds a controlled business-workflow layer while preserving the
+existing website and CMS fallbacks:
+
+- an accessible English, Chinese and French project-intake wizard;
+- general, project, supplier, partner and compliance enquiries;
+- versioned landed-cost and project-timeline assumptions;
+- reproducible saved estimates linked to leads;
+- lead status, priority, owner, notes, activity history and safe CSV export;
+- private, authenticated multilingual PDF project briefs;
+- a provider-neutral SMTP adapter and retry-safe email outbox;
+- database-backed rate limiting, honeypot spam protection, signed public CSRF
+  tokens, same-origin enforcement and audit logging.
+
+All Phase 3 records are scoped with `organizationKey=nexus`. Public payloads
+cannot choose or override that scope. Admin queries and mutations apply the
+same scope explicitly.
+
+### Phase 3 feature flags
+
+All new capabilities are disabled by default:
+
+```text
+PHASE3_BUSINESS_TOOLS_ENABLED=false
+PHASE3_ADMIN_TOOLS_ENABLED=false
+PHASE3_EMAIL_NOTIFICATIONS_ENABLED=false
+```
+
+The public and admin flags may be enabled independently after the additive
+database migration and seed complete. Email must remain disabled until SMTP
+credentials are explicitly configured and an authorized mailbox test is
+approved.
+
+Optional security configuration:
+
+```text
+PHASE3_FORM_SECRET
+```
+
+Use a unique random value of at least 32 characters. When omitted, the
+existing `ADMIN_SESSION_SECRET` signs public form CSRF tokens.
+
+Optional SMTP configuration:
+
+```text
+SMTP_HOST
+SMTP_PORT
+SMTP_SECURE
+SMTP_USER
+SMTP_PASSWORD
+SMTP_FROM
+SMTP_ADMIN_RECIPIENT
+```
+
+No mailbox credentials are stored in source code. Hostinger SMTP is compatible
+with this adapter, but no real mailbox connection is attempted by the release.
+Failed delivery never rolls back a lead submission; messages remain in the
+outbox for bounded, idempotent retries.
+
+### Phase 3 database rollout
+
+Migration `20260730003000_phase3_business_tools` is additive. It creates:
+
+```text
+BusinessLead
+LeadActivity
+CostAssumptionVersion
+TimelineAssumptionVersion
+SavedEstimate
+EmailOutbox
+```
+
+It does not remove or rewrite any existing CMS, media, publication, admin,
+product, project, news, supplier or inquiry data.
+
+After confirming a Neon restore point, apply and seed with:
+
+```bash
+npm run db:migrate:deploy
+npm run phase3:seed
+```
+
+The seed creates only the first immutable active cost and timeline assumption
+versions when none exist. Review the business assumptions and multilingual
+disclaimers with Canadian logistics, tax, engineering and legal professionals
+before enabling the public calculator.
+
+### Phase 3 PDF and email notes
+
+Project briefs are generated only through an authenticated admin route. The
+PDF response is not stored at a public URL and includes the saved versioned
+assumptions and an indicative-estimate disclaimer. PDFKit embeds a local
+Noto Sans CJK SC font so English, Simplified Chinese and French render without
+an external font service.
+
+The email outbox is provider-neutral and disabled by default. A scheduled
+Vercel invocation or authenticated operations task can call the protected
+processor after SMTP is configured; a scheduler is not included in this
+release.
+
+### Phase 3 release validation
+
+On the project Mac:
+
+```bash
+./scripts/validate-phase3.command
+```
+
+The runner validates Prisma, TypeScript, unit tests, lint, the production build
+and patch whitespace. It always copies the most useful PASS/FAIL result to the
+clipboard. Route integration tests require a disposable migrated PostgreSQL
+database and an isolated local administrator:
+
+```bash
+npm run test:phase3:routes
+```
+
+Never point integration tests at production.
+
+### Phase 3 limitations and decisions
+
+- Cost inputs and percentages are business assumptions, not tax, customs,
+  engineering or legal advice and never form a quotation.
+- Timeline ranges depend on jurisdiction, approvals, supplier capacity,
+  shipping, weather and site readiness.
+- The estimator accepts a base-product cost supplied by the visitor; it is not
+  a product-pricing database.
+- The public workflow does not create customer accounts or expose lead data.
+- PDFs are generated on demand for authenticated administrators only.
+- SMTP delivery requires separate credentials and an authorized live test.
+- CSV files neutralize spreadsheet formulas, but administrators must still
+  handle exported personal data under the applicable privacy policy.
+- Data retention periods, consent language, lead ownership policy, tax/duty
+  assumptions and quotation terms require a business/legal decision before
+  production enablement.
+- The inherited application remains on Next.js 14.2.35. A current dependency
+  audit reports advisories that have no patched Next 14 release; upgrading to
+  a supported Next.js/React major must be handled as a separately tested
+  platform release before enabling Phase 3 in production.
+
 ### Release validation
 
 On the project Mac:
