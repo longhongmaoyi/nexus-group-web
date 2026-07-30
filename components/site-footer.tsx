@@ -23,7 +23,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
   const localized = (value: Localized) => value[locale]
   return (
     <footer className="border-t border-white/10 bg-[#06191d] text-white">
-      <div className="mx-auto grid max-w-[1760px] gap-9 px-5 py-10 sm:px-8 lg:grid-cols-[1.05fr_0.75fr_1.35fr] lg:px-12">
+      <div className="mx-auto grid max-w-[1760px] gap-8 px-5 py-8 sm:px-8 lg:grid-cols-[0.9fr_0.65fr_1.65fr] lg:gap-7 lg:px-12">
         <div>
           <BrandMark href={`/${locale}`} adaptive />
           <p className="mt-4 max-w-lg text-base leading-7 text-white/64">{localized(copy.body)}</p>
@@ -31,25 +31,25 @@ export function SiteFooter({ locale }: { locale: Locale }) {
         <div className="grid gap-7 sm:grid-cols-2">
           {groups.map((group) => <div key={group.title.en}><h3 className="text-sm font-bold uppercase tracking-[0.15em] text-[#b8d683]">{localized(group.title)}</h3><div className="mt-3 grid gap-2.5">{group.links.map((item) => <Link key={item.slug} href={`/${locale}/${item.slug}`} className="text-[0.94rem] text-white/64 hover:text-white">{localized(item.label)}</Link>)}</div></div>)}
         </div>
-        <div className="lg:border-l lg:border-white/10 lg:pl-8">
+        <div className="min-w-0 lg:border-l lg:border-white/10 lg:pl-7">
           <h2 className="text-xl font-semibold">{localized(copy.contact)}</h2>
-          <div className="mt-4 grid gap-5">
-            <address className="not-italic">
+          <div className="mt-3 grid gap-4 md:grid-cols-2 md:gap-0">
+            <address className="min-w-0 not-italic md:pr-5">
               <p className="text-base font-semibold text-white">Mr. Lin Jian</p>
               <p className="mt-0.5 text-sm font-medium text-[#b8d683]">{localized(copy.director)}</p>
-              <div className="mt-2.5 grid gap-1.5 text-sm leading-5 text-white/68">
+              <div className="mt-2 grid gap-1.5 text-sm leading-5 text-white/68">
                 <a href="mailto:leo@nexuslife.ca" className="flex items-start gap-2 hover:text-white"><Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#b8d683]" /><span>leo@nexuslife.ca</span></a>
                 <a href="https://wa.me/14168463253" target="_blank" rel="noreferrer" className="flex items-start gap-2 hover:text-white"><MessageCircle className="mt-0.5 h-4 w-4 shrink-0 text-[#b8d683]" /><span>+1 416 846 3253</span></a>
-                <p className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#b8d683]" /><span>125 Cartmel Drive, Markham, Ontario, Canada, L3S 1K8</span></p>
+                <p className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#b8d683]" /><span className="max-w-[24rem]">125 Cartmel Drive, Markham, Ontario, Canada, L3S 1K8</span></p>
               </div>
             </address>
-            <address className="border-t border-white/10 pt-4 not-italic">
+            <address className="min-w-0 border-t border-white/10 pt-4 not-italic md:border-l md:border-t-0 md:py-0 md:pl-5">
               <p className="text-base font-semibold text-white">Satya Sharma</p>
               <p className="mt-0.5 text-sm font-medium text-[#b8d683]">{localized(copy.generalManager)}</p>
-              <div className="mt-2.5 grid gap-1.5 text-sm leading-5 text-white/68">
+              <div className="mt-2 grid gap-1.5 text-sm leading-5 text-white/68">
                 <a href="mailto:satya@nexuslife.ca" className="flex items-start gap-2 hover:text-white"><Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#b8d683]" /><span>satya@nexuslife.ca</span></a>
                 <a href="https://wa.me/919517149685" target="_blank" rel="noreferrer" className="flex items-start gap-2 hover:text-white"><MessageCircle className="mt-0.5 h-4 w-4 shrink-0 text-[#b8d683]" /><span>+91 9517149685</span></a>
-                <p className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#b8d683]" /><span>Yiwu International Trade City, Zhejiang, China</span></p>
+                <p className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#b8d683]" /><span className="max-w-[22rem]">Yiwu International Trade City, Zhejiang, China</span></p>
               </div>
             </address>
           </div>
