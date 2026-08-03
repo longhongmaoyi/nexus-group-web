@@ -112,6 +112,26 @@ PORTAL_BLOB_WEBHOOK_PUBLIC_KEY=<private portal store webhook public key>
 All three values must be configured in the hosting provider. The existing
 `BLOB_READ_WRITE_TOKEN` remains dedicated to public CMS images.
 
+## Phase 5 operating centre
+
+Phase 5 adds one feature-flagged internal operating layer at `/admin/phase5`.
+It extends existing leads and portal projects, and adds compliance records,
+local partners and internal tasks. Analytics are computed from first-party
+database records. CSV and PDF reports use the existing application tooling.
+
+```text
+PHASE5_ADMIN_ENABLED=false
+PHASE5_INTERNAL_NOTIFICATIONS_ENABLED=false
+PHASE5_PUBLIC_COMPLIANCE_ENABLED=false
+PHASE5_AI_REVIEW_ENABLED=false
+```
+
+The public EN/ZH/FR Compliance Centre is only available when its separate flag
+is enabled, and only records with complete reviewed multilingual public fields
+are shown. Evidence and internal responsibility fields are never returned.
+AI review is an inactive provider boundary only: it is off by default, requires
+human review, and cannot perform an automatic production action.
+
 ### Phase 2 migration and seed
 
 Migration:

@@ -4,6 +4,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { BrandMark } from '@/components/brand-mark'
 import { LocaleSwitcher } from '@/components/locale-switcher'
 import type { Locale } from '@/lib/i18n'
+import { isPhase5PublicComplianceEnabled } from '@/lib/phase5-core.mjs'
 
 type Localized = Record<Locale, string>
 const t = (en: string, zh: string, fr: string): Localized => ({ en, zh, fr })
@@ -26,6 +27,9 @@ const copy = {
 
 export function SiteHeader({ locale }: { locale: Locale }) {
   const localized = (value: Localized) => value[locale]
+  const visibleNavigation = isPhase5PublicComplianceEnabled()
+    ? [...navigation, { slug: 'compliance', label: t('Compliance', '合规中心', 'Conformité') }]
+    : navigation
 
   return (
     <header className="absolute inset-x-0 top-0 z-50 bg-[linear-gradient(180deg,rgba(3,17,21,.76),rgba(3,17,21,.22))] text-white">
@@ -36,7 +40,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
         </div>
 
         <nav className="hidden items-center gap-3 xl:flex 2xl:gap-5" aria-label="Primary navigation">
-          {navigation.map((item, index) => (
+          {visibleNavigation.map((item, index) => (
             <Link key={`${item.slug}-${index}`} href={`/${locale}/${item.slug}`} className="whitespace-nowrap text-[0.94rem] font-semibold text-white/86 transition hover:text-white 2xl:text-base">
               {localized(item.label)}
             </Link>
@@ -51,7 +55,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
         </div>
       </div>
       <nav className="mx-auto flex max-w-[1760px] gap-6 overflow-x-auto px-5 pb-3 text-sm font-semibold text-white/84 sm:px-8 lg:px-12 xl:hidden" aria-label="Primary navigation">
-        {navigation.map((item, index) => (
+        {visibleNavigation.map((item, index) => (
           <Link key={`${item.slug}-compact-${index}`} href={`/${locale}/${item.slug}`} className="shrink-0 whitespace-nowrap transition hover:text-white">
             {localized(item.label)}
           </Link>

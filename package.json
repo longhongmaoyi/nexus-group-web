@@ -21,11 +21,13 @@
     "cms:media:index": "node scripts/cms-media-index.mjs",
     "cms:phase2:seed": "node scripts/cms-phase2-seed.mjs",
     "phase3:seed": "node scripts/phase3-seed.mjs",
+    "phase5:seed": "node scripts/phase5-seed.mjs",
     "release-a:seed": "node scripts/release-a-seed.mjs",
     "test:smtp:delivery": "node scripts/test-smtp-delivery.mjs",
     "test:phase2:routes": "node scripts/test-phase2-routes.mjs",
     "test:phase3:routes": "node scripts/test-phase3-routes.mjs",
     "test:phase4:routes": "node scripts/test-phase4-routes.mjs",
+    "test:phase5:routes": "node scripts/test-phase5-routes.mjs",
     "admin:create": "node scripts/admin-create.mjs",
     "test": "node --test tests/*.test.mjs",
     "postinstall": "prisma generate"

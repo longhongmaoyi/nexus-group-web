@@ -113,6 +113,30 @@ enum PortalQuotationStatus {
   WITHDRAWN
 }
 
+enum ComplianceStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  READY_FOR_REVIEW
+  VERIFIED
+  BLOCKED
+  NOT_APPLICABLE
+}
+
+enum PartnerVerificationStatus {
+  UNVERIFIED
+  IN_REVIEW
+  VERIFIED
+  SUSPENDED
+}
+
+enum InternalTaskStatus {
+  OPEN
+  IN_PROGRESS
+  BLOCKED
+  DONE
+  CANCELLED
+}
+
 model AdminUser {
   id                       String                      @id @default(cuid())
   email                    String                      @unique
@@ -134,6 +158,11 @@ model AdminUser {
   portalComments           PortalComment[]             @relation("PortalAdminComment")
   portalAuditEvents        PortalAuditEvent[]          @relation("PortalAdminAudit")
   supplierProfilesVerified Supplier[]                  @relation("SupplierVerifier")
+  phase5ProjectsOwned      PortalProject[]             @relation("Phase5ProjectOwner")
+  complianceResponsible    ComplianceRecord[]          @relation("ComplianceResponsible")
+  partnersVerified         LocalPartner[]              @relation("PartnerVerifier")
+  phase5TasksAssigned      InternalTask[]              @relation("TaskAssignee")
+  phase5TasksCreated       InternalTask[]              @relation("TaskCreator")
 }
 
 model CmsPage {
@@ -417,17 +446,23 @@ model BusinessLead {
   source             String          @default("WEBSITE")
   sourceMetadata     Json?
   ownerAdminId       String?
+  nextAction         String?         @db.Text
+  dueDate            DateTime?
+  portalProjectId    String?         @unique
   createdAt          DateTime        @default(now())
   updatedAt          DateTime        @updatedAt
   owner              AdminUser?      @relation("LeadOwner", fields: [ownerAdminId], references: [id], onDelete: SetNull)
   activities         LeadActivity[]
   estimates          SavedEstimate[]
   emailMessages      EmailOutbox[]
+  portalProject      PortalProject?  @relation(fields: [portalProjectId], references: [id], onDelete: SetNull)
+  internalTasks      InternalTask[]
 
   @@index([organizationKey, createdAt])
   @@index([organizationKey, status, priority])
   @@index([organizationKey, type])
   @@index([ownerAdminId, status])
+  @@index([organizationKey, dueDate])
   @@index([contactEmail])
 }
 
@@ -513,6 +548,7 @@ model EmailOutbox {
   id                String            @id @default(cuid())
   organizationKey   String            @default("nexus")
   leadId            String?
+  internalTaskId    String?
   dedupeKey         String            @unique
   templateKey       String
   locale            String            @default("en")
@@ -532,9 +568,11 @@ model EmailOutbox {
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
   lead              BusinessLead?     @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  internalTask      InternalTask?     @relation(fields: [internalTaskId], references: [id], onDelete: SetNull)
 
   @@index([organizationKey, status, nextAttemptAt])
   @@index([leadId, createdAt])
+  @@index([internalTaskId, createdAt])
 }
 
 model PortalTenant {
@@ -622,21 +660,35 @@ model PortalAuthToken {
 }
 
 model PortalProject {
-  id          String              @id @default(cuid())
-  tenantId    String
-  reference   String
-  title       String
-  description String?             @db.Text
-  status      PortalProjectStatus @default(INTAKE)
-  createdAt   DateTime            @default(now())
-  updatedAt   DateTime            @updatedAt
-  tenant      PortalTenant        @relation(fields: [tenantId], references: [id], onDelete: Restrict)
-  documents   PortalDocument[]
-  quotations  PortalQuotation[]
-  comments    PortalComment[]
+  id                String              @id @default(cuid())
+  tenantId          String
+  reference         String
+  title             String
+  description       String?             @db.Text
+  status            PortalProjectStatus @default(INTAKE)
+  ownerAdminId      String?
+  priority          LeadPriority        @default(NORMAL)
+  nextAction        String?             @db.Text
+  dueDate           DateTime?
+  budgetAmount      Decimal?            @db.Decimal(14, 2)
+  contractedAmount  Decimal?            @db.Decimal(14, 2)
+  invoicedAmount    Decimal?            @db.Decimal(14, 2)
+  paidAmount        Decimal?            @db.Decimal(14, 2)
+  currency          String              @default("CAD")
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  tenant            PortalTenant        @relation(fields: [tenantId], references: [id], onDelete: Restrict)
+  documents         PortalDocument[]
+  quotations        PortalQuotation[]
+  comments          PortalComment[]
+  owner             AdminUser?          @relation("Phase5ProjectOwner", fields: [ownerAdminId], references: [id], onDelete: SetNull)
+  linkedLead        BusinessLead?
+  complianceRecords ComplianceRecord[]
+  internalTasks     InternalTask[]
 
   @@unique([tenantId, reference])
   @@index([tenantId, status, updatedAt])
+  @@index([ownerAdminId, status, dueDate])
 }
 
 model PortalDocument {
@@ -666,11 +718,102 @@ model PortalDocument {
   verifiedBy         AdminUser?               @relation("PortalDocumentVerifier", fields: [verifiedByAdminId], references: [id], onDelete: SetNull)
   supplier           Supplier?                @relation(fields: [supplierId], references: [id], onDelete: SetNull)
   product            Product?                 @relation(fields: [productId], references: [id], onDelete: SetNull)
+  complianceEvidence ComplianceRecord[]
 
   @@index([tenantId, status, createdAt])
   @@index([tenantId, projectId, visibility])
   @@index([supplierId, libraryPublishedAt])
   @@index([productId, libraryPublishedAt])
+}
+
+model ComplianceRecord {
+  id                 String           @id @default(cuid())
+  organizationKey    String           @default("nexus")
+  projectId          String?
+  evidenceDocumentId String?
+  responsibleAdminId String?
+  jurisdiction       String
+  projectUse         String
+  category           String
+  requirement        String           @db.Text
+  status             ComplianceStatus @default(NOT_STARTED)
+  responsibleParty   String?
+  evidenceUrl        String?
+  reviewDate         DateTime?
+  publicVisible      Boolean          @default(false)
+  publicTitleEn      String?
+  publicTitleZh      String?
+  publicTitleFr      String?
+  publicSummaryEn    String?          @db.Text
+  publicSummaryZh    String?          @db.Text
+  publicSummaryFr    String?          @db.Text
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  project            PortalProject?   @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  evidenceDocument   PortalDocument?  @relation(fields: [evidenceDocumentId], references: [id], onDelete: SetNull)
+  responsibleAdmin   AdminUser?       @relation("ComplianceResponsible", fields: [responsibleAdminId], references: [id], onDelete: SetNull)
+  internalTasks      InternalTask[]
+
+  @@index([organizationKey, jurisdiction, status])
+  @@index([projectId, category])
+  @@index([publicVisible, jurisdiction])
+  @@index([responsibleAdminId, reviewDate])
+}
+
+model LocalPartner {
+  id                 String                    @id @default(cuid())
+  organizationKey    String                    @default("nexus")
+  name               String
+  category           String
+  region             String
+  capabilities       String                    @db.Text
+  verificationStatus PartnerVerificationStatus @default(UNVERIFIED)
+  contactName        String?
+  email              String?
+  phone              String?
+  website            String?
+  contactVisible     Boolean                   @default(false)
+  active             Boolean                   @default(true)
+  notes              String?                   @db.Text
+  verifiedAt         DateTime?
+  verifiedByAdminId  String?
+  createdAt          DateTime                  @default(now())
+  updatedAt          DateTime                  @updatedAt
+  verifiedBy         AdminUser?                @relation("PartnerVerifier", fields: [verifiedByAdminId], references: [id], onDelete: SetNull)
+
+  @@index([organizationKey, category, region])
+  @@index([verificationStatus, active])
+}
+
+model InternalTask {
+  id                 String             @id @default(cuid())
+  organizationKey    String             @default("nexus")
+  title              String
+  description        String?            @db.Text
+  status             InternalTaskStatus @default(OPEN)
+  priority           LeadPriority       @default(NORMAL)
+  dueDate            DateTime?
+  leadId             String?
+  projectId          String?
+  complianceRecordId String?
+  assigneeAdminId    String?
+  createdByAdminId   String?
+  reminderSentAt     DateTime?
+  completedAt        DateTime?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  lead               BusinessLead?      @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  project            PortalProject?     @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  complianceRecord   ComplianceRecord?  @relation(fields: [complianceRecordId], references: [id], onDelete: SetNull)
+  assignee           AdminUser?         @relation("TaskAssignee", fields: [assigneeAdminId], references: [id], onDelete: SetNull)
+  createdBy          AdminUser?         @relation("TaskCreator", fields: [createdByAdminId], references: [id], onDelete: SetNull)
+  emailMessages      EmailOutbox[]
+
+  @@index([organizationKey, status, priority])
+  @@index([assigneeAdminId, status, dueDate])
+  @@index([leadId, createdAt])
+  @@index([projectId, createdAt])
+  @@index([complianceRecordId, createdAt])
 }
 
 model PortalQuotation {
