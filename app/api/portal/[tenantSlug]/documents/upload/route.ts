@@ -7,6 +7,7 @@ import { enforceRateLimit, requestFingerprint } from '@/lib/admin-security'
 import { getPrisma } from '@/lib/prisma'
 import { getPortalMembershipAccess, isPhase4Enabled, writePortalAudit } from '@/lib/portal-auth'
 import { PORTAL_MAX_UPLOAD_BYTES, validatePortalUpload } from '@/lib/portal-auth-core.mjs'
+import { getPortalBlobConfig } from '@/lib/portal-blob-core.mjs'
 import { tenantScope } from '@/lib/portal-tenant-core.mjs'
 
 const contentTypes = [
@@ -16,11 +17,13 @@ const contentTypes = [
 ]
 
 export async function POST(request: Request, context: { params: Promise<{ tenantSlug: string }> }) {
-  if (!isPhase4Enabled() || !process.env.BLOB_READ_WRITE_TOKEN) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  const portalBlob = getPortalBlobConfig()
+  if (!isPhase4Enabled() || !portalBlob) return NextResponse.json({ error: 'Not found' }, { status: 404 })
   const { tenantSlug } = await context.params
   try {
     const body = await request.json() as HandleUploadBody
     const response = await handleUpload({
+      token: portalBlob.token,
       request,
       body,
       onBeforeGenerateToken: async (pathname, clientPayload) => {
@@ -50,7 +53,7 @@ export async function POST(request: Request, context: { params: Promise<{ tenant
       onUploadCompleted: async ({ blob, tokenPayload }) => {
         const payload = JSON.parse(tokenPayload || '{}')
         const file = validatePortalUpload(payload)
-        const details = await head(blob.url)
+        const details = await head(blob.url, { token: portalBlob.token, storeId: portalBlob.storeId })
         const prisma = await getPrisma()
         const document = await prisma.portalDocument.create({ data: {
           tenantId: String(payload.tenantId), uploaderId: String(payload.uploaderId),

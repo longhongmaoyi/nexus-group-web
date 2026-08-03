@@ -100,6 +100,18 @@ Archiving a media record does not physically delete the Blob object. This is an
 intentional rollback safeguard. Physical purge is an operational action and is
 not exposed in the CMS.
 
+Phase 4 portal documents use a separate **private Vercel Blob store**. Portal
+routes select it explicitly and do not fall back to the public CMS store:
+
+```text
+PORTAL_BLOB_READ_WRITE_TOKEN=<private portal store token>
+PORTAL_BLOB_STORE_ID=<private portal store id>
+PORTAL_BLOB_WEBHOOK_PUBLIC_KEY=<private portal store webhook public key>
+```
+
+All three values must be configured in the hosting provider. The existing
+`BLOB_READ_WRITE_TOKEN` remains dedicated to public CMS images.
+
 ### Phase 2 migration and seed
 
 Migration:

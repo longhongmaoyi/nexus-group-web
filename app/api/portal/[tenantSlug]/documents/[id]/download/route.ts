@@ -3,10 +3,12 @@ import { NextResponse } from 'next/server'
 
 import { getPrisma } from '@/lib/prisma'
 import { getPortalMembershipAccess, isPhase4Enabled, writePortalAudit } from '@/lib/portal-auth'
+import { getPortalBlobConfig } from '@/lib/portal-blob-core.mjs'
 import { tenantScope } from '@/lib/portal-tenant-core.mjs'
 
 export async function GET(_: Request, context: { params: Promise<{ tenantSlug: string; id: string }> }) {
-  if (!isPhase4Enabled() || !process.env.BLOB_READ_WRITE_TOKEN) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  const portalBlob = getPortalBlobConfig()
+  if (!isPhase4Enabled() || !portalBlob) return NextResponse.json({ error: 'Not found' }, { status: 404 })
   const { tenantSlug, id } = await context.params
   const access = await getPortalMembershipAccess(tenantSlug, 'READ')
   if (!access.ok) return NextResponse.json({ error: access.error }, { status: access.status })
@@ -18,7 +20,7 @@ export async function GET(_: Request, context: { params: Promise<{ tenantSlug: s
   })
   if (!document) return NextResponse.json({ error: 'Not found' }, { status: 404 })
 
-  const blob = await get(document.pathname, { access: 'private' })
+  const blob = await get(document.pathname, { access: 'private', token: portalBlob.token, storeId: portalBlob.storeId })
   if (!blob || blob.statusCode !== 200) return NextResponse.json({ error: 'Not found' }, { status: 404 })
   await writePortalAudit({ tenantId: document.tenantId, portalUserId: access.session.user.id, action: 'DOCUMENT_DOWNLOADED', entityType: 'PortalDocument', entityId: document.id })
   const encodedName = encodeURIComponent(document.name).replace(/'/g, '%27')
