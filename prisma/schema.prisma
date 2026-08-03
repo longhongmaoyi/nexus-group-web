@@ -58,22 +58,82 @@ enum EmailOutboxStatus {
   CANCELLED
 }
 
+enum PortalTenantType {
+  CLIENT
+  SUPPLIER
+}
+
+enum PortalAccountStatus {
+  PENDING_VERIFICATION
+  ACTIVE
+  SUSPENDED
+}
+
+enum PortalMembershipRole {
+  OWNER
+  MANAGER
+  MEMBER
+  VIEWER
+}
+
+enum PortalTokenKind {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+}
+
+enum PortalProjectStatus {
+  INTAKE
+  PLANNING
+  QUOTING
+  APPROVAL
+  DELIVERY
+  COMPLETED
+  ON_HOLD
+}
+
+enum PortalDocumentVisibility {
+  TENANT
+  NEXUS_ONLY
+  SHARED
+}
+
+enum PortalDocumentStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+  ARCHIVED
+}
+
+enum PortalQuotationStatus {
+  DRAFT
+  SENT
+  APPROVED
+  REJECTED
+  EXPIRED
+  WITHDRAWN
+}
+
 model AdminUser {
-  id               String               @id @default(cuid())
-  email            String               @unique
-  name             String?
-  passwordHash     String
-  role             String               @default("EDITOR")
-  createdAt        DateTime             @default(now())
-  updatedAt        DateTime             @updatedAt
-  auditLogs        AuditLog[]
-  mediaAssets      MediaAsset[]
-  publications     CmsPublication[]
-  sectionTemplates CmsSectionTemplate[]
-  assignedLeads     BusinessLead[]       @relation("LeadOwner")
-  leadActivities    LeadActivity[]
-  costVersions      CostAssumptionVersion[]
-  timelineVersions  TimelineAssumptionVersion[]
+  id                       String                      @id @default(cuid())
+  email                    String                      @unique
+  name                     String?
+  passwordHash             String
+  role                     String                      @default("EDITOR")
+  createdAt                DateTime                    @default(now())
+  updatedAt                DateTime                    @updatedAt
+  auditLogs                AuditLog[]
+  mediaAssets              MediaAsset[]
+  publications             CmsPublication[]
+  sectionTemplates         CmsSectionTemplate[]
+  assignedLeads            BusinessLead[]              @relation("LeadOwner")
+  leadActivities           LeadActivity[]
+  costVersions             CostAssumptionVersion[]
+  timelineVersions         TimelineAssumptionVersion[]
+  portalDocumentsVerified  PortalDocument[]            @relation("PortalDocumentVerifier")
+  portalQuotationsCreated  PortalQuotation[]           @relation("PortalQuotationCreator")
+  portalComments           PortalComment[]             @relation("PortalAdminComment")
+  portalAuditEvents        PortalAuditEvent[]          @relation("PortalAdminAudit")
+  supplierProfilesVerified Supplier[]                  @relation("SupplierVerifier")
 }
 
 model CmsPage {
@@ -224,23 +284,24 @@ model RateLimitBucket {
 }
 
 model Product {
-  id             String        @id @default(cuid())
-  slug           String        @unique
-  sku            String?       @unique
-  titleEn        String
-  titleZh        String
-  titleFr        String
-  descriptionEn  String        @db.Text
-  descriptionZh  String        @db.Text
-  descriptionFr  String        @db.Text
-  category       String
-  coverImage     String?
-  gallery        Json?
-  specifications Json?
-  featured       Boolean       @default(false)
-  status         ContentStatus @default(DRAFT)
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
+  id              String           @id @default(cuid())
+  slug            String           @unique
+  sku             String?          @unique
+  titleEn         String
+  titleZh         String
+  titleFr         String
+  descriptionEn   String           @db.Text
+  descriptionZh   String           @db.Text
+  descriptionFr   String           @db.Text
+  category        String
+  coverImage      String?
+  gallery         Json?
+  specifications  Json?
+  featured        Boolean          @default(false)
+  status          ContentStatus    @default(DRAFT)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  portalDocuments PortalDocument[]
 }
 
 model Project {
@@ -284,74 +345,84 @@ model NewsPost {
 }
 
 model Supplier {
-  id             String   @id @default(cuid())
-  companyName    String
-  contactName    String?
-  email          String?
-  phone          String?
-  country        String?
-  productTypes   String?
-  certifications String?
-  notes          String?  @db.Text
-  approved       Boolean  @default(false)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id                 String           @id @default(cuid())
+  companyName        String
+  contactName        String?
+  email              String?
+  phone              String?
+  country            String?
+  productTypes       String?
+  certifications     String?
+  notes              String?          @db.Text
+  approved           Boolean          @default(false)
+  portalTenantId     String?          @unique
+  verificationStatus String           @default("UNVERIFIED")
+  verifiedAt         DateTime?
+  verifiedByAdminId  String?
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  portalTenant       PortalTenant?    @relation(fields: [portalTenantId], references: [id], onDelete: SetNull)
+  verifiedBy         AdminUser?       @relation("SupplierVerifier", fields: [verifiedByAdminId], references: [id], onDelete: SetNull)
+  portalDocuments    PortalDocument[]
+
+  @@index([verificationStatus])
+  @@index([verifiedByAdminId])
 }
 
 model Inquiry {
-  id        String        @id @default(cuid())
-  name      String
-  email     String
-  phone     String?
-  company   String?
-  country   String?
-  interest  String?
-  message   String        @db.Text
-  locale    String        @default("en")
-  consent   Boolean       @default(false)
-  consentAt DateTime?
+  id                 String        @id @default(cuid())
+  name               String
+  email              String
+  phone              String?
+  company            String?
+  country            String?
+  interest           String?
+  message            String        @db.Text
+  locale             String        @default("en")
+  consent            Boolean       @default(false)
+  consentAt          DateTime?
   consentTextVersion String?
-  status    InquiryStatus @default(NEW)
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  status             InquiryStatus @default(NEW)
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
 }
 
 model BusinessLead {
-  id                    String           @id @default(cuid())
-  organizationKey       String           @default("nexus")
-  reference             String           @unique
-  type                  LeadType         @default(PROJECT)
-  status                LeadStatus       @default(NEW)
-  priority              LeadPriority     @default(NORMAL)
-  locale                String           @default("en")
-  contactName           String
-  contactEmail          String
-  contactPhone          String?
-  organizationName      String?
-  country               String?
-  province              String?
-  municipality          String?
-  sector                String?
-  projectType           String?
-  intendedUse           String?
-  sizeCapacity          String?
-  budgetRange           String?
-  targetTimeline        String?
-  siteReadiness         String?
-  complianceNeeds       String?
-  notes                 String?          @db.Text
-  consent               Boolean
-  consentAt             DateTime?
-  consentTextVersion    String?
-  source                String           @default("WEBSITE")
-  sourceMetadata        Json?
-  ownerAdminId          String?
-  createdAt             DateTime         @default(now())
-  updatedAt             DateTime         @updatedAt
-  owner                 AdminUser?       @relation("LeadOwner", fields: [ownerAdminId], references: [id], onDelete: SetNull)
-  activities            LeadActivity[]
-  estimates             SavedEstimate[]
-  emailMessages         EmailOutbox[]
+  id                 String          @id @default(cuid())
+  organizationKey    String          @default("nexus")
+  reference          String          @unique
+  type               LeadType        @default(PROJECT)
+  status             LeadStatus      @default(NEW)
+  priority           LeadPriority    @default(NORMAL)
+  locale             String          @default("en")
+  contactName        String
+  contactEmail       String
+  contactPhone       String?
+  organizationName   String?
+  country            String?
+  province           String?
+  municipality       String?
+  sector             String?
+  projectType        String?
+  intendedUse        String?
+  sizeCapacity       String?
+  budgetRange        String?
+  targetTimeline     String?
+  siteReadiness      String?
+  complianceNeeds    String?
+  notes              String?         @db.Text
+  consent            Boolean
+  consentAt          DateTime?
+  consentTextVersion String?
+  source             String          @default("WEBSITE")
+  sourceMetadata     Json?
+  ownerAdminId       String?
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  owner              AdminUser?      @relation("LeadOwner", fields: [ownerAdminId], references: [id], onDelete: SetNull)
+  activities         LeadActivity[]
+  estimates          SavedEstimate[]
+  emailMessages      EmailOutbox[]
 
   @@index([organizationKey, createdAt])
   @@index([organizationKey, status, priority])
@@ -361,76 +432,76 @@ model BusinessLead {
 }
 
 model LeadActivity {
-  id              String        @id @default(cuid())
-  organizationKey String        @default("nexus")
+  id              String       @id @default(cuid())
+  organizationKey String       @default("nexus")
   leadId          String
   actorAdminId    String?
   kind            String
-  body            String?       @db.Text
+  body            String?      @db.Text
   metadata        Json?
-  createdAt       DateTime      @default(now())
-  lead            BusinessLead  @relation(fields: [leadId], references: [id], onDelete: Cascade)
-  actorAdmin      AdminUser?    @relation(fields: [actorAdminId], references: [id], onDelete: SetNull)
+  createdAt       DateTime     @default(now())
+  lead            BusinessLead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  actorAdmin      AdminUser?   @relation(fields: [actorAdminId], references: [id], onDelete: SetNull)
 
   @@index([organizationKey, leadId, createdAt])
   @@index([actorAdminId, createdAt])
 }
 
 model CostAssumptionVersion {
-  id                String          @id @default(cuid())
-  organizationKey   String          @default("nexus")
-  version           Int
-  name              String
-  currency          String          @default("CAD")
-  assumptions       Json
-  disclaimerEn      String          @db.Text
-  disclaimerZh      String          @db.Text
-  disclaimerFr      String          @db.Text
-  active            Boolean         @default(false)
-  createdById       String?
-  createdAt         DateTime        @default(now())
-  createdBy         AdminUser?      @relation(fields: [createdById], references: [id], onDelete: SetNull)
-  estimates         SavedEstimate[]
+  id              String          @id @default(cuid())
+  organizationKey String          @default("nexus")
+  version         Int
+  name            String
+  currency        String          @default("CAD")
+  assumptions     Json
+  disclaimerEn    String          @db.Text
+  disclaimerZh    String          @db.Text
+  disclaimerFr    String          @db.Text
+  active          Boolean         @default(false)
+  createdById     String?
+  createdAt       DateTime        @default(now())
+  createdBy       AdminUser?      @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  estimates       SavedEstimate[]
 
   @@unique([organizationKey, version])
   @@index([organizationKey, active])
 }
 
 model TimelineAssumptionVersion {
-  id                String          @id @default(cuid())
-  organizationKey   String          @default("nexus")
-  version           Int
-  name              String
-  stages            Json
-  uncertaintyPct    Int             @default(20)
-  disclaimerEn      String          @db.Text
-  disclaimerZh      String          @db.Text
-  disclaimerFr      String          @db.Text
-  active            Boolean         @default(false)
-  createdById       String?
-  createdAt         DateTime        @default(now())
-  createdBy         AdminUser?      @relation(fields: [createdById], references: [id], onDelete: SetNull)
-  estimates         SavedEstimate[]
+  id              String          @id @default(cuid())
+  organizationKey String          @default("nexus")
+  version         Int
+  name            String
+  stages          Json
+  uncertaintyPct  Int             @default(20)
+  disclaimerEn    String          @db.Text
+  disclaimerZh    String          @db.Text
+  disclaimerFr    String          @db.Text
+  active          Boolean         @default(false)
+  createdById     String?
+  createdAt       DateTime        @default(now())
+  createdBy       AdminUser?      @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  estimates       SavedEstimate[]
 
   @@unique([organizationKey, version])
   @@index([organizationKey, active])
 }
 
 model SavedEstimate {
-  id                       String                     @id @default(cuid())
-  organizationKey          String                     @default("nexus")
-  reference                String                     @unique
-  leadId                   String?
-  locale                   String                     @default("en")
-  input                    Json
-  costResult               Json?
-  timelineResult           Json?
-  costAssumptionVersionId  String?
-  timelineVersionId        String?
-  createdAt                DateTime                   @default(now())
-  lead                     BusinessLead?              @relation(fields: [leadId], references: [id], onDelete: SetNull)
-  costAssumptionVersion    CostAssumptionVersion?     @relation(fields: [costAssumptionVersionId], references: [id], onDelete: Restrict)
-  timelineVersion          TimelineAssumptionVersion? @relation(fields: [timelineVersionId], references: [id], onDelete: Restrict)
+  id                      String                     @id @default(cuid())
+  organizationKey         String                     @default("nexus")
+  reference               String                     @unique
+  leadId                  String?
+  locale                  String                     @default("en")
+  input                   Json
+  costResult              Json?
+  timelineResult          Json?
+  costAssumptionVersionId String?
+  timelineVersionId       String?
+  createdAt               DateTime                   @default(now())
+  lead                    BusinessLead?              @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  costAssumptionVersion   CostAssumptionVersion?     @relation(fields: [costAssumptionVersionId], references: [id], onDelete: Restrict)
+  timelineVersion         TimelineAssumptionVersion? @relation(fields: [timelineVersionId], references: [id], onDelete: Restrict)
 
   @@index([organizationKey, createdAt])
   @@index([leadId, createdAt])
@@ -439,29 +510,249 @@ model SavedEstimate {
 }
 
 model EmailOutbox {
-  id              String            @id @default(cuid())
-  organizationKey String            @default("nexus")
-  leadId          String?
-  dedupeKey       String            @unique
-  templateKey     String
-  locale          String            @default("en")
-  recipient       String
-  replyTo         String?
-  subject         String
-  textBody        String            @db.Text
-  htmlBody        String            @db.Text
-  status          EmailOutboxStatus @default(PENDING)
-  attempts        Int               @default(0)
-  maxAttempts     Int               @default(5)
-  nextAttemptAt   DateTime          @default(now())
-  lockedAt        DateTime?
-  sentAt          DateTime?
-  lastError       String?           @db.Text
+  id                String            @id @default(cuid())
+  organizationKey   String            @default("nexus")
+  leadId            String?
+  dedupeKey         String            @unique
+  templateKey       String
+  locale            String            @default("en")
+  recipient         String
+  replyTo           String?
+  subject           String
+  textBody          String            @db.Text
+  htmlBody          String            @db.Text
+  status            EmailOutboxStatus @default(PENDING)
+  attempts          Int               @default(0)
+  maxAttempts       Int               @default(5)
+  nextAttemptAt     DateTime          @default(now())
+  lockedAt          DateTime?
+  sentAt            DateTime?
+  lastError         String?           @db.Text
   providerMessageId String?
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  lead            BusinessLead?     @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  lead              BusinessLead?     @relation(fields: [leadId], references: [id], onDelete: SetNull)
 
   @@index([organizationKey, status, nextAttemptAt])
   @@index([leadId, createdAt])
+}
+
+model PortalTenant {
+  id              String             @id @default(cuid())
+  organizationKey String             @default("nexus")
+  slug            String             @unique
+  name            String
+  type            PortalTenantType
+  active          Boolean            @default(true)
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+  memberships     PortalMembership[]
+  projects        PortalProject[]
+  documents       PortalDocument[]
+  quotations      PortalQuotation[]
+  comments        PortalComment[]
+  auditEvents     PortalAuditEvent[]
+  supplier        Supplier?
+
+  @@index([organizationKey, type, active])
+}
+
+model PortalUser {
+  id                String              @id @default(cuid())
+  email             String              @unique
+  name              String
+  passwordHash      String
+  locale            String              @default("en")
+  status            PortalAccountStatus @default(PENDING_VERIFICATION)
+  emailVerifiedAt   DateTime?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  memberships       PortalMembership[]
+  sessions          PortalSession[]
+  authTokens        PortalAuthToken[]
+  documentsUploaded PortalDocument[]    @relation("PortalDocumentUploader")
+  comments          PortalComment[]     @relation("PortalUserComment")
+  auditEvents       PortalAuditEvent[]  @relation("PortalUserAudit")
+
+  @@index([status, createdAt])
+}
+
+model PortalMembership {
+  id             String                @id @default(cuid())
+  tenantId       String
+  userId         String
+  role           PortalMembershipRole  @default(MEMBER)
+  active         Boolean               @default(true)
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+  tenant         PortalTenant          @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user           PortalUser            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quoteDecisions PortalQuoteDecision[]
+
+  @@unique([tenantId, userId])
+  @@index([userId, active])
+  @@index([tenantId, role, active])
+}
+
+model PortalSession {
+  id         String     @id @default(cuid())
+  userId     String
+  tokenHash  String     @unique
+  expiresAt  DateTime
+  revokedAt  DateTime?
+  lastSeenAt DateTime   @default(now())
+  createdAt  DateTime   @default(now())
+  user       PortalUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expiresAt])
+  @@index([expiresAt, revokedAt])
+}
+
+model PortalAuthToken {
+  id        String          @id @default(cuid())
+  userId    String
+  kind      PortalTokenKind
+  tokenHash String          @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime        @default(now())
+  user      PortalUser      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, kind, expiresAt])
+}
+
+model PortalProject {
+  id          String              @id @default(cuid())
+  tenantId    String
+  reference   String
+  title       String
+  description String?             @db.Text
+  status      PortalProjectStatus @default(INTAKE)
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  tenant      PortalTenant        @relation(fields: [tenantId], references: [id], onDelete: Restrict)
+  documents   PortalDocument[]
+  quotations  PortalQuotation[]
+  comments    PortalComment[]
+
+  @@unique([tenantId, reference])
+  @@index([tenantId, status, updatedAt])
+}
+
+model PortalDocument {
+  id                 String                   @id @default(cuid())
+  tenantId           String
+  projectId          String?
+  uploaderId         String?
+  verifiedByAdminId  String?
+  supplierId         String?
+  productId          String?
+  name               String
+  pathname           String                   @unique
+  url                String                   @unique
+  contentType        String
+  sizeBytes          Int
+  category           String
+  visibility         PortalDocumentVisibility @default(TENANT)
+  status             PortalDocumentStatus     @default(PENDING)
+  checksum           String?
+  libraryPublishedAt DateTime?
+  verifiedAt         DateTime?
+  createdAt          DateTime                 @default(now())
+  updatedAt          DateTime                 @updatedAt
+  tenant             PortalTenant             @relation(fields: [tenantId], references: [id], onDelete: Restrict)
+  project            PortalProject?           @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  uploader           PortalUser?              @relation("PortalDocumentUploader", fields: [uploaderId], references: [id], onDelete: SetNull)
+  verifiedBy         AdminUser?               @relation("PortalDocumentVerifier", fields: [verifiedByAdminId], references: [id], onDelete: SetNull)
+  supplier           Supplier?                @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+  product            Product?                 @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  @@index([tenantId, status, createdAt])
+  @@index([tenantId, projectId, visibility])
+  @@index([supplierId, libraryPublishedAt])
+  @@index([productId, libraryPublishedAt])
+}
+
+model PortalQuotation {
+  id               String                @id @default(cuid())
+  tenantId         String
+  projectId        String
+  createdByAdminId String?
+  number           String
+  version          Int
+  title            String
+  currency         String                @default("CAD")
+  totalAmount      Decimal?              @db.Decimal(14, 2)
+  lineItems        Json
+  assumptions      Json?
+  exclusions       Json?
+  status           PortalQuotationStatus @default(DRAFT)
+  validUntil       DateTime?
+  sentAt           DateTime?
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+  tenant           PortalTenant          @relation(fields: [tenantId], references: [id], onDelete: Restrict)
+  project          PortalProject         @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  createdBy        AdminUser?            @relation("PortalQuotationCreator", fields: [createdByAdminId], references: [id], onDelete: SetNull)
+  decisions        PortalQuoteDecision[]
+  comments         PortalComment[]
+
+  @@unique([tenantId, number, version])
+  @@index([tenantId, status, updatedAt])
+  @@index([projectId, status])
+}
+
+model PortalQuoteDecision {
+  id           String           @id @default(cuid())
+  quotationId  String
+  membershipId String
+  decision     String
+  comment      String?          @db.Text
+  createdAt    DateTime         @default(now())
+  quotation    PortalQuotation  @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+  membership   PortalMembership @relation(fields: [membershipId], references: [id], onDelete: Restrict)
+
+  @@index([quotationId, createdAt])
+  @@index([membershipId, createdAt])
+}
+
+model PortalComment {
+  id           String           @id @default(cuid())
+  tenantId     String
+  projectId    String?
+  quotationId  String?
+  portalUserId String?
+  adminUserId  String?
+  body         String           @db.Text
+  internal     Boolean          @default(false)
+  createdAt    DateTime         @default(now())
+  tenant       PortalTenant     @relation(fields: [tenantId], references: [id], onDelete: Restrict)
+  project      PortalProject?   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  quotation    PortalQuotation? @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+  portalUser   PortalUser?      @relation("PortalUserComment", fields: [portalUserId], references: [id], onDelete: SetNull)
+  adminUser    AdminUser?       @relation("PortalAdminComment", fields: [adminUserId], references: [id], onDelete: SetNull)
+
+  @@index([tenantId, createdAt])
+  @@index([projectId, createdAt])
+  @@index([quotationId, createdAt])
+}
+
+model PortalAuditEvent {
+  id           String       @id @default(cuid())
+  tenantId     String
+  portalUserId String?
+  adminUserId  String?
+  action       String
+  entityType   String
+  entityId     String?
+  metadata     Json?
+  createdAt    DateTime     @default(now())
+  tenant       PortalTenant @relation(fields: [tenantId], references: [id], onDelete: Restrict)
+  portalUser   PortalUser?  @relation("PortalUserAudit", fields: [portalUserId], references: [id], onDelete: SetNull)
+  adminUser    AdminUser?   @relation("PortalAdminAudit", fields: [adminUserId], references: [id], onDelete: SetNull)
+
+  @@index([tenantId, createdAt])
+  @@index([tenantId, entityType, entityId])
+  @@index([portalUserId, createdAt])
+  @@index([adminUserId, createdAt])
 }

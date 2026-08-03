@@ -64,6 +64,15 @@ h6 {
   .section-copy {
     @apply mt-5 max-w-3xl text-base leading-8 text-slate-600;
   }
+  .portal-input {
+    @apply w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-base text-ink outline-none transition placeholder:text-slate-400 focus:border-forest focus:ring-4 focus:ring-emerald-100;
+  }
+  .portal-primary {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-bold text-white transition hover:bg-forest disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .portal-secondary {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-ink transition hover:border-forest hover:text-forest disabled:cursor-not-allowed disabled:opacity-60;
+  }
 }
 
 summary::-webkit-details-marker {
