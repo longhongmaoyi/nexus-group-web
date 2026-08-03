@@ -21,6 +21,8 @@
     "cms:media:index": "node scripts/cms-media-index.mjs",
     "cms:phase2:seed": "node scripts/cms-phase2-seed.mjs",
     "phase3:seed": "node scripts/phase3-seed.mjs",
+    "release-a:seed": "node scripts/release-a-seed.mjs",
+    "test:smtp:delivery": "node scripts/test-smtp-delivery.mjs",
     "test:phase2:routes": "node scripts/test-phase2-routes.mjs",
     "test:phase3:routes": "node scripts/test-phase3-routes.mjs",
     "admin:create": "node scripts/admin-create.mjs",
@@ -53,5 +55,8 @@
     "prisma": "6.7.0",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.2"
+  },
+  "overrides": {
+    "postcss": "$postcss"
   }
 }

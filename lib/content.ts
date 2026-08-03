@@ -1,4 +1,5 @@
 import type { Locale, LocalizedText } from '@/lib/i18n'
+import { privacyNotice } from '@/lib/legal-content'
 
 const t = (en: string, zh: string, fr: string): LocalizedText => ({ en, zh, fr })
 
@@ -197,6 +198,12 @@ export const sectionPages = {
       { title: t('Supplier Partnerships', '供应商合作', 'Partenariats fournisseurs'), body: t('Manufacturers and technology partners interested in the Canadian market.', '希望进入加拿大市场的制造商与技术伙伴。', 'Fabricants et partenaires technologiques intéressés par le marché canadien.') },
       { title: t('Media & Collaboration', '媒体与合作', 'Médias et collaboration'), body: t('News, investment, design and strategic collaboration.', '新闻、投资、设计与战略合作。', 'Actualités, investissement, design et collaboration stratégique.') },
     ],
+  },
+  privacy: {
+    eyebrow: privacyNotice.eyebrow,
+    title: privacyNotice.title,
+    intro: privacyNotice.intro,
+    blocks: privacyNotice.blocks,
   },
 } as const
 

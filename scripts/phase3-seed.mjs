@@ -30,9 +30,9 @@ const stages = [
 }))
 
 const costDisclaimer = {
-  en: 'This planning estimate is indicative only and is not a quotation, offer, or guarantee. Actual costs depend on design, jurisdiction, supplier terms, exchange rates, duties, taxes, site conditions, professional services, permits, and market conditions.',
-  zh: '本规划估算仅供参考，不构成报价、要约或保证。实际成本取决于设计、司法辖区、供应商条款、汇率、关税、税费、场地条件、专业服务、许可及市场情况。',
-  fr: 'Cette estimation est indicative seulement et ne constitue ni un devis, ni une offre, ni une garantie. Les coûts réels dépendent de la conception, du territoire, des fournisseurs, des taux de change, des droits, des taxes, du site, des services professionnels, des permis et du marché.',
+  en: 'Planning estimate only—not a quotation, offer, professional opinion, tax/customs advice, permit, certification or approval. Percentages are editable budgeting allowances, not verified rates. Duties and taxes depend on tariff classification, origin, value for duty, importer status and destination. Engineering and compliance allowances do not replace project-specific work by qualified professionals or decisions by authorities. Only a separate written quotation issued by an authorized NEXUS representative can state a price, scope, exclusions, taxes, validity period and acceptance terms.',
+  zh: '仅供规划估算——不构成报价、要约、专业意见、税务或海关建议、许可、认证或批准。百分比是可编辑的预算预留，并非经核实的适用税率。关税和税费取决于税则归类、原产地、完税价格、进口商身份及目的地。工程与合规预留不能替代合格专业人士针对具体项目的工作或主管机构的决定。只有由 NEXUS 授权代表另行出具的书面报价，方可载明价格、范围、排除项、税费、有效期及接受条款。',
+  fr: 'Estimation de planification seulement — ni devis, offre, avis professionnel, conseil fiscal ou douanier, permis, certification ou approbation. Les pourcentages sont des provisions budgétaires modifiables, et non des taux vérifiés. Les droits et taxes dépendent du classement tarifaire, de l’origine, de la valeur en douane, du statut de l’importateur et de la destination. Les provisions d’ingénierie et de conformité ne remplacent pas le travail propre au projet de professionnels qualifiés ni les décisions des autorités. Seul un devis écrit distinct émis par un représentant NEXUS autorisé peut préciser le prix, la portée, les exclusions, les taxes, la période de validité et les modalités d’acceptation.',
 }
 const timelineDisclaimer = {
   en: 'This timeline is an early planning range. Duration depends on jurisdiction, design completeness, approvals, testing, supplier capacity, transport, customs, site readiness, weather, inspections, and other project-specific conditions.',

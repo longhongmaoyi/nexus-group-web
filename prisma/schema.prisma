@@ -308,6 +308,9 @@ model Inquiry {
   interest  String?
   message   String        @db.Text
   locale    String        @default("en")
+  consent   Boolean       @default(false)
+  consentAt DateTime?
+  consentTextVersion String?
   status    InquiryStatus @default(NEW)
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt

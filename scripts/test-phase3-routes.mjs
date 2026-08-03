@@ -18,16 +18,19 @@ async function main() {
   check(root.status === 200, `Root returned ${root.status}`)
   check(contact.status === 200 && contactHtml.includes('NEXUS PROJECT ASSESSMENT'), 'Business wizard not rendered.')
   check(config.status === 200, `Config returned ${config.status}`)
-  check(csrf.status === 200 && csrfJson.token && csrfCookie, 'CSRF setup failed.')
+  check(
+    csrf.status === 200 && csrfJson.token && csrfCookie,
+    `CSRF setup failed: status=${csrf.status} token=${Boolean(csrfJson.token)} cookie=${Boolean(csrfCookie)}`,
+  )
 
   const payload = {
-    type: 'PROJECT', locale: 'en', contactName: 'Phase Three Test', contactEmail: 'phase3@example.ca',
+    type: 'PROJECT', locale: 'en', contactName: 'Phase Three Test', contactEmail: process.env.PHASE3_TEST_CONTACT_EMAIL || 'phase3@example.ca',
     organizationName: 'NEXUS Test', country: 'Canada', province: 'Ontario', municipality: 'Ottawa',
     sector: 'Construction', projectType: 'Remote office', intendedUse: 'Temporary project coordination office',
     sizeCapacity: '20 people', budgetRange: 'CAD 250,000-1 million', targetTimeline: '6-12 months',
     siteReadiness: 'Site identified', complianceNeeds: 'Municipal and electrical review',
     notes: 'Harmless local integration test submission with complete project context.',
-    consent: true, consentTextVersion: '2026-07', baseCost: 100000, website: '',
+    consent: true, consentTextVersion: '2026-08-03', baseCost: 100000, website: '',
   }
   const lead = await fetch(`${base}/api/business-tools/leads`, {
     method: 'POST',
@@ -93,6 +96,21 @@ async function main() {
   })
   const emailJson = await emailProcess.json()
   check(emailProcess.status === 200 && emailJson.disabled === true, 'Disabled email provider did not remain safe.')
+  let cleanup = 'not-requested'
+  if (process.env.PHASE3_TEST_CLEANUP === 'true') {
+    const { PrismaClient } = await import('@prisma/client')
+    const prisma = new PrismaClient()
+    try {
+      await prisma.$transaction([
+        prisma.emailOutbox.deleteMany({ where: { leadId } }),
+        prisma.savedEstimate.deleteMany({ where: { leadId } }),
+        prisma.businessLead.deleteMany({ where: { id: leadId, reference: leadJson.reference, source: 'WEBSITE' } }),
+      ])
+      cleanup = 'complete'
+    } finally {
+      await prisma.$disconnect()
+    }
+  }
   console.log(JSON.stringify({
     root: root.status,
     contact: contact.status,
@@ -108,6 +126,7 @@ async function main() {
     pdf: brief.status,
     emailDisabled: emailJson.disabled,
     reference: leadJson.reference,
+    cleanup,
   }, null, 2))
 }
 

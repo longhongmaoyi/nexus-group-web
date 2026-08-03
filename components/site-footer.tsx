@@ -17,6 +17,7 @@ const copy = {
   contact: t('Contact Us', '联系我们', 'Nous contacter'),
   director: t('Director', '董事', 'Directeur'),
   generalManager: t('General Manager', '总经理', 'Directeur général'),
+  privacy: t('Privacy & Data Use', '隐私与数据使用', 'Confidentialité et données'),
 }
 
 export function SiteFooter({ locale }: { locale: Locale }) {
@@ -55,7 +56,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           </div>
         </div>
       </div>
-      <div className="border-t border-white/10"><div className="mx-auto flex max-w-[1760px] flex-col gap-2 px-5 py-4 text-sm text-white/45 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-12"><span>© {new Date().getFullYear()} NEXUS LIFE GROUP. All rights reserved.</span><span>English · 中文 · Français</span></div></div>
+      <div className="border-t border-white/10"><div className="mx-auto flex max-w-[1760px] flex-col gap-2 px-5 py-4 text-sm text-white/45 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-12"><span>© {new Date().getFullYear()} NEXUS LIFE GROUP. All rights reserved.</span><span className="flex flex-wrap gap-x-4 gap-y-1"><Link href={`/${locale}/privacy`} className="hover:text-white">{localized(copy.privacy)}</Link><span>English · 中文 · Français</span></span></div></div>
     </footer>
   )
 }

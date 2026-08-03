@@ -252,7 +252,7 @@ SMTP_SECURE
 SMTP_USER
 SMTP_PASSWORD
 SMTP_FROM
-SMTP_ADMIN_RECIPIENT
+PHASE3_ADMIN_NOTIFICATION_EMAIL
 ```
 
 No mailbox credentials are stored in source code. Hostinger SMTP is compatible
@@ -333,9 +333,19 @@ Never point integration tests at production.
 - SMTP delivery requires separate credentials and an authorized live test.
 - CSV files neutralize spreadsheet formulas, but administrators must still
   handle exported personal data under the applicable privacy policy.
-- Data retention periods, consent language, lead ownership policy, tax/duty
-  assumptions and quotation terms require a business/legal decision before
-  production enablement.
+- Release A proposes a 24-month limit after last meaningful activity for
+  inactive or unsuccessful enquiries, and up to 7 years after the relationship
+  ends for records tied to a quotation, contract or completed transaction when
+  tax, accounting, warranty, insurance or legal needs justify it. This policy
+  must be approved by the business/privacy lead before production publication.
+- Website submissions and related records belong to NEXUS, not to an individual
+  administrator. Assignment identifies the administrator responsible for the
+  next action; it does not transfer ownership or permit export or reuse outside
+  authorized NEXUS work. Unassigned leads remain in the shared controlled queue.
+- The estimator's duty, tax, engineering and compliance percentages are editable
+  planning allowances, not verified rates or professional advice. Only a
+  separate written quotation issued by an authorized NEXUS representative can
+  set price, scope, exclusions, taxes, validity and acceptance terms.
 - The inherited application remains on Next.js 14.2.35. A current dependency
   audit reports advisories that have no patched Next 14 release; upgrading to
   a supported Next.js/React major must be handled as a separately tested

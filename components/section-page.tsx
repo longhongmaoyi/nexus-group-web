@@ -310,12 +310,20 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
       ]
     }
 
+    if (section === 'privacy') {
+      return [
+        t('Purpose-limited use', '限定目的使用', 'Utilisation limitée aux finalités'),
+        t('Defined retention', '明确保留期限', 'Conservation définie'),
+        t('Access and correction', '访问与更正', 'Accès et rectification'),
+      ]
+    }
+
     return [
       t('Clear responsibilities', '责任清晰', 'Responsabilités claires'),
       t('Evidence-based decisions', '基于证据的决策', 'Décisions fondées sur des preuves'),
       t('Qualified next action', '合格的下一步', 'Prochaine action qualifiée'),
     ]
-  }, [isAssembly])
+  }, [isAssembly, section])
 
   return (
     <main>
@@ -479,7 +487,7 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
 
             {section === 'contact' ? (
               <div className="mt-14 max-w-5xl">{businessToolsEnabled ? <BusinessIntakeWizard locale={locale} /> : <InquiryForm locale={locale} />}</div>
-            ) : (
+            ) : section !== 'privacy' ? (
               <div className="mt-14 rounded-[2.25rem] bg-ink p-8 text-white sm:p-10 lg:flex lg:items-center lg:justify-between">
                 <div>
                   <h2 className="text-3xl font-bold tracking-tight">{localized(homeCopy.ctaTitle, locale)}</h2>
@@ -489,7 +497,7 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
                   {localized(homeCopy.contactCta, locale)} <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
-            )}
+            ) : null}
           </div>
         </section>
       )}

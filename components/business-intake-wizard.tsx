@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
 import { ArrowLeft, ArrowRight, Calculator, CheckCircle2, Clock3, LoaderCircle, ShieldCheck } from 'lucide-react'
 import type { Locale } from '@/lib/i18n'
+import { CONSENT_TEXT_VERSION, consentCopy, planningDisclaimer } from '@/lib/legal-content'
 import { calculateLandedCost, calculateTimeline, type CostAssumptions, type TimelineStage } from '@/lib/phase3-calculations.mjs'
 
 type PlanningConfig = {
@@ -20,7 +21,7 @@ const copy = {
     budget: 'Budget range', timeline: 'Target timeline', compliance: 'Known approval or compliance needs',
     base: 'Known base product budget (optional, CAD)', notes: 'Business problem, requirements and notes',
     name: 'Contact name', email: 'Business email', phone: 'Phone / WhatsApp', organization: 'Organization',
-    consent: 'I consent to NEXUS storing and using this information to assess and respond to this enquiry.',
+    consent: consentCopy.en,
     previous: 'Previous', next: 'Continue', submit: 'Submit assessment', success: 'Assessment received',
     reference: 'Your reference is', error: 'We could not save the assessment.', estimate: 'Indicative landed-cost range',
     duration: 'Indicative project duration', indicative: 'Planning estimate only - not a quotation, permit, certification or approval.',
@@ -34,7 +35,7 @@ const copy = {
     budget: '预算范围', timeline: '目标时间', compliance: '已知审批或合规需求',
     base: '已知产品基础预算（可选，加元）', notes: '业务问题、需求与备注',
     name: '联系人姓名', email: '商务邮箱', phone: '电话 / WhatsApp', organization: '机构名称',
-    consent: '我同意 NEXUS 存储并使用这些信息，以评估和回复本次咨询。',
+    consent: consentCopy.zh,
     previous: '上一步', next: '继续', submit: '提交评估', success: '评估已收到',
     reference: '您的参考编号为', error: '暂时无法保存评估。', estimate: '参考落地成本范围',
     duration: '参考项目工期', indicative: '仅用于规划 - 不构成报价、许可、认证或批准。',
@@ -48,7 +49,7 @@ const copy = {
     budget: 'Fourchette budgétaire', timeline: 'Échéancier cible', compliance: 'Besoins connus en approbation ou conformité',
     base: 'Budget de base connu (facultatif, CAD)', notes: 'Problème d’affaires, exigences et notes',
     name: 'Nom du contact', email: 'Courriel professionnel', phone: 'Téléphone / WhatsApp', organization: 'Organisation',
-    consent: 'J’accepte que NEXUS conserve et utilise ces renseignements pour évaluer cette demande et y répondre.',
+    consent: consentCopy.fr,
     previous: 'Précédent', next: 'Continuer', submit: 'Soumettre l’évaluation', success: 'Évaluation reçue',
     reference: 'Votre référence est', error: 'Impossible d’enregistrer l’évaluation.', estimate: 'Fourchette indicative du coût rendu',
     duration: 'Durée indicative du projet', indicative: 'Estimation seulement - ni devis, permis, certification ou approbation.',
@@ -88,7 +89,7 @@ export function BusinessIntakeWizard({ locale }: { locale: Locale }) {
       const response = await fetch('/api/business-tools/leads', {
         method: 'POST',
         headers: { 'content-type': 'application/json', 'x-nexus-csrf-token': token },
-        body: JSON.stringify({ ...data, locale, consent: data.consent === 'on', baseCost: data.baseCost ? Number(data.baseCost) : null, consentTextVersion: '2026-07' }),
+        body: JSON.stringify({ ...data, locale, consent: data.consent === 'on', baseCost: data.baseCost ? Number(data.baseCost) : null, consentTextVersion: CONSENT_TEXT_VERSION }),
       })
       const result = await response.json()
       if (!response.ok) throw new Error(result.error || t.error)
@@ -121,8 +122,8 @@ export function BusinessIntakeWizard({ locale }: { locale: Locale }) {
         <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px]" />
         <div data-wizard-step="0" hidden={step !== 0}><Fieldset label={t.steps[0]}><Select name="type" title={t.type} values={enquiryTypes} required /><Select name="sector" title={t.sector} values={sectors} required /><Input name="projectType" title={t.projectType} required /><Input name="intendedUse" title={t.use} required /></Fieldset></div>
         <div data-wizard-step="1" hidden={step !== 1}><Fieldset label={t.steps[1]}><label className={label}>{t.country}<input name="country" defaultValue="Canada" required className={field} /></label><Select name="province" title={t.province} values={provinces} required /><Input name="municipality" title={t.municipality} required /><Input name="sizeCapacity" title={t.size} /><Select name="siteReadiness" title={t.site} values={sites} /></Fieldset></div>
-        <div data-wizard-step="2" hidden={step !== 2}><Fieldset label={t.steps[2]}><Select name="budgetRange" title={t.budget} values={budgets} /><Select name="targetTimeline" title={t.timeline} values={timelines} /><label className={`${label} sm:col-span-2`}>{t.compliance}<textarea name="complianceNeeds" rows={3} className={field} /></label><label className={`${label} sm:col-span-2`}>{t.base}<input name="baseCost" type="number" min="0" step="1000" onChange={(e) => setBaseCost(Number(e.target.value || 0))} className={field} /></label>{(cost || duration) && <div className="grid gap-4 sm:col-span-2 sm:grid-cols-2" aria-live="polite">{cost && <EstimateCard icon={<Calculator className="h-5 w-5" />} title={t.estimate} value={`${config?.cost?.currency} ${Math.round(cost.low).toLocaleString()} - ${Math.round(cost.high).toLocaleString()}`} />}{duration && <EstimateCard icon={<Clock3 className="h-5 w-5" />} title={t.duration} value={`${duration.lowWeeks} - ${duration.highWeeks} weeks`} />}<p className="sm:col-span-2 text-xs text-slate-500">{t.indicative}</p></div>}</Fieldset></div>
-        <div data-wizard-step="3" hidden={step !== 3}><Fieldset label={t.steps[3]}><Input name="contactName" title={t.name} required /><Input name="contactEmail" title={t.email} type="email" required /><Input name="contactPhone" title={t.phone} /><Input name="organizationName" title={t.organization} /><label className={`${label} sm:col-span-2`}>{t.notes}<textarea name="notes" required minLength={20} rows={6} className={field} /></label><label className="sm:col-span-2 flex items-start gap-3 text-sm leading-6 text-slate-600"><input name="consent" type="checkbox" required className="mt-1 h-4 w-4" /><span>{t.consent}</span></label></Fieldset></div>
+        <div data-wizard-step="2" hidden={step !== 2}><Fieldset label={t.steps[2]}><Select name="budgetRange" title={t.budget} values={budgets} /><Select name="targetTimeline" title={t.timeline} values={timelines} /><label className={`${label} sm:col-span-2`}>{t.compliance}<textarea name="complianceNeeds" rows={3} className={field} /></label><label className={`${label} sm:col-span-2`}>{t.base}<input name="baseCost" type="number" min="0" step="1000" onChange={(e) => setBaseCost(Number(e.target.value || 0))} className={field} /></label>{(cost || duration) && <div className="grid gap-4 sm:col-span-2 sm:grid-cols-2" aria-live="polite">{cost && <EstimateCard icon={<Calculator className="h-5 w-5" />} title={t.estimate} value={`${config?.cost?.currency} ${Math.round(cost.low).toLocaleString()} - ${Math.round(cost.high).toLocaleString()}`} />}{duration && <EstimateCard icon={<Clock3 className="h-5 w-5" />} title={t.duration} value={`${duration.lowWeeks} - ${duration.highWeeks} weeks`} />}<p className="sm:col-span-2 text-xs leading-5 text-slate-500">{planningDisclaimer[locale]}</p></div>}</Fieldset></div>
+        <div data-wizard-step="3" hidden={step !== 3}><Fieldset label={t.steps[3]}><Input name="contactName" title={t.name} required /><Input name="contactEmail" title={t.email} type="email" required /><Input name="contactPhone" title={t.phone} /><Input name="organizationName" title={t.organization} /><label className={`${label} sm:col-span-2`}>{t.notes}<textarea name="notes" required minLength={20} rows={6} className={field} /></label><label className="sm:col-span-2 flex items-start gap-3 text-sm leading-6 text-slate-600"><input name="consent" type="checkbox" required className="mt-1 h-4 w-4" /><span>{t.consent} <a href={`/${locale}/privacy`} target="_blank" rel="noreferrer" className="font-semibold underline">{locale === 'zh' ? '查看隐私说明' : locale === 'fr' ? 'Lire l’avis de confidentialité' : 'Read the Privacy Notice'}</a>.</span></label></Fieldset></div>
         <div className="mt-7 flex justify-between gap-4 border-t border-slate-200 pt-6">
           <button type="button" onClick={() => setStep((v) => Math.max(0, v - 1))} disabled={step === 0} className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-3 text-sm font-bold disabled:opacity-30"><ArrowLeft className="h-4 w-4" />{t.previous}</button>
           {step < 3 ? <button type="button" onClick={(event) => {

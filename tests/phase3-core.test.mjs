@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import {
+  CONSENT_TEXT_VERSION,
   calculateLandedCost,
   calculateTimeline,
   createCsrfToken,
@@ -25,6 +26,7 @@ test('validates and normalizes a project lead without accepting cross-tenant inp
   })
   assert.equal(lead.contactEmail, 'marie@example.ca')
   assert.equal(lead.type, 'PROJECT')
+  assert.equal(lead.consentTextVersion, CONSENT_TEXT_VERSION)
   assert.equal('organizationKey' in lead, false)
 })
 

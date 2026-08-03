@@ -1,18 +1,25 @@
 import { getPrisma } from '@/lib/prisma'
-import { getEmailProvider } from '@/lib/email-provider'
+import { getEmailProvider, sanitizeEmailError, type EmailProvider } from '@/lib/email-provider'
 import { NEXUS_ORGANIZATION_KEY } from '@/lib/phase3-core.mjs'
 
-export async function processEmailOutbox(limit = 10) {
-  if (process.env.PHASE3_EMAIL_NOTIFICATIONS_ENABLED !== 'true') {
+type ProcessEmailOutboxOptions = {
+  releaseTestDedupePrefix?: string
+  provider?: EmailProvider
+}
+
+export async function processEmailOutbox(limit = 10, options: ProcessEmailOutboxOptions = {}) {
+  const releaseTest = Boolean(options.releaseTestDedupePrefix)
+  if (process.env.PHASE3_EMAIL_NOTIFICATIONS_ENABLED !== 'true' && !releaseTest) {
     return { processed: 0, sent: 0, failed: 0, disabled: true }
   }
   const prisma = await getPrisma()
-  const provider = getEmailProvider()
+  const provider = options.provider || getEmailProvider(releaseTest)
   const now = new Date()
   const staleLock = new Date(now.getTime() - 15 * 60_000)
   const candidates = await prisma.emailOutbox.findMany({
     where: {
       organizationKey: NEXUS_ORGANIZATION_KEY,
+      ...(options.releaseTestDedupePrefix ? { dedupeKey: { startsWith: options.releaseTestDedupePrefix } } : {}),
       attempts: { lt: 5 },
       OR: [
         { status: { in: ['PENDING', 'FAILED'] }, nextAttemptAt: { lte: now } },
@@ -56,7 +63,7 @@ export async function processEmailOutbox(limit = 10) {
         data: {
           status: 'FAILED',
           lockedAt: null,
-          lastError: String(error instanceof Error ? error.message : error).slice(0, 2000),
+          lastError: sanitizeEmailError(error),
           nextAttemptAt: terminal ? new Date('2999-01-01T00:00:00.000Z') : new Date(Date.now() + delayMinutes * 60_000),
         },
       })

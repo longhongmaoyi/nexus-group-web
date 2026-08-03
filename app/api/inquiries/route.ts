@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getPrisma } from '@/lib/prisma'
+import { CONSENT_TEXT_VERSION } from '@/lib/legal-content'
 
 export async function POST(request: Request) {
   try {
@@ -8,7 +9,7 @@ export async function POST(request: Request) {
     const email = String(body.email || '').trim()
     const message = String(body.message || '').trim()
 
-    if (!name || !email || !message || !email.includes('@')) {
+    if (!name || !email || !message || !email.includes('@') || body.consent !== true) {
       return NextResponse.json({ error: 'Invalid inquiry' }, { status: 400 })
     }
 
@@ -23,6 +24,9 @@ export async function POST(request: Request) {
         country: body.country ? String(body.country).trim() : null,
         interest: body.interest ? String(body.interest).trim() : null,
         locale: ['en', 'zh', 'fr'].includes(body.locale) ? body.locale : 'en',
+        consent: true,
+        consentAt: new Date(),
+        consentTextVersion: CONSENT_TEXT_VERSION,
       },
       select: { id: true, createdAt: true },
     })

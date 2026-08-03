@@ -1,6 +1,7 @@
 declare module '@/lib/phase3-core.mjs' {
   export const NEXUS_ORGANIZATION_KEY: 'nexus'
   export const PHASE3_LOCALES: readonly ['en', 'zh', 'fr']
+  export const CONSENT_TEXT_VERSION: '2026-08-03'
   export const LEAD_TYPES: readonly string[]
   export const LEAD_STATUSES: readonly string[]
   export const LEAD_PRIORITIES: readonly string[]

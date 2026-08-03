@@ -8,6 +8,7 @@ import {
   NEXUS_ORGANIZATION_KEY,
   type LeadSubmission,
 } from '@/lib/phase3-core.mjs'
+import { planningDisclaimer } from '@/lib/legal-content'
 
 export const DEFAULT_COST_ASSUMPTIONS = {
   freightPct: 12,
@@ -35,9 +36,9 @@ export const DEFAULT_TIMELINE_STAGES = [
 
 export const DISCLAIMERS = {
   cost: {
-    en: 'This planning estimate is indicative only and is not a quotation, offer, or guarantee. Actual costs depend on design, jurisdiction, supplier terms, exchange rates, duties, taxes, site conditions, professional services, permits, and market conditions.',
-    zh: '本规划估算仅供参考，不构成报价、要约或保证。实际成本取决于设计、司法辖区、供应商条款、汇率、关税、税费、场地条件、专业服务、许可及市场情况。',
-    fr: 'Cette estimation de planification est indicative seulement et ne constitue ni un devis, ni une offre, ni une garantie. Les coûts réels dépendent de la conception, du territoire, des fournisseurs, des taux de change, des droits, des taxes, du site, des services professionnels, des permis et du marché.',
+    en: planningDisclaimer.en,
+    zh: planningDisclaimer.zh,
+    fr: planningDisclaimer.fr,
   },
   timeline: {
     en: 'This timeline is an early planning range. Project duration depends on jurisdiction, design completeness, approvals, testing, supplier capacity, transport, customs, site readiness, weather, inspections, and other project-specific conditions.',
@@ -180,19 +181,19 @@ export function acknowledgementTemplate(locale: string, name: string, reference:
       subject: `NEXUS project assessment received - ${reference}`,
       greeting: `Hello ${name},`,
       body: `Thank you. NEXUS has received your enquiry. Reference: ${reference}. Our team will review the information before recommending the next step.`,
-      note: 'Any cost or timeline information is indicative only and is not a quotation or approval.',
+      note: planningDisclaimer.en,
     },
     zh: {
       subject: `NEXUS 已收到您的项目评估 - ${reference}`,
       greeting: `${name}，您好：`,
       body: `感谢您。NEXUS 已收到您的咨询。参考编号：${reference}。我们的团队将审核资料并建议下一步安排。`,
-      note: '任何成本或时间信息仅供参考，不构成报价或审批。',
+      note: planningDisclaimer.zh,
     },
     fr: {
       subject: `Évaluation NEXUS reçue - ${reference}`,
       greeting: `Bonjour ${name},`,
       body: `Merci. NEXUS a reçu votre demande. Référence : ${reference}. Notre équipe examinera les renseignements avant de recommander la prochaine étape.`,
-      note: 'Toute information de coût ou de délai est indicative et ne constitue ni un devis ni une approbation.',
+      note: planningDisclaimer.fr,
     },
   } as const
   const copy = variants[locale as keyof typeof variants] || variants.en
@@ -200,7 +201,7 @@ export function acknowledgementTemplate(locale: string, name: string, reference:
   return { subject: copy.subject, text, html: `<p>${escapeHtml(copy.greeting)}</p><p>${escapeHtml(copy.body)}</p><p><small>${escapeHtml(copy.note)}</small></p><p>NEXUS GROUP</p>` }
 }
 
-function adminNotificationTemplate(_: string, lead: { reference: string; type: string; contactName: string; contactEmail: string }) {
+export function adminNotificationTemplate(_: string, lead: { reference: string; type: string; contactName: string; contactEmail: string }) {
   const subject = `New NEXUS ${lead.type.toLowerCase()} lead - ${lead.reference}`
   const text = `A new lead was received.\nReference: ${lead.reference}\nType: ${lead.type}\nContact: ${lead.contactName}\nEmail: ${lead.contactEmail}`
   return { subject, text, html: `<p>A new lead was received.</p><p><strong>${escapeHtml(lead.reference)}</strong><br>Type: ${escapeHtml(lead.type)}<br>Contact: ${escapeHtml(lead.contactName)}<br>Email: ${escapeHtml(lead.contactEmail)}</p>` }

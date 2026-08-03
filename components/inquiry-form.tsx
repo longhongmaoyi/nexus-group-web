@@ -4,6 +4,7 @@ import { useState, type FormEvent } from 'react'
 import { ArrowRight, CheckCircle2, LoaderCircle } from 'lucide-react'
 
 import type { Locale } from '@/lib/i18n'
+import { CONSENT_TEXT_VERSION, consentCopy } from '@/lib/legal-content'
 
 const copies = {
   en: {
@@ -27,7 +28,7 @@ const copies = {
     timeline: 'Target delivery timeline',
     model: 'Preferred commercial model',
     details: 'Describe the business problem, site and required outcome',
-    consent: 'I agree that NEXUS may use this information to review and respond to this project inquiry.',
+    consent: consentCopy.en,
     submit: 'Submit Project Assessment',
     success: 'Thank you. Your structured project assessment has been received.',
     error: 'The assessment could not be saved. Please verify the production database connection.',
@@ -53,7 +54,7 @@ const copies = {
     timeline: '目标交付时间',
     model: '首选合作模式',
     details: '请描述业务问题、场地情况及预期成果',
-    consent: '我同意 NEXUS 使用这些信息评估并回复本项目咨询。',
+    consent: consentCopy.zh,
     submit: '提交项目评估',
     success: '感谢您，项目评估资料已收到。',
     error: '评估资料暂时无法保存，请检查生产数据库连接。',
@@ -79,7 +80,7 @@ const copies = {
     timeline: 'Échéancier de livraison visé',
     model: 'Modèle commercial privilégié',
     details: 'Décrivez le problème, le site et le résultat recherché',
-    consent: 'J’accepte que NEXUS utilise ces renseignements pour évaluer ce projet et y répondre.',
+    consent: consentCopy.fr,
     submit: 'Soumettre l’évaluation',
     success: 'Merci. Votre évaluation structurée a été reçue.',
     error: 'L’évaluation ne peut pas être enregistrée. Vérifiez la base de données de production.',
@@ -168,6 +169,8 @@ export function InquiryForm({ locale }: { locale: Locale }) {
         interest: value('sector'),
         message: projectBrief,
         locale,
+        consent: formData.get('consent') === 'on',
+        consentTextVersion: CONSENT_TEXT_VERSION,
       }),
     })
 
@@ -232,7 +235,7 @@ export function InquiryForm({ locale }: { locale: Locale }) {
 
       <label className="mt-6 flex items-start gap-3 text-sm leading-6 text-slate-600">
         <input name="consent" type="checkbox" required className="mt-1 h-4 w-4 rounded border-slate-300" />
-        <span>{copy.consent}</span>
+        <span>{copy.consent} <a href={`/${locale}/privacy`} target="_blank" rel="noreferrer" className="font-semibold underline">{locale === 'zh' ? '查看隐私说明' : locale === 'fr' ? 'Lire l’avis de confidentialité' : 'Read the Privacy Notice'}</a>.</span>
       </label>
 
       <button type="submit" disabled={state === 'loading'} className="mt-7 inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[#26688f] disabled:opacity-60">
