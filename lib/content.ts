@@ -113,6 +113,46 @@ export const solutionCards = [
   },
 ]
 
+
+export const buyerResources = [
+  {
+    slug: 'project-brief-guide',
+    title: t('Project Brief Guide', '项目简报指南', 'Guide du dossier de projet'),
+    description: t(
+      'Turn a broad idea into information that suppliers and local professionals can assess.',
+      '把宽泛想法转化为供应商及本地专业人士能够评估的信息。',
+      'Transformer une idée générale en renseignements que fournisseurs et professionnels peuvent évaluer.'
+    ),
+  },
+  {
+    slug: 'landed-cost-guide',
+    title: t('Landed Cost Guide', '落地成本指南', 'Guide du coût rendu'),
+    description: t(
+      'See what sits between a factory price and a working asset on the site.',
+      '了解工厂价格与现场可运行资产之间还包含哪些成本。',
+      'Voir ce qui se trouve entre le prix usine et un actif opérationnel sur le site.'
+    ),
+  },
+  {
+    slug: 'delivery-timeline-guide',
+    title: t('Delivery Timeline Guide', '交付时间指南', 'Guide de l’échéancier'),
+    description: t(
+      'Understand the stages and dependencies behind a realistic project schedule.',
+      '了解现实项目时间表背后的阶段与依赖关系。',
+      'Comprendre les étapes et dépendances derrière un calendrier réaliste.'
+    ),
+  },
+  {
+    slug: 'document-checklist',
+    title: t('Product Document Checklist', '产品文件清单', 'Liste de contrôle des documents'),
+    description: t(
+      'Track the evidence received, the gaps that remain and who is responsible.',
+      '跟踪已收到的证据、仍存在的缺口及责任方。',
+      'Suivre les preuves reçues, les lacunes restantes et les responsables.'
+    ),
+  },
+] as const
+
 export const deliverySteps = [
   { key: '01', title: t('Import', '进口', 'Importation'), body: t('Global sourcing and logistics coordination.', '全球采购与物流协调。', 'Approvisionnement mondial et coordination logistique.') },
   { key: '02', title: t('Assembly', '组装', 'Assemblage'), body: t('Integrated assembly and finishing in Canada.', '在加拿大完成集成组装与饰面。', 'Assemblage et finition intégrés au Canada.') },
@@ -923,6 +963,283 @@ export const sectionPages = {
       }
     ]
   },
+
+  'buyer-resources': {
+    eyebrow: t('Buyer Resources', '买家资源', 'Ressources pour acheteurs'),
+    title: t(
+      'Practical guides for the decisions that come before an order.',
+      '帮助您在下单前做好关键决策的实用指南。',
+      'Des guides pratiques pour les décisions qui précèdent une commande.'
+    ),
+    intro: t(
+      'A product image and factory price rarely tell the whole story. These guides help buyers prepare a clearer brief, compare proposals, understand cost and timing, and see whether the supporting documents are strong enough for the next step.',
+      '产品图片和工厂价格通常无法说明全部情况。这些指南帮助买家准备更清晰的简报、比较方案、理解成本与时间，并判断支持文件是否足以推进下一步。',
+      'Une image et un prix usine racontent rarement toute l’histoire. Ces guides aident à préparer un dossier plus clair, comparer les propositions, comprendre le coût et le calendrier, et juger si les documents permettent d’avancer.'
+    ),
+    blocks: [
+      {
+        title: t('Begin with the project brief', '从项目简报开始', 'Commencer par le dossier de projet'),
+        body: t(
+          'A useful brief describes the business need, site, users, capacity, utilities, budget, target date and known constraints. It gives suppliers and local professionals the same starting point.',
+          '有用的简报应说明业务需求、场地、使用者、容量、公用设施、预算、目标日期及已知限制，让供应商和本地专业人士从同一起点开始。',
+          'Un bon dossier décrit le besoin, le site, les usagers, la capacité, les services, le budget, la date cible et les contraintes connues.'
+        )
+      },
+      {
+        title: t('Compare the full delivered scope', '比较完整交付范围', 'Comparer la portée complète'),
+        body: t(
+          'Separate the product, documents, packaging, freight, customs, receiving, assembly, site work, installation, inspections and service. A low factory price can become expensive when important responsibilities are missing.',
+          '应分别查看产品、文件、包装、运输、海关、收货、组装、现场工作、安装、检查及服务。低工厂价格在缺少重要责任范围时可能最终更昂贵。',
+          'Distinguez produit, documents, emballage, fret, douane, réception, assemblage, travaux de site, installation, inspections et service.'
+        )
+      },
+      {
+        title: t('Treat time as a chain of dependencies', '把时间看作一系列依赖关系', 'Voir le temps comme une chaîne de dépendances'),
+        body: t(
+          'Design, document review, approvals, production, shipping and site preparation may overlap, but only when decisions are made on time. One unresolved issue can hold up several later stages.',
+          '设计、文件审查、审批、生产、运输及现场准备可以并行，但前提是关键决策按时完成。一个未解决问题可能拖延多个后续阶段。',
+          'Conception, examen des documents, approbations, production, transport et préparation du site peuvent se chevaucher, mais seulement si les décisions sont prises à temps.'
+        )
+      },
+      {
+        title: t('Keep document status visible', '让文件状态清晰可见', 'Rendre visible l’état des documents'),
+        body: t(
+          'A document register should show what was requested, received, reviewed and still remains open. A certificate title alone is not a complete evidence file.',
+          '文件登记表应显示请求了什么、收到了什么、审查了什么及仍有哪些未决事项。仅有证书名称并不构成完整证据档案。',
+          'Un registre doit montrer ce qui a été demandé, reçu, examiné et ce qui reste ouvert. Le titre d’un certificat ne constitue pas un dossier complet.'
+        )
+      }
+    ]
+  },
+  'project-brief-guide': {
+    eyebrow: t('Buyer Resource · Project Brief', '买家资源 · 项目简报', 'Ressource acheteur · Dossier de projet'),
+    title: t(
+      'Give every supplier and project partner the same starting point.',
+      '让每个供应商和项目伙伴从同一起点开始。',
+      'Donner le même point de départ à chaque fournisseur et partenaire.'
+    ),
+    intro: t(
+      'A project brief does not need to answer every technical question. It should explain the problem clearly enough for the right people to identify gaps and avoid quoting different assumptions as if they were comparable.',
+      '项目简报不需要回答所有技术问题，但应清楚说明问题，让合适的人能够识别缺口，并避免各方基于不同假设报价却被误认为可直接比较。',
+      'Un dossier n’a pas besoin de répondre à toutes les questions techniques. Il doit expliquer le problème assez clairement pour repérer les lacunes et éviter de comparer des devis fondés sur des hypothèses différentes.'
+    ),
+    blocks: [
+      {
+        title: t('State the business need', '说明业务需求', 'Expliquer le besoin d’affaires'),
+        body: t(
+          'Describe what is not working today, what opportunity you want to capture and what outcome the new space must support. Explain the users, season, service level and operating model—not only the number of units.',
+          '说明当前什么没有解决、希望抓住什么机会，以及新空间必须支持什么结果。应说明使用者、季节、服务水平及运营模式，而不只是单元数量。',
+          'Décrivez ce qui ne fonctionne pas, l’occasion visée et le résultat attendu. Expliquez les usagers, la saison, le service et le modèle d’exploitation, pas seulement le nombre d’unités.'
+        )
+      },
+      {
+        title: t('Describe the site', '说明场地', 'Décrire le site'),
+        body: t(
+          'Include the location, ownership or control status, known zoning, access, slope, soil information, climate exposure, existing buildings, utilities and seasonal restrictions.',
+          '包括地点、所有权或控制状态、已知分区、通行、坡度、土壤资料、气候暴露、现有建筑、公用设施及季节性限制。',
+          'Indiquez le lieu, le statut de contrôle, le zonage connu, l’accès, la pente, le sol, l’exposition climatique, les bâtiments, les services et les restrictions saisonnières.'
+        )
+      },
+      {
+        title: t('Define users and capacity', '明确使用者与容量', 'Définir les usagers et la capacité'),
+        body: t(
+          'State who uses the space, how many people are present, length of stay, shifts or peak periods, privacy needs, accessibility and the staff required to operate it.',
+          '说明谁会使用空间、人数、停留时间、班次或高峰时段、隐私需求、无障碍及运营所需人员。',
+          'Précisez qui utilise l’espace, combien de personnes sont présentes, la durée, les quarts ou pointes, l’intimité, l’accessibilité et le personnel nécessaire.'
+        )
+      },
+      {
+        title: t('Separate requirements from preferences', '区分必需项与偏好项', 'Séparer les exigences des préférences'),
+        body: t(
+          'List the non-negotiable functions, performance expectations and deadline first. Keep styles, finishes and optional features separate so the project can make sensible trade-offs.',
+          '先列出不可妥协的功能、性能预期及截止时间。把风格、饰面及可选功能单独列出，便于项目进行合理取舍。',
+          'Indiquez d’abord les fonctions, performances et échéances non négociables. Gardez styles, finitions et options séparés pour permettre des compromis raisonnables.'
+        )
+      },
+      {
+        title: t('Give a budget range and target date', '提供预算范围与目标日期', 'Donner un budget et une date cible'),
+        body: t(
+          'Explain whether the budget covers the product only or the full project. State why the date matters, such as a seasonal opening, workforce mobilization, financing or lease expiry.',
+          '说明预算仅覆盖产品还是完整项目，并说明日期为何重要，例如季节开业、人员进场、融资或租约到期。',
+          'Précisez si le budget couvre seulement le produit ou le projet complet, et pourquoi la date compte : ouverture saisonnière, mobilisation, financement ou fin de bail.'
+        )
+      }
+    ]
+  },
+  'landed-cost-guide': {
+    eyebrow: t('Buyer Resource · Landed Cost', '买家资源 · 落地成本', 'Ressource acheteur · Coût rendu'),
+    title: t(
+      'The factory price is only one line in the project budget.',
+      '工厂价格只是项目预算中的一项。',
+      'Le prix usine n’est qu’une ligne du budget du projet.'
+    ),
+    intro: t(
+      'A useful landed-cost view follows the product from specification through export, transport, Canadian receiving and the work required before the asset can operate. It should show assumptions and responsibility, not hide everything inside one number.',
+      '有用的落地成本应从产品规格开始，覆盖出口、运输、加拿大收货，以及资产投入运行前所需工作。它应显示假设与责任，而不是把所有内容隐藏在一个数字里。',
+      'Une vue utile du coût rendu suit le produit depuis la spécification jusqu’à l’exportation, au transport, à la réception et aux travaux nécessaires avant l’exploitation.'
+    ),
+    blocks: [
+      {
+        title: t('Product and configuration', '产品与配置', 'Produit et configuration'),
+        body: t(
+          'Start with the exact model, quantity, options, materials, equipment, furniture, spare parts and documents included. A base-model price cannot be compared with a fully equipped configuration.',
+          '从具体型号、数量、选项、材料、设备、家具、备件及包含文件开始。基础型号价格不能与全配置方案直接比较。',
+          'Commencez par le modèle, la quantité, les options, matériaux, équipements, mobilier, pièces et documents inclus. Un prix de base ne se compare pas à une configuration complète.'
+        )
+      },
+      {
+        title: t('Engineering and document work', '工程与文件工作', 'Ingénierie et documents'),
+        body: t(
+          'Allow for drawing revisions, calculations, tests, third-party review, samples, inspections and translations. Some of this may sit outside the factory quote.',
+          '应考虑图纸修改、计算、测试、第三方审查、样品、检验及翻译。其中部分可能不在工厂报价内。',
+          'Prévoyez révisions de plans, calculs, essais, examen tiers, échantillons, inspections et traductions. Une partie peut se trouver hors du devis usine.'
+        )
+      },
+      {
+        title: t('Export, freight and border costs', '出口、运输与边境成本', 'Exportation, fret et coûts frontaliers'),
+        body: t(
+          'Include packaging, inland transport, terminal handling, freight, insurance, brokerage, duties, taxes and inspections. Rates and classifications must be confirmed for the actual product and shipment.',
+          '包括包装、内陆运输、码头操作、运费、保险、报关、关税、税费及检查。费率和归类必须针对实际产品和货物确认。',
+          'Incluez emballage, transport intérieur, manutention, fret, assurance, courtage, droits, taxes et inspections. Les taux et classements doivent être confirmés pour le produit réel.'
+        )
+      },
+      {
+        title: t('Canadian receiving and site delivery', '加拿大收货与现场交付', 'Réception au Canada et livraison sur site'),
+        body: t(
+          'Budget for receiving checks, storage, repairs, assembly, local components, transport permits, escorts, crane, unloading and movement to the project site.',
+          '预算应包括收货检查、储存、维修、组装、本地部件、运输许可、护送、吊车、卸货及运往项目现场。',
+          'Prévoyez contrôles à la réception, stockage, réparations, assemblage, composants locaux, permis de transport, escortes, grue, déchargement et déplacement vers le site.'
+        )
+      },
+      {
+        title: t('Site work and operating readiness', '现场工作与运营准备', 'Travaux de site et mise en service'),
+        body: t(
+          'Foundations, civil work, utilities, trades, permits, inspections, commissioning, training and deficiencies may sit outside the product price. Record exchange rates, contingency and exclusions as well.',
+          '基础、土建、公用设施、专业工种、许可、检查、调试、培训及缺陷处理可能不在产品价格内。同时应记录汇率、预备金及排除项。',
+          'Fondations, travaux civils, services, métiers, permis, inspections, mise en service, formation et déficiences peuvent se trouver hors du prix produit. Notez aussi le change, la contingence et les exclusions.'
+        )
+      }
+    ]
+  },
+  'delivery-timeline-guide': {
+    eyebrow: t('Buyer Resource · Timeline', '买家资源 · 时间表', 'Ressource acheteur · Échéancier'),
+    title: t(
+      'A realistic schedule shows dependencies, not only dates.',
+      '现实的时间表应显示依赖关系，而不只是日期。',
+      'Un échéancier réaliste montre les dépendances, pas seulement les dates.'
+    ),
+    intro: t(
+      'Modular projects can save time when off-site production and site work move together. They can also stall when design decisions, documents, approvals, factory slots or site readiness arrive late.',
+      '当场外生产与现场工作同步推进时，模块化项目可以节省时间；但设计决策、文件、审批、工厂排产或现场准备延迟时，也可能停滞。',
+      'Le modulaire peut gagner du temps lorsque la production hors site et le chantier avancent ensemble. Il peut aussi bloquer si décisions, documents, approbations, créneaux d’usine ou préparation du site arrivent tard.'
+    ),
+    blocks: [
+      {
+        title: t('Discovery and feasibility', '需求确认与可行性', 'Découverte et faisabilité'),
+        body: t(
+          'Confirm the need, site, capacity, budget, decision makers and major risks. The result should be a brief and responsibility map, not an immediate promise of delivery.',
+          '确认需求、场地、容量、预算、决策方及主要风险。成果应是简报与责任图，而不是立即承诺交付。',
+          'Confirmez le besoin, le site, la capacité, le budget, les décideurs et les risques. Le résultat doit être un dossier et une carte des responsabilités.'
+        )
+      },
+      {
+        title: t('Product definition and design', '产品定义与设计', 'Définition du produit et conception'),
+        body: t(
+          'Select the system, settle the configuration and coordinate factory information with site, foundation, utility and professional requirements. Late changes move every later date.',
+          '选择系统、确定配置，并协调工厂信息与场地、基础、公用设施及专业要求。后期变更会影响所有后续日期。',
+          'Choisissez le système, fixez la configuration et coordonnez les données d’usine avec le site, les fondations, les services et les exigences professionnelles.'
+        )
+      },
+      {
+        title: t('Documents and approvals', '文件与审批', 'Documents et approbations'),
+        body: t(
+          'Collect drawings, calculations, evidence and applications. Allow time for reviewer questions, supplier responses, revisions and resubmissions. The first submission is not always the final one.',
+          '收集图纸、计算、证据及申请材料。应预留审查问题、供应商回复、修改及重新提交时间。首次提交并不总是最终版本。',
+          'Rassemblez plans, calculs, preuves et demandes. Prévoyez questions, réponses, révisions et nouvelles soumissions.'
+        )
+      },
+      {
+        title: t('Production, shipping and receiving', '生产、运输与收货', 'Production, expédition et réception'),
+        body: t(
+          'Confirm the production slot, approved information, materials, inspections, packaging, route, permits, insurance, receiving point, unloading equipment and storage.',
+          '确认生产排期、批准信息、材料、检验、包装、路线、许可、保险、收货点、卸货设备及储存。',
+          'Confirmez le créneau de production, les informations approuvées, matériaux, inspections, emballage, trajet, permis, assurance, réception, déchargement et stockage.'
+        )
+      },
+      {
+        title: t('Site preparation, installation and handover', '现场准备、安装与移交', 'Préparation du site, installation et remise'),
+        body: t(
+          'Complete access, foundations, drainage, utilities and safety planning before delivery. Then coordinate crane, trades, inspections, commissioning, training, manuals, warranties and deficiency closeout.',
+          '交付前完成通行、基础、排水、公用设施及安全规划。随后协调吊车、专业工种、检查、调试、培训、手册、质保及缺陷关闭。',
+          'Terminez accès, fondations, drainage, services et sécurité avant la livraison. Coordonnez ensuite grue, métiers, inspections, mise en service, formation, manuels, garanties et correction des déficiences.'
+        )
+      }
+    ]
+  },
+  'document-checklist': {
+    eyebrow: t('Buyer Resource · Documents', '买家资源 · 文件', 'Ressource acheteur · Documents'),
+    title: t(
+      'Know what evidence exists before relying on a product claim.',
+      '在依赖产品声明前，先了解有哪些证据。',
+      'Savoir quelles preuves existent avant de se fier à une affirmation.'
+    ),
+    intro: t(
+      'The right document package depends on the product and project. This checklist is not an approval standard. It is a practical way to organize requests, see what has been received and keep missing information visible.',
+      '正确的文件包取决于产品和项目。本清单不是审批标准，而是一种实用方式，用于组织请求、查看已收到内容并让缺失信息保持可见。',
+      'Le bon dossier dépend du produit et du projet. Cette liste n’est pas une norme d’approbation. Elle sert à organiser les demandes, voir ce qui a été reçu et garder visibles les éléments manquants.'
+    ),
+    blocks: [
+      {
+        title: t('Company and factory records', '企业与工厂记录', 'Dossiers de l’entreprise et de l’usine'),
+        body: t(
+          'Legal registration, ownership, factory address, contracting entity, export entity, contacts, production capability, quality organization and relevant references.',
+          '合法注册、所有权、工厂地址、合同主体、出口主体、联系人、生产能力、质量组织及相关案例。',
+          'Enregistrement légal, propriété, adresse d’usine, entité contractante, entité exportatrice, contacts, capacité de production, organisation qualité et références.'
+        )
+      },
+      {
+        title: t('Product definition and materials', '产品定义与材料', 'Définition du produit et matériaux'),
+        body: t(
+          'Current model, drawings, dimensions, weights, specifications, bill of materials, options, operating limits, installation instructions, material grades, component models and approved substitutions.',
+          '最新型号、图纸、尺寸、重量、规格、物料清单、选项、运行限制、安装说明、材料等级、部件型号及批准替代项。',
+          'Modèle actuel, plans, dimensions, poids, spécifications, nomenclature, options, limites, instructions, nuances de matériaux, modèles de composants et substitutions approuvées.'
+        )
+      },
+      {
+        title: t('Testing and certification records', '测试与认证记录', 'Dossiers d’essais et de certification'),
+        body: t(
+          'Underlying reports, scope, tested model, issuing body, dates, surveillance or expiry information, limitations and evidence that the supplied configuration matches what was tested.',
+          '基础报告、范围、测试型号、签发机构、日期、监督或有效期信息、限制条件，以及供应配置与测试配置一致的证据。',
+          'Rapports, portée, modèle testé, organisme, dates, surveillance ou expiration, limites et preuve que la configuration fournie correspond à celle testée.'
+        )
+      },
+      {
+        title: t('Quality and traceability', '质量与追溯', 'Qualité et traçabilité'),
+        body: t(
+          'Incoming inspection, in-process checks, final tests, non-conformance handling, corrective actions, photographs, serial or batch records and agreed inspection points.',
+          '来料检验、过程检查、最终测试、不合格处理、纠正措施、照片、序列号或批次记录及约定检验点。',
+          'Inspection à l’entrée, contrôles en cours, essais finaux, non-conformités, actions correctives, photos, dossiers de série ou lot et points d’inspection convenus.'
+        )
+      },
+      {
+        title: t('Logistics, installation and service', '物流、安装与服务', 'Logistique, installation et service'),
+        body: t(
+          'Packing method, lifting points, transport limits, receiving instructions, installation sequence, required tools and trades, commissioning, warranty, spare parts, manuals and service contacts.',
+          '包装方式、吊点、运输限制、收货说明、安装顺序、所需工具与工种、调试、质保、备件、手册及服务联系人。',
+          'Méthode d’emballage, points de levage, limites de transport, réception, séquence d’installation, outils et métiers, mise en service, garantie, pièces, manuels et contacts.'
+        )
+      },
+      {
+        title: t('Use a simple status system', '使用简单状态体系', 'Utiliser un système de statut simple'),
+        body: t(
+          'Mark each item as requested, received, under review, accepted for the current purpose, revision required, expired or not applicable. Received is not the same as reviewed and suitable.',
+          '把每项标记为已请求、已收到、审查中、当前用途已接受、需修改、已过期或不适用。已收到并不等同于已审查且适用。',
+          'Marquez chaque élément comme demandé, reçu, en examen, accepté pour l’usage actuel, à réviser, expiré ou non applicable. Reçu ne signifie pas examiné et approprié.'
+        )
+      }
+    ]
+  },
+
   privacy: {
     eyebrow: privacyNotice.eyebrow,
     title: privacyNotice.title,

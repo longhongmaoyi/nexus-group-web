@@ -14,6 +14,9 @@ import {
   FileCheck2,
   Globe2,
   HardHat,
+  Mail,
+  MapPin,
+  MessageCircle,
   PackageCheck,
   ShieldCheck,
   Truck,
@@ -23,7 +26,8 @@ import {
 
 import { InquiryForm } from '@/components/inquiry-form'
 import { BusinessIntakeWizard } from '@/components/business-intake-wizard'
-import { conceptProjects, homeCopy, localized, sectionPages, solutionCards, type SectionSlug } from '@/lib/content'
+import { buyerResources, conceptProjects, homeCopy, localized, sectionPages, solutionCards, type SectionSlug } from '@/lib/content'
+import { companyContactNote, publishedContacts } from '@/lib/company-profile'
 import type { CmsPageSnapshot } from '@/lib/cms-types'
 import type { Locale } from '@/lib/i18n'
 
@@ -573,6 +577,54 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
                     </Link>
                   ))}
                 </div>
+              </div>
+            ) : null}
+
+
+            {section === 'buyer-resources' ? (
+              <div className="mt-14 grid gap-5 md:grid-cols-2">
+                {buyerResources.map((resource, index) => (
+                  <Link key={resource.slug} href={`/${locale}/${resource.slug}`} className="group rounded-[2rem] border border-ink/10 bg-white p-7 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-ink/25 hover:shadow-lift">
+                    <span className="text-xs font-black tracking-[0.18em] text-forest">{String(index + 1).padStart(2, '0')}</span>
+                    <h3 className="mt-5 text-2xl font-bold tracking-tight text-ink">{localized(resource.title, locale)}</h3>
+                    <p className="mt-4 text-sm leading-7 text-slate-600">{localized(resource.description, locale)}</p>
+                    <span className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-forest">{t('Open guide', '打开指南', 'Ouvrir le guide')[locale]} <ArrowRight className="h-4 w-4" /></span>
+                  </Link>
+                ))}
+              </div>
+            ) : null}
+
+            {(section === 'products' || section === 'news') ? (
+              <Link href={`/${locale}/buyer-resources`} className="mt-14 grid gap-5 rounded-[2.25rem] border border-ink/10 bg-[#e8efec] p-7 transition hover:border-ink/25 sm:p-9 lg:grid-cols-[1fr_auto] lg:items-center">
+                <div>
+                  <p className="eyebrow">{t('Buyer resources', '买家资源', 'Ressources pour acheteurs')[locale]}</p>
+                  <h2 className="mt-4 text-3xl font-bold tracking-tight text-ink">{t('Prepare the brief, cost view, timeline and document list before comparing offers.', '在比较方案前，先准备项目简报、成本视图、时间表及文件清单。', 'Préparez le dossier, le coût, l’échéancier et la liste de documents avant de comparer les offres.')[locale]}</h2>
+                </div>
+                <span className="inline-flex items-center gap-2 text-sm font-bold text-forest">{t('View buyer guides', '查看买家指南', 'Voir les guides')[locale]} <ArrowRight className="h-4 w-4" /></span>
+              </Link>
+            ) : null}
+
+            {section === 'contact' ? (
+              <div className="mt-14">
+                <div className="max-w-3xl">
+                  <p className="eyebrow">{t('Published contact points', '公开联系方式', 'Coordonnées publiques')[locale]}</p>
+                  <h2 className="section-title">{t('Choose the contact closest to the conversation you need.', '选择最适合您沟通需求的联系人。', 'Choisissez le contact le plus proche de votre besoin.')[locale]}</h2>
+                </div>
+                <div className="mt-8 grid gap-5 lg:grid-cols-2">
+                  {publishedContacts.map((contact) => (
+                    <address key={contact.key} className="not-italic rounded-[2rem] border border-ink/10 bg-white p-7 shadow-soft">
+                      <p className="text-xs font-black uppercase tracking-[0.16em] text-forest">{localized(contact.contactLabel, locale)}</p>
+                      <h3 className="mt-4 text-2xl font-bold tracking-tight text-ink">{contact.name}</h3>
+                      <p className="mt-1 text-sm font-semibold text-slate-500">{localized(contact.role, locale)}</p>
+                      <div className="mt-6 grid gap-3 text-sm leading-6 text-slate-700">
+                        <a href={`mailto:${contact.email}`} className="flex items-start gap-3 hover:text-forest"><Mail className="mt-1 h-4 w-4 shrink-0 text-forest" /><span>{contact.email}</span></a>
+                        <a href={contact.whatsappUrl} target="_blank" rel="noreferrer" className="flex items-start gap-3 hover:text-forest"><MessageCircle className="mt-1 h-4 w-4 shrink-0 text-forest" /><span>{contact.phoneDisplay}</span></a>
+                        <p className="flex items-start gap-3"><MapPin className="mt-1 h-4 w-4 shrink-0 text-forest" /><span>{localized(contact.location, locale)}</span></p>
+                      </div>
+                    </address>
+                  ))}
+                </div>
+                <p className="mt-5 max-w-4xl text-xs leading-6 text-slate-500">{localized(companyContactNote, locale)}</p>
               </div>
             ) : null}
 
