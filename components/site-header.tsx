@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, ChevronDown, LayoutDashboard } from 'lucide-react'
 
 import { BrandMark } from '@/components/brand-mark'
 import { LocaleSwitcher } from '@/components/locale-switcher'
@@ -9,57 +9,76 @@ import { isPhase5PublicComplianceEnabled } from '@/lib/phase5-core.mjs'
 type Localized = Record<Locale, string>
 const t = (en: string, zh: string, fr: string): Localized => ({ en, zh, fr })
 
-const navigation = [
-  { slug: 'products', label: t('Living Spaces', '生活空间', 'Espaces de vie') },
-  { slug: 'industries', label: t('Solutions', '解决方案', 'Solutions') },
+const primary = [
+  { slug: 'products', label: t('Solutions', '解决方案', 'Solutions') },
+  { slug: 'assembly-centre', label: t('How We Deliver', '交付方式', 'Notre approche') },
   { slug: 'projects', label: t('Projects', '项目', 'Projets') },
-  { slug: 'news', label: t('Innovation', '创新', 'Innovation') },
-  { slug: 'about', label: t('Sustainability', '可持续发展', 'Durabilité') },
-  { slug: 'about', label: t('About Us', '关于我们', 'À propos') },
-  { slug: 'news', label: t('News', '新闻', 'Actualités') },
+  { slug: 'about', label: t('About', '关于', 'À propos') },
+]
+
+const secondary = [
+  { slug: 'industries', label: t('Industries', '行业', 'Secteurs') },
+  { slug: 'suppliers', label: t('Suppliers', '供应商', 'Fournisseurs') },
+  { slug: 'news', label: t('Innovation & News', '创新与新闻', 'Innovation et actualités') },
   { slug: 'contact', label: t('Contact', '联系', 'Contact') },
 ]
 
 const copy = {
-  tagline: t('Building Spaces. Creating Life.', '构筑空间，创造生活。', 'Bâtir des espaces. Créer la vie.'),
-  cta: t('Get in Touch', '联系我们', 'Nous contacter'),
+  more: t('More', '更多', 'Plus'),
+  portal: t('Portal', '门户', 'Portail'),
+  start: t('Start a Project', '启动项目', 'Démarrer un projet'),
 }
 
 export function SiteHeader({ locale }: { locale: Locale }) {
   const localized = (value: Localized) => value[locale]
-  const visibleNavigation = isPhase5PublicComplianceEnabled()
-    ? [...navigation, { slug: 'compliance', label: t('Compliance', '合规中心', 'Conformité') }]
-    : navigation
+  const moreLinks = isPhase5PublicComplianceEnabled()
+    ? [...secondary, { slug: 'compliance', label: t('Compliance Centre', '合规中心', 'Centre de conformité') }]
+    : secondary
 
   return (
-    <header className="absolute inset-x-0 top-0 z-50 bg-[linear-gradient(180deg,rgba(3,17,21,.76),rgba(3,17,21,.22))] text-white">
-      <div className="mx-auto flex min-h-[76px] max-w-[1760px] items-center justify-between gap-3 px-5 py-2.5 sm:px-8 lg:px-12">
-        <div className="flex shrink-0 items-center gap-4">
-          <BrandMark href={`/${locale}`} adaptive />
-          <span className="hidden max-w-32 border-l border-white/25 pl-4 text-[0.72rem] font-medium leading-[1.35] text-white/78 2xl:block">{localized(copy.tagline)}</span>
-        </div>
+    <header className="absolute inset-x-0 top-0 z-50 overflow-x-hidden border-b border-white/15 bg-[linear-gradient(180deg,rgba(7,13,15,.76),rgba(7,13,15,.2))] text-white">
+      <div className="mx-auto flex min-h-[82px] max-w-[1760px] items-center justify-between gap-4 px-5 py-3 sm:px-8 lg:px-12">
+        <BrandMark href={`/${locale}`} adaptive />
 
-        <nav className="hidden items-center gap-3 xl:flex 2xl:gap-5" aria-label="Primary navigation">
-          {visibleNavigation.map((item, index) => (
-            <Link key={`${item.slug}-${index}`} href={`/${locale}/${item.slug}`} className="whitespace-nowrap text-[0.94rem] font-semibold text-white/86 transition hover:text-white 2xl:text-base">
+        <nav className="hidden items-center gap-6 xl:flex" aria-label="Primary navigation">
+          {primary.map((item) => (
+            <Link key={item.slug} href={`/${locale}/${item.slug}`} className="text-sm font-semibold text-white/76 transition hover:text-white">
               {localized(item.label)}
             </Link>
           ))}
+          <details className="group relative">
+            <summary className="flex cursor-pointer list-none items-center gap-1.5 text-sm font-semibold text-white/76 transition hover:text-white">
+              {localized(copy.more)} <ChevronDown className="h-3.5 w-3.5 transition group-open:rotate-180" />
+            </summary>
+            <div className="absolute left-1/2 top-8 w-60 -translate-x-1/2 border border-black/10 bg-[#f4f1e9] p-2 text-[#11191b] shadow-2xl">
+              {moreLinks.map((item) => (
+                <Link key={item.slug} href={`/${locale}/${item.slug}`} className="block px-4 py-3 text-sm font-semibold transition hover:bg-[#e3e0d7] hover:text-[#176b96]">
+                  {localized(item.label)}
+                </Link>
+              ))}
+            </div>
+          </details>
         </nav>
 
         <div className="flex items-center gap-2">
-          <div className="hidden rounded-full bg-white/95 text-[#0b2528] lg:block"><LocaleSwitcher locale={locale} /></div>
-          <Link href={`/${locale}/contact`} className="inline-flex items-center gap-1.5 rounded-full border border-white/45 bg-white/8 px-3 py-2 text-sm font-semibold text-white backdrop-blur transition hover:bg-white hover:text-[#0b2528] sm:px-4">
-            {localized(copy.cta)} <ArrowUpRight className="h-3.5 w-3.5" />
+          <div className="hidden rounded-full bg-white/95 text-[#11191b] lg:block"><LocaleSwitcher locale={locale} /></div>
+          <Link href={`/${locale}/portal`} className="inline-flex min-h-10 items-center gap-2 border border-white/35 px-3 text-xs font-bold uppercase tracking-[0.1em] text-white transition hover:bg-white/10 sm:px-4">
+            <LayoutDashboard className="h-3.5 w-3.5" /> <span className="hidden sm:inline">{localized(copy.portal)}</span>
+          </Link>
+          <Link href={`/${locale}/contact`} className="inline-flex min-h-10 items-center gap-2 bg-white px-3 text-xs font-bold uppercase tracking-[0.1em] text-[#11191b] transition hover:bg-[#75bfe8] sm:px-4">
+            <span className="hidden sm:inline">{localized(copy.start)}</span><span className="sm:hidden">{localized(t('Start', '启动', 'Démarrer'))}</span> <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
         </div>
       </div>
-      <nav className="mx-auto flex max-w-[1760px] gap-6 overflow-x-auto px-5 pb-3 text-sm font-semibold text-white/84 sm:px-8 lg:px-12 xl:hidden" aria-label="Primary navigation">
-        {visibleNavigation.map((item, index) => (
-          <Link key={`${item.slug}-compact-${index}`} href={`/${locale}/${item.slug}`} className="shrink-0 whitespace-nowrap transition hover:text-white">
-            {localized(item.label)}
-          </Link>
+
+      <nav className="mx-auto flex w-full max-w-full items-center gap-6 overflow-x-auto px-5 pb-3 text-xs font-semibold text-white/78 sm:px-8 lg:px-12 xl:hidden" aria-label="Primary navigation">
+        {primary.map((item) => (
+          <Link key={item.slug} href={`/${locale}/${item.slug}`} className="shrink-0 whitespace-nowrap hover:text-white">{localized(item.label)}</Link>
         ))}
+        {moreLinks.map((item) => (
+          <Link key={item.slug} href={`/${locale}/${item.slug}`} className="shrink-0 whitespace-nowrap hover:text-white">{localized(item.label)}</Link>
+        ))}
+        <span className="shrink-0 lg:hidden"><LocaleSwitcher locale={locale} dark /></span>
       </nav>
     </header>
   )

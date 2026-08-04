@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import {
@@ -22,7 +23,7 @@ import {
 
 import { InquiryForm } from '@/components/inquiry-form'
 import { BusinessIntakeWizard } from '@/components/business-intake-wizard'
-import { homeCopy, localized, sectionPages, type SectionSlug } from '@/lib/content'
+import { conceptProjects, homeCopy, localized, sectionPages, type SectionSlug } from '@/lib/content'
 import type { CmsPageSnapshot } from '@/lib/cms-types'
 import type { Locale } from '@/lib/i18n'
 
@@ -295,6 +296,7 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
   }
   const [active, setActive] = useState(0)
   const isAssembly = section === 'assembly-centre'
+  const isProjects = section === 'projects'
   const enhancement = sectionContext[section]
   const EnhancementIcon = enhancement?.icon
 
@@ -354,7 +356,56 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
         </div>
       </section>
 
-      {isAssembly ? (
+      {isProjects ? (
+        <section className="bg-[#f4f1e9] px-5 py-16 sm:px-8 lg:px-12 lg:py-24">
+          <div className="mx-auto max-w-[1760px]">
+            <div className="flex flex-col gap-5 border-b border-black/15 pb-10 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="premium-eyebrow">{t('Status-led portfolio', '状态导向项目组合', 'Portfolio guidé par le statut')[locale]}</p>
+                <h2 className="mt-5 max-w-4xl text-4xl font-semibold leading-[0.98] tracking-[-0.045em] text-[#11191b] sm:text-5xl lg:text-6xl">
+                  {t('A clear distinction between direction and delivered evidence.', '清晰区分项目方向与交付证据。', 'Une distinction claire entre orientation et preuves de livraison.')[locale]}
+                </h2>
+              </div>
+              <div className="flex flex-wrap gap-2 text-[0.62rem] font-bold uppercase tracking-[0.16em]">
+                <span className="border border-black/20 px-3 py-2">{t('Verified Project', '已核验项目', 'Projet vérifié')[locale]}</span>
+                <span className="border border-black/20 px-3 py-2">{t('In Development', '开发中', 'En développement')[locale]}</span>
+                <span className="bg-[#11191b] px-3 py-2 text-white">{t('Design Concept', '设计概念', 'Concept de design')[locale]}</span>
+              </div>
+            </div>
+
+            <div className="mt-10 grid gap-x-5 gap-y-12 md:grid-cols-2">
+              {conceptProjects.map((project, index) => (
+                <article key={project.title.en} className={index % 3 === 0 ? 'md:col-span-2' : ''}>
+                  <div className={`group relative overflow-hidden bg-[#11191b] ${index % 3 === 0 ? 'aspect-[1.75/1]' : 'aspect-[1.25/1]'}`}>
+                    <Image src={project.image} alt={localized(project.title, locale)} fill quality={92} sizes={index % 3 === 0 ? '100vw' : '(max-width: 768px) 100vw, 50vw'} className="object-cover transition duration-700 ease-out group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/76 via-black/5 to-black/5" />
+                    <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8">
+                      <span className="inline-flex bg-[#f4f1e9] px-3 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.18em] text-[#11191b]">{t('Design Concept', '设计概念', 'Concept de design')[locale]}</span>
+                      <div className="mt-4 flex items-end justify-between gap-5">
+                        <div>
+                          <h3 className="text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">{localized(project.title, locale)}</h3>
+                          <p className="mt-2 text-sm text-white/66">{localized(project.meta, locale)}</p>
+                        </div>
+                        <span className="hidden h-11 w-11 shrink-0 place-items-center rounded-full border border-white/40 sm:grid"><ArrowRight className="h-4 w-4" /></span>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-14 grid gap-6 border-t border-black/15 pt-10 lg:grid-cols-[0.66fr_0.34fr] lg:items-end">
+              <div>
+                <p className="premium-eyebrow">{t('Evidence standard', '证据标准', 'Norme de preuve')[locale]}</p>
+                <h2 className="mt-5 max-w-4xl text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">{enhancement?.outcome[locale]}</h2>
+              </div>
+              <Link href={`/${locale}/contact`} className="premium-button-dark justify-self-start lg:justify-self-end">
+                {localized(homeCopy.contactCta, locale)} <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      ) : isAssembly ? (
         <section className="bg-[#f3f1e9] py-16 lg:py-24">
           <div className="mx-auto max-w-8xl px-5 sm:px-8 lg:px-12">
             <div className="max-w-4xl">

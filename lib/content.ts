@@ -17,16 +17,16 @@ export const navigation = [
 export const homeCopy = {
   utility: t('Assembled in Canada. Engineered for North America.', '加拿大组装，为北美市场而设计。', 'Assemblé au Canada. Conçu pour l’Amérique du Nord.'),
   heroEyebrow: t('Canada + Global Modular Infrastructure', '加拿大 + 全球模块化基础设施', 'Infrastructures modulaires — Canada + Monde'),
-  heroTitle: t('Redefining Modular Living', '重新定义模块化生活', 'Redéfinir la vie modulaire'),
+  heroTitle: t('Global Capability. Built for Canadian Business.', '全球能力，为加拿大企业而建。', 'Capacité mondiale. Conçue pour les entreprises canadiennes.'),
   heroSubtitle: t(
     'Integrated solutions for living, working and exploring the future.',
     '为未来生活、工作与探索提供一体化解决方案。',
     'Des solutions intégrées pour vivre, travailler et explorer l’avenir.'
   ),
   heroBody: t(
-    'NEXUS GROUP connects global supply, Canadian assembly, compliance coordination, installation and long-term support in one premium platform.',
-    'NEXUS 集团将全球供应链、加拿大组装、认证协调、安装与长期售后整合于一个高端平台。',
-    'NEXUS GROUP réunit l’approvisionnement mondial, l’assemblage canadien, la conformité, l’installation et le soutien à long terme.'
+    'NEXUS connects qualified global supply with Canadian coordination, compliance pathways, site delivery and long-term support.',
+    'NEXUS 将优质全球供应能力与加拿大协调、合规路径、现场交付及长期支持相连接。',
+    'NEXUS relie un approvisionnement mondial qualifié à la coordination canadienne, aux parcours de conformité, à la livraison et au soutien à long terme.'
   ),
   primaryCta: t('Explore Products', '浏览产品', 'Découvrir les produits'),
   secondaryCta: t('Start a Project', '启动项目', 'Démarrer un projet'),
@@ -59,7 +59,7 @@ export const homeCopy = {
   ),
   projectsEyebrow: t('Featured Concepts', '精选概念项目', 'Concepts en vedette'),
   projectsTitle: t('Built for Canada. Designed for the world.', '立足加拿大，面向全球。', 'Conçu pour le Canada. Pensé pour le monde.'),
-  projectsNote: t('Concept imagery and project names are placeholders until verified portfolio content is supplied.', '以下为概念图片与示例项目名称，待提供已验证案例后替换。', 'Les visuels et noms sont des concepts à remplacer par un portfolio vérifié.'),
+  projectsNote: t('Design concepts are identified by status and are not presented as completed work.', '设计概念均按状态标注，不作为已完工项目呈现。', 'Les concepts sont identifiés par leur statut et ne sont pas présentés comme des projets livrés.'),
   supplierEyebrow: t('Supplier Network', '供应商网络', 'Réseau de fournisseurs'),
   supplierTitle: t('Build the next generation of modular spaces with us.', '与我们共同打造新一代模块化空间。', 'Construisons ensemble la prochaine génération d’espaces modulaires.'),
   supplierBody: t(
@@ -165,8 +165,8 @@ export const sectionPages = {
   },
   projects: {
     eyebrow: t('Projects', '项目', 'Projets'),
-    title: t('A future portfolio of modular environments.', '未来模块化空间项目组合。', 'Un futur portfolio d’environnements modulaires.'),
-    intro: t('The initial project cards are clearly identified as concepts. Replace them with verified locations, clients, specifications and photography before public launch.', '当前项目卡片已明确标注为概念内容。正式上线前请替换为已验证的地点、客户、规格与图片。', 'Les projets initiaux sont clairement identifiés comme concepts. Ils devront être remplacés par des données et photos vérifiées avant le lancement.'),
+    title: t('Project directions, presented with a clear status.', '项目方向，状态清晰呈现。', 'Des orientations de projet présentées avec un statut clair.'),
+    intro: t('A curated view of modular applications. Each entry is labelled by its current evidence level so concepts are never presented as completed work.', '模块化应用的精选展示。每个项目均按当前证据等级标注，绝不将概念呈现为已完工项目。', 'Une sélection d’applications modulaires. Chaque entrée indique son niveau de preuve afin qu’un concept ne soit jamais présenté comme un projet livré.'),
     blocks: conceptProjects.map((item) => ({ title: item.title, body: item.meta })),
   },
   suppliers: {
