@@ -16,8 +16,8 @@ export const navigation = [
 ]
 
 export const homeCopy = {
-  utility: t('Assembled in Canada. Engineered for North America.', '加拿大组装，为北美市场而设计。', 'Assemblé au Canada. Conçu pour l’Amérique du Nord.'),
-  heroEyebrow: t('Canada + Global Modular Infrastructure', '加拿大 + 全球模块化基础设施', 'Infrastructures modulaires — Canada + Monde'),
+  utility: t('Canadian coordination for globally sourced modular systems.', '为全球采购的模块化系统提供加拿大本地协调。', 'Coordination canadienne de systèmes modulaires provenant du monde entier.'),
+  heroEyebrow: t('Modular projects, coordinated from source to site', '模块化项目，从源头到现场全程协调', 'Des projets modulaires coordonnés de la source au site'),
   heroTitle: t('Global Capability. Built for Canadian Business.', '全球能力，为加拿大企业而建。', 'Capacité mondiale. Conçue pour les entreprises canadiennes.'),
   heroSubtitle: t(
     'Spaces for accommodation, business, tourism and remote operations.',
@@ -34,7 +34,7 @@ export const homeCopy = {
   trust: [
     t('Canadian Assembly', '加拿大组装', 'Assemblage canadien'),
     t('Compliance Coordination', '认证协调', 'Coordination de conformité'),
-    t('Four-Season Ready', '四季适用', 'Adapté aux quatre saisons'),
+    t('Site and climate review', '场地与气候审查', 'Examen du site et du climat'),
     t('Global Supply Network', '全球供应网络', 'Réseau mondial de fournisseurs'),
   ],
   solutionsEyebrow: t('Start with the real need.', '从真实需求出发。', 'Partir du besoin réel.'),
@@ -51,18 +51,18 @@ export const homeCopy = {
     '加拿大模块化产品集成中心，统一协调进口、组装、合规认证、安装与售后服务。',
     'Un centre canadien qui coordonne l’importation, l’assemblage local, la conformité, l’installation et le service après-vente.'
   ),
-  footprintEyebrow: t('Our Global Ecosystem', '我们的全球生态系统', 'Notre écosystème mondial'),
-  footprintTitle: t('Global capability. Canadian execution.', '全球能力，加拿大落地。', 'Capacité mondiale. Exécution canadienne.'),
+  footprintEyebrow: t('How the model works', '我们的运作方式', 'Fonctionnement du modèle'),
+  footprintTitle: t('Global sourcing, with local accountability.', '全球采购，本地责任清晰。', 'Approvisionnement mondial, responsabilité locale.'),
   footprintBody: t(
     'NEXUS is positioned as an integrated solution group—not simply a modular home seller. The platform connects manufacturers, project partners, local specialists and customers.',
     'NEXUS 的定位不是普通模块化房屋销售商，而是连接制造商、项目伙伴、本地专业团队与客户的综合解决方案集团。',
     'NEXUS se positionne comme un groupe de solutions intégré, reliant fabricants, partenaires de projet, spécialistes locaux et clients.'
   ),
-  projectsEyebrow: t('Featured Concepts', '精选概念项目', 'Concepts en vedette'),
-  projectsTitle: t('Built for Canada. Designed for the world.', '立足加拿大，面向全球。', 'Conçu pour le Canada. Pensé pour le monde.'),
+  projectsEyebrow: t('Project directions', '项目方向', 'Orientations de projet'),
+  projectsTitle: t('Concepts shown honestly, with their status attached.', '项目概念如实呈现，并明确标注状态。', 'Des concepts présentés honnêtement, avec leur statut.'),
   projectsNote: t('Design concepts are identified by status and are not presented as completed work.', '设计概念均按状态标注，不作为已完工项目呈现。', 'Les concepts sont identifiés par leur statut et ne sont pas présentés comme des projets livrés.'),
   supplierEyebrow: t('Supplier Network', '供应商网络', 'Réseau de fournisseurs'),
-  supplierTitle: t('Build the next generation of modular spaces with us.', '与我们共同打造新一代模块化空间。', 'Construisons ensemble la prochaine génération d’espaces modulaires.'),
+  supplierTitle: t('Canadian projects need more than a competitive factory price.', '加拿大项目需要的不只是有竞争力的工厂价格。', 'Les projets canadiens exigent plus qu’un prix usine compétitif.'),
   supplierBody: t(
     'Qualified suppliers are reviewed for manufacturing capability, documentation, quality control, export readiness, communication and after-sales responsibility.',
     '合格供应商将接受制造能力、文件、质量控制、出口准备度、沟通及售后责任等方面的审查。',
@@ -75,9 +75,9 @@ export const homeCopy = {
     'Indiquez le lieu, l’usage, la capacité, le budget et la date cible. Nous pourrons alors proposer une prochaine étape réaliste.'
   ),
   viewAll: t('View all projects', '查看全部项目', 'Voir tous les projets'),
-  learnMore: t('Learn more', '了解更多', 'En savoir plus'),
+  learnMore: t('View details', '查看详情', 'Voir les détails'),
   supplierCta: t('Become a Supplier', '成为供应商', 'Devenir fournisseur'),
-  contactCta: t('Get in Touch', '联系我们', 'Nous contacter'),
+  contactCta: t('Discuss Your Project', '讨论您的项目', 'Discuter de votre projet'),
 }
 
 export const solutionCards = [
@@ -85,31 +85,31 @@ export const solutionCards = [
     slug: 'modular-living',
     image: '/images/modular-living.jpg',
     title: t('Modular Living', '模块化生活', 'Habitat modulaire'),
-    description: t('Glamping cabins, tiny houses, modular cabins and resort villas.', '豪华露营小屋、微型住宅、模块化小屋与度假别墅。', 'Chalets glamping, minimaisons, cabines modulaires et villas de villégiature.'),
+    description: t('Cabins, compact homes and villas planned around climate, occupancy, utilities and site access.', '围绕气候、居住人数、公用设施及现场通行条件规划的小屋、紧凑型住宅和别墅。', 'Chalets, habitations compactes et villas conçus selon le climat, l’occupation, les services et l’accès au site.'),
   },
   {
     slug: 'tourism-hospitality',
     image: '/images/tourism.jpg',
     title: t('Tourism & Hospitality', '旅游与酒店', 'Tourisme et hôtellerie'),
-    description: t('Campgrounds, resorts, eco-tourism and hospitality projects.', '营地、度假村、生态旅游与酒店项目。', 'Terrains de camping, complexes, écotourisme et projets hôteliers.'),
+    description: t('Guest accommodation and support buildings for resorts, campgrounds and destination properties.', '面向度假村、营地及目的地项目的住宿与配套建筑。', 'Hébergement et bâtiments de soutien pour centres de villégiature, terrains de camping et destinations.'),
   },
   {
     slug: 'commercial-solutions',
     image: '/images/commercial.jpg',
     title: t('Commercial Solutions', '商业解决方案', 'Solutions commerciales'),
-    description: t('Coffee kiosks, food kiosks, retail units and modular offices.', '咖啡亭、餐饮亭、零售单元与模块化办公室。', 'Kiosques café, restauration, unités commerciales et bureaux modulaires.'),
+    description: t('Kiosks, food-service units, retail spaces and offices shaped around the operating model.', '根据实际运营模式规划的售卖亭、餐饮单元、零售空间及办公室。', 'Kiosques, unités de restauration, commerces et bureaux adaptés au modèle d’exploitation.'),
   },
   {
     slug: 'industrial-solutions',
     image: '/images/industrial.jpg',
     title: t('Industrial Solutions', '工业解决方案', 'Solutions industrielles'),
-    description: t('Worker camps, site offices, storage modules and mining camps.', '工人营地、工地办公室、仓储模块与矿区营地。', 'Camps de travailleurs, bureaux de chantier, stockage et camps miniers.'),
+    description: t('Accommodation, offices, storage and service modules for remote and fast-moving operations.', '面向偏远及快速推进项目的住宿、办公室、仓储和服务模块。', 'Hébergement, bureaux, stockage et modules de service pour les opérations éloignées ou en évolution rapide.'),
   },
   {
     slug: 'public-community',
     image: '/images/community.jpg',
     title: t('Public & Community', '公共与社区', 'Public et communautaire'),
-    description: t('Flexible spaces for education, healthcare and community use.', '面向教育、医疗与社区用途的灵活空间。', 'Espaces flexibles pour l’éducation, la santé et la vie communautaire.'),
+    description: t('Flexible buildings for education, community programs, administration and essential services.', '面向教育、社区项目、行政管理及基本服务的灵活建筑。', 'Bâtiments flexibles pour l’éducation, les programmes communautaires, l’administration et les services essentiels.'),
   },
 ]
 

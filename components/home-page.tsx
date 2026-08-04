@@ -30,39 +30,39 @@ type RevealStyle = CSSProperties & { '--reveal-delay'?: string }
 const t = (en: string, zh: string, fr: string): Localized => ({ en, zh, fr })
 
 const copy = {
-  heroEyebrow: t('Canada–Global Project Integration', '加拿大全球项目整合', 'Intégration de projets Canada–Monde'),
+  heroEyebrow: t('Modular projects, from source to site', '模块化项目，从源头到现场', 'Des projets modulaires, de la source au site'),
   heroTitle: t('Global Capability. Built for Canadian Business.', '全球能力，为加拿大企业而建。', 'Capacité mondiale. Conçue pour les entreprises canadiennes.'),
   heroBody: t(
-    'NEXUS connects qualified global supply with Canadian coordination, compliance pathways, site delivery and long-term support.',
-    'NEXUS 将优质全球供应能力与加拿大协调、合规路径、现场交付及长期支持相连接。',
-    'NEXUS relie un approvisionnement mondial qualifié à la coordination canadienne, aux parcours de conformité, à la livraison et au soutien à long terme.',
+    'A modular project is more than choosing a building. NEXUS helps define the need, compare realistic options and coordinate the work required to put the space into service in Canada.',
+    '模块化项目不只是选择一栋建筑。NEXUS 协助明确需求、比较现实方案，并协调空间在加拿大投入使用所需的工作。',
+    'Un projet modulaire ne consiste pas seulement à choisir un bâtiment. NEXUS aide à préciser le besoin, comparer des options réalistes et coordonner la mise en service au Canada.',
   ),
   start: t('Start a Project', '启动项目', 'Démarrer un projet'),
   explore: t('Explore Solutions', '探索解决方案', 'Explorer les solutions'),
-  solutionsEyebrow: t('Integrated Solution Platform', '一体化解决方案平台', 'Plateforme de solutions intégrées'),
-  solutionsTitle: t('Built around the way your operation needs to work.', '围绕您的运营需求而打造。', 'Conçu selon les besoins réels de vos opérations.'),
+  solutionsEyebrow: t('Start with the real need', '从真实需求出发', 'Partir du besoin réel'),
+  solutionsTitle: t('The right space starts with the way it will be used.', '合适的空间从真实使用方式开始。', 'Le bon espace commence par la façon dont il sera utilisé.'),
   solutionsBody: t(
-    'Six focused pathways connect modular environments, operational infrastructure and technology services to a controlled Canadian delivery process.',
-    '六条专注路径，将模块化环境、运营基础设施及技术服务连接至受控的加拿大交付流程。',
-    'Six parcours relient les environnements modulaires, les infrastructures opérationnelles et les services technologiques à une livraison canadienne maîtrisée.',
+    'A cabin, a kiosk and a workforce camp may all be modular, but they do not need the same layout, documentation or delivery plan.',
+    '小屋、售卖亭和工人营地都可以采用模块化方案，但它们需要不同的布局、文件和交付计划。',
+    'Un chalet, un kiosque et un camp de travailleurs peuvent tous être modulaires, sans exiger le même plan, les mêmes documents ni la même livraison.',
   ),
-  storiesEyebrow: t('Application Stories', '应用场景', 'Scénarios d’application'),
-  storiesTitle: t('A system is only valuable when it fits the site, the people and the operating brief.', '系统只有在适合场地、人员与运营要求时才真正有价值。', 'Un système n’a de valeur que s’il répond au site, aux personnes et au mandat opérationnel.'),
+  storiesEyebrow: t('How it could work', '方案如何落地', 'Comment cela pourrait fonctionner'),
+  storiesTitle: t('The same modular system will not suit every site—or every operator.', '同一套模块化系统不会适合所有场地或所有运营方。', 'Le même système modulaire ne convient pas à tous les sites ni à tous les exploitants.'),
   processEyebrow: t('Coordinated Delivery', '协同交付', 'Livraison coordonnée'),
-  processTitle: t('One accountable pathway from first brief to lifecycle support.', '从初步需求到全生命周期支持的一体化责任路径。', 'Un parcours responsable, du premier mandat au soutien du cycle de vie.'),
+  processTitle: t('A clear route from the first conversation to handover and support.', '从首次沟通到移交和支持的清晰路径。', 'Un parcours clair, du premier échange à la remise et au soutien.'),
   projectsEyebrow: t('Project Portfolio', '项目组合', 'Portfolio de projets'),
-  projectsTitle: t('Ideas are labelled honestly. Delivery evidence comes first.', '诚实标注构想，以交付证据为先。', 'Les idées sont clairement identifiées. Les preuves de livraison passent d’abord.'),
+  projectsTitle: t('Concepts are labelled as concepts. Completed work needs proof.', '概念就标注为概念，已完工项目需要证据。', 'Les concepts restent des concepts. Une réalisation doit être prouvée.'),
   projectsBody: t(
     'NEXUS distinguishes verified work, projects in development and design concepts so every portfolio claim can be understood in context.',
     'NEXUS 清晰区分已核验项目、开发中项目及设计概念，确保每项项目表述都有明确背景。',
     'NEXUS distingue les projets vérifiés, en développement et les concepts afin que chaque référence soit comprise dans son contexte.',
   ),
   viewProjects: t('Explore Projects', '探索项目', 'Explorer les projets'),
-  finalTitle: t('Bring us the operating challenge.', '把您的运营挑战交给我们。', 'Confiez-nous votre défi opérationnel.'),
+  finalTitle: t('Tell us what is getting in the way.', '告诉我们目前的困难是什么。', 'Dites-nous ce qui bloque votre projet.'),
   finalBody: t(
-    'We will help define the requirements, identify the right supply pathway and coordinate the next qualified step.',
-    '我们将协助明确需求、识别合适的供应路径，并协调下一步合格行动。',
-    'Nous vous aiderons à définir les exigences, choisir la bonne voie d’approvisionnement et coordonner la prochaine étape qualifiée.',
+    'We will turn the problem into a clear brief, identify what needs to be checked and suggest a practical next step.',
+    '我们会把问题整理成清晰简报，确定需要核实的事项，并提出务实的下一步。',
+    'Nous transformerons le problème en dossier clair, identifierons les points à vérifier et proposerons une prochaine étape concrète.',
   ),
 }
 
@@ -302,7 +302,7 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
           </div>
 
           <div className="mt-8 flex items-center justify-between gap-4 border-t border-white/22 pt-5 text-[0.66rem] font-bold uppercase tracking-[0.2em] text-white/52">
-            <span>Global Supply / Canadian Coordination</span>
+            <span>{localized(t('Global supply / Canadian coordination', '全球供应 / 加拿大协调', 'Approvisionnement mondial / coordination canadienne'))}</span>
             <div className="flex shrink-0 items-center gap-2 lg:hidden">
               <button
                 type="button"
@@ -373,7 +373,7 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
                   <span className="absolute left-5 top-5 border border-white/35 bg-black/20 px-3 py-2 text-[0.65rem] font-bold uppercase tracking-[0.2em] backdrop-blur-sm">Application / {story.number}</span>
                 </div>
                 <div className={index % 2 ? 'lg:order-1 lg:pr-12' : 'lg:pl-2'}>
-                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#75bfe8]">{localized(t('Qualified solution profile', '合格解决方案概况', 'Profil de solution qualifié'))}</p>
+                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#75bfe8]">{localized(t('What the project would need', '项目真正需要什么', 'Ce dont le projet aurait besoin'))}</p>
                   <h3 className="mt-5 max-w-[16ch] text-4xl font-semibold leading-[0.98] tracking-[-0.045em] sm:text-5xl">{localized(story.title)}</h3>
                   <p className="mt-6 max-w-xl text-base leading-8 text-white/65">{localized(story.body)}</p>
                   <ul className="mt-8 divide-y divide-white/12 border-y border-white/12">
