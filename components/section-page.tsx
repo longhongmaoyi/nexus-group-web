@@ -381,7 +381,7 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
               {conceptProjects.map((project, index) => (
                 <article key={project.title.en} className={index % 3 === 0 ? 'md:col-span-2' : ''}>
                   <div className={`group relative overflow-hidden bg-[#11191b] ${index % 3 === 0 ? 'aspect-[1.75/1]' : 'aspect-[1.25/1]'}`}>
-                    <Image src={project.image} alt={localized(project.title, locale)} fill quality={92} sizes={index % 3 === 0 ? '100vw' : '(max-width: 768px) 100vw, 50vw'} className="object-cover transition duration-700 ease-out group-hover:scale-105" />
+                    <Image src={project.image} alt={localized(project.title, locale)} fill quality={92} sizes={index % 3 === 0 ? '100vw' : '(max-width: 768px) 100vw, 50vw'} className="object-cover transition duration-700 ease-out group-hover:scale-[1.02]" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/76 via-black/5 to-black/5" />
                     <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8">
                       <span className="inline-flex bg-[#f4f1e9] px-3 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.18em] text-[#11191b]">{t('Design Concept', '设计概念', 'Concept de design')[locale]}</span>
@@ -563,7 +563,7 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
                           fill
                           quality={90}
                           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                          className="object-cover transition duration-700 group-hover:scale-105"
+                          className="object-cover transition duration-700 group-hover:scale-[1.02]"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
                       </div>

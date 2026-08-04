@@ -75,15 +75,15 @@ const heroLines: Record<Locale, string[]> = {
 // Restored from the pre-premium homepage hero in 3b4f0c6/41ad0b1.
 const heroSlides = [
   {
-    image: '/images/nexus-lakeside-community-hero-v1.jpg',
+    image: '/images/community.jpg',
     label: t('Living together, naturally', '自然相伴，共同生活', 'Vivre ensemble, naturellement'),
   },
   {
-    image: '/images/hero-slide-02.jpg',
+    image: '/images/modular-living.jpg',
     label: t('Spaces made for real life', '为真实生活打造的空间', 'Des espaces faits pour la vraie vie'),
   },
   {
-    image: '/images/hero-slide-03.jpg',
+    image: '/images/commercial.jpg',
     label: t('Modular design with a human heart', '以人为本的模块化设计', 'Un design modulaire profondément humain'),
   },
 ] as const
@@ -130,7 +130,7 @@ const products = [
     title: t('Technology Services', '技术服务', 'Services technologiques'),
     description: t('Digital coordination and operational tools that support the project and its lifecycle.', '支持项目及其全生命周期的数字化协调与运营工具。', 'Coordination numérique et outils opérationnels au service du projet et de son cycle de vie.'),
     facts: [t('Structured documents, workflows and project visibility', '结构化文件、工作流程及项目可视性', 'Documents structurés, flux de travail et visibilité du projet'), t('Services scoped to the client and operating environment', '服务范围依据客户及运营环境确定', 'Services définis selon le client et l’environnement opérationnel')],
-    image: '/images/hero-slide-03.jpg',
+    image: '/images/commercial.jpg',
     href: 'about',
   },
 ]
@@ -141,21 +141,21 @@ const stories = [
     title: t('Remote Workforce Camp', '偏远地区劳动力营地', 'Camp pour travailleurs en région éloignée'),
     body: t('A coordinated mix of accommodation, shared services and operational spaces can be shaped around headcount, rotation, location and site logistics.', '可根据人员规模、轮班制度、地点及现场物流，协调住宿、共享服务与运营空间的组合。', 'Un ensemble coordonné d’hébergement, de services partagés et d’espaces opérationnels peut être adapté aux effectifs, rotations, lieux et contraintes logistiques.'),
     facts: [t('Occupancy and room mix defined from the client brief', '入住规模及房型组合依据客户需求确定', 'Occupation et composition définies selon le mandat client'), t('Transport, foundations and utilities reviewed for the site', '针对场地审查运输、基础及公用设施', 'Transport, fondations et services examinés pour le site'), t('Compliance evidence coordinated with responsible parties', '与责任方协调合规证明', 'Preuves de conformité coordonnées avec les parties responsables')],
-    image: '/images/project-workforce.jpg',
+    image: '/images/industrial.jpg',
   },
   {
     number: '02',
     title: t('Modular Resort or Hospitality Unit', '模块化度假村或酒店单元', 'Unité modulaire de villégiature ou d’hôtellerie'),
     body: t('Guest units and shared amenities can be configured around the landscape, operating season, service model and desired guest experience.', '宾客单元与共享配套可围绕景观、运营季节、服务模式及预期宾客体验进行配置。', 'Les unités et espaces communs peuvent être configurés selon le paysage, la saison d’exploitation, le modèle de service et l’expérience recherchée.'),
     facts: [t('Unit planning responds to the destination concept', '单元规划响应目的地概念', 'Planification adaptée au concept de destination'), t('Material and finish selections remain project-specific', '材料与饰面选择按项目确定', 'Matériaux et finitions propres au projet'), t('Local planning and permit requirements are confirmed before delivery', '交付前确认当地规划及许可要求', 'Exigences locales de planification et permis confirmés avant livraison')],
-    image: '/images/project-lake-hd-v1.jpg',
+    image: '/images/tourism.jpg',
   },
   {
     number: '03',
     title: t('Commercial Kiosk or Modular Workspace', '商业亭或模块化工作空间', 'Kiosque commercial ou espace de travail modulaire'),
     body: t('A compact business space can bring together brand, customer flow, equipment, staff needs and service connections in one coordinated brief.', '紧凑型商业空间可在一个协同需求中整合品牌、客流、设备、员工需求及服务连接。', 'Un espace commercial compact peut réunir la marque, le parcours client, les équipements, les besoins du personnel et les raccordements dans un même mandat.'),
     facts: [t('Layout follows the intended operation and customer journey', '布局依据预期运营及客户动线', 'Aménagement fondé sur l’exploitation et le parcours client'), t('Equipment and utility loads are confirmed by the project team', '设备及公用设施负载由项目团队确认', 'Équipements et charges de services confirmés par l’équipe projet'), t('Signage, accessibility and approvals are location-specific', '标识、无障碍及审批要求因地点而异', 'Signalétique, accessibilité et approbations propres au lieu')],
-    image: '/images/project-kiosk.jpg',
+    image: '/images/commercial.jpg',
   },
 ]
 
@@ -433,7 +433,7 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
             <Link href={`/${locale}/projects`} className="premium-button-dark mt-8">{localized(copy.viewProjects)} <ArrowUpRight className="h-4 w-4" /></Link>
           </div>
           <Link href={`/${locale}/projects`} className="group relative aspect-[1.3/1] overflow-hidden bg-[#11191b]" data-reveal>
-            <Image src={featuredContent?.image || '/images/project-lake-hd-v1.jpg'} alt={localized(featuredContent?.title || t('Lakefront modular retreat design concept', '湖畔模块化度假区设计概念', 'Concept de retraite modulaire au bord du lac'))} fill quality={92} sizes="(max-width: 1024px) 100vw, 58vw" className="object-cover transition duration-700 ease-out group-hover:scale-105" />
+            <Image src={featuredContent?.image || '/images/tourism.jpg'} alt={localized(featuredContent?.title || t('Lakefront modular retreat design concept', '湖畔模块化度假区设计概念', 'Concept de retraite modulaire au bord du lac'))} fill quality={92} sizes="(max-width: 1024px) 100vw, 58vw" className="object-cover transition duration-700 ease-out group-hover:scale-[1.02]" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8">
               <span className="inline-flex bg-[#f4f1e9] px-3 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.18em] text-[#11191b]">{localized(t('Design Concept', '设计概念', 'Concept de design'))}</span>

@@ -4,7 +4,7 @@ import { locales, type Locale } from '@/lib/i18n'
 
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.nexuslife.ca').replace(/\/+$/, '')
 export const SITE_NAME = 'NEXUS LIFE GROUP'
-export const DEFAULT_SOCIAL_IMAGE = '/images/nexus-lakeside-community-hero-v1.jpg'
+export const DEFAULT_SOCIAL_IMAGE = '/images/community.jpg'
 
 export const languageTags: Record<Locale, string> = {
   en: 'en-CA',

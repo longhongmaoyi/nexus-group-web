@@ -10,12 +10,12 @@ const slides = [
     position: 'object-center',
   },
   {
-    src: '/images/hero-slide-02.jpg',
+    src: '/images/modular-living.jpg',
     alt: 'Modern black modular residence beside a mountain lake',
     position: 'object-center',
   },
   {
-    src: '/images/hero-slide-03.jpg',
+    src: '/images/commercial.jpg',
     alt: 'Modular resort cabins and guests gathered beside a lake',
     position: 'object-center',
   },
