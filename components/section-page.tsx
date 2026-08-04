@@ -23,7 +23,7 @@ import {
 
 import { InquiryForm } from '@/components/inquiry-form'
 import { BusinessIntakeWizard } from '@/components/business-intake-wizard'
-import { conceptProjects, homeCopy, localized, sectionPages, type SectionSlug } from '@/lib/content'
+import { conceptProjects, homeCopy, localized, sectionPages, solutionCards, type SectionSlug } from '@/lib/content'
 import type { CmsPageSnapshot } from '@/lib/cms-types'
 import type { Locale } from '@/lib/i18n'
 
@@ -535,6 +535,46 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
                 )}
               </div>
             </div>
+
+
+            {section === 'products' ? (
+              <div className="mt-14">
+                <div className="max-w-3xl">
+                  <p className="eyebrow">{t('Choose a solution family', '选择方案类别', 'Choisir une famille de solutions')[locale]}</p>
+                  <h2 className="section-title">{t('Go straight to the details that match the project.', '直接查看与项目匹配的详细内容。', 'Accédez directement aux détails qui correspondent au projet.')[locale]}</h2>
+                  <p className="section-copy">{t('Each page explains the operating questions, site conditions, documents and responsibilities that should be settled before a reliable proposal is prepared.', '每个页面都会说明在准备可靠方案前应明确的运营问题、场地条件、文件及责任。', 'Chaque page explique les questions d’exploitation, les conditions du site, les documents et les responsabilités à régler avant de préparer une proposition fiable.')[locale]}</p>
+                </div>
+
+                <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                  {solutionCards.map((item) => (
+                    <Link
+                      key={item.slug}
+                      href={`/${locale}/${item.slug}`}
+                      className="group overflow-hidden rounded-[2rem] border border-ink/10 bg-white shadow-soft transition duration-300 hover:-translate-y-1 hover:border-ink/20 hover:shadow-lift"
+                    >
+                      <div className="relative aspect-[1.5/1] overflow-hidden bg-slate-100">
+                        <Image
+                          src={item.image}
+                          alt={localized(item.title, locale)}
+                          fill
+                          quality={90}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                          className="object-cover transition duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
+                      </div>
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold tracking-tight text-ink">{localized(item.title, locale)}</h3>
+                        <p className="mt-3 text-sm leading-7 text-slate-600">{localized(item.description, locale)}</p>
+                        <span className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-forest">
+                          {t('View details', '查看详情', 'Voir les détails')[locale]} <ArrowRight className="h-4 w-4" />
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : null}
 
             {section === 'contact' ? (
               <div className="mt-14 max-w-5xl">{businessToolsEnabled ? <BusinessIntakeWizard locale={locale} /> : <InquiryForm locale={locale} />}</div>

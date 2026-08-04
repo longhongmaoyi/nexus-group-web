@@ -339,6 +339,283 @@ export const sectionPages = {
       }
     ]
   },
+
+  'modular-living': {
+    eyebrow: t('Modular Living', '模块化生活', 'Habitat modulaire'),
+    title: t(
+      'A good cabin starts with the site and the people who will use it.',
+      '好的小屋方案从场地和真实使用者开始。',
+      'Un bon chalet commence par le site et les personnes qui l’utiliseront.'
+    ),
+    intro: t(
+      'Modular living can mean a private retreat, a rental cabin, staff housing or a larger resort villa. Before choosing a floor plan, settle the basics: who will stay there, when it will be used, how utilities will work and how the module will reach the site.',
+      '模块化生活可以是私人度假屋、出租小屋、员工住房或较大的度假别墅。在选择户型前，应先明确谁来使用、何时使用、公用设施如何运行，以及模块如何运到现场。',
+      'L’habitat modulaire peut être une retraite privée, un chalet locatif, un logement du personnel ou une villa. Avant de choisir un plan, il faut préciser qui l’utilisera, à quelle saison, comment fonctionneront les services et comment le module arrivera sur le site.'
+    ),
+    blocks: [
+      {
+        title: t('Start with real use', '从真实使用方式开始', 'Commencer par l’usage réel'),
+        body: t(
+          'A weekend guest cabin and a year-round rental may look similar in a rendering, but they do not have the same occupancy, storage, maintenance or privacy needs. The first brief should describe the people, length of stay and daily routine—not only the bedroom count.',
+          '周末客房与全年出租物业在效果图上可能很相似，但居住人数、储物、维护及隐私需求并不相同。第一份简报应说明使用者、停留时间及日常习惯，而不只是卧室数量。',
+          'Un chalet d’invités et une location ouverte à l’année peuvent se ressembler sur une image, sans avoir les mêmes besoins d’occupation, de rangement, d’entretien ou d’intimité. Le dossier doit décrire les personnes, la durée des séjours et les habitudes quotidiennes.'
+        )
+      },
+      {
+        title: t('Climate changes the specification', '气候会改变规格', 'Le climat change la spécification'),
+        body: t(
+          'Insulation, windows, air sealing, vapour control, roof design, moisture management, heating and ventilation must work together. A model used in a mild climate cannot simply be called four-season without checking the exact Canadian location and use.',
+          '保温、门窗、气密、隔汽、屋面、防潮、供暖及通风必须协同工作。在温和气候中使用的型号，不能在未核实加拿大具体地点及用途前就笼统称为四季适用。',
+          'Isolation, fenêtres, étanchéité à l’air, contrôle de la vapeur, toiture, humidité, chauffage et ventilation doivent fonctionner ensemble. Un modèle utilisé sous un climat doux ne peut pas être qualifié de quatre saisons sans vérifier le lieu et l’usage.'
+        )
+      },
+      {
+        title: t('Utilities shape the layout', '公用设施会影响布局', 'Les services influencent le plan'),
+        body: t(
+          'Confirm power, water, wastewater, hot water, heating and cooling, ventilation, appliances and internet. Off-grid or limited-service sites need equipment space, storage, maintenance access and backup systems that standard floor plans may not show.',
+          '应确认电力、供水、污水、热水、供暖制冷、通风、家电及网络。离网或服务受限场地需要设备空间、储存、维护通道及备用系统，而标准户型通常不会展示这些内容。',
+          'Il faut confirmer l’électricité, l’eau, les eaux usées, l’eau chaude, le chauffage, la climatisation, la ventilation, les appareils et Internet. Les sites hors réseau exigent de l’espace pour les équipements, l’entretien et les systèmes de secours.'
+        )
+      },
+      {
+        title: t('The route and site work matter', '运输路线与现场工作很重要', 'Le trajet et les travaux de site comptent'),
+        body: t(
+          'Module dimensions, bridge clearances, turning space, seasonal roads, crane access and unloading areas can influence the design. Foundations, drainage, utility connections, decks, stairs and grading also need named owners and coordinated drawings.',
+          '模块尺寸、桥梁净空、转弯空间、季节性道路、吊车通行及卸货区域都会影响设计。基础、排水、公用设施连接、平台、楼梯及场地平整也需要明确责任方和协调图纸。',
+          'Les dimensions, les ponts, les rayons de virage, les routes saisonnières, la grue et le déchargement peuvent modifier le design. Fondations, drainage, raccordements, terrasses, escaliers et nivellement exigent aussi des responsables et des plans coordonnés.'
+        )
+      },
+      {
+        title: t('What a useful proposal should show', '一份有用的方案应说明什么', 'Ce qu’une proposition utile doit montrer'),
+        body: t(
+          'Look for the exact configuration, dimensions, weights, drawings, materials, included finishes and equipment, document status, packaging, freight assumptions, site exclusions, installation responsibilities, warranty terms and anything that can still change the price or schedule.',
+          '方案应明确具体配置、尺寸、重量、图纸、材料、包含的饰面与设备、文件状态、包装、运费假设、现场排除项、安装责任、质保条款，以及仍可能改变价格或时间的因素。',
+          'La proposition doit préciser la configuration, les dimensions, le poids, les plans, les matériaux, les finitions et équipements inclus, l’état des documents, l’emballage, le fret, les exclusions, les responsabilités, la garantie et les facteurs pouvant encore modifier le prix ou le délai.'
+        )
+      }
+    ]
+  },
+  'tourism-hospitality': {
+    eyebrow: t('Tourism & Hospitality', '旅游与酒店', 'Tourisme et hôtellerie'),
+    title: t(
+      'Plan the guest experience and the operating system together.',
+      '宾客体验与运营体系应同步规划。',
+      'Planifier ensemble l’expérience client et le système d’exploitation.'
+    ),
+    intro: t(
+      'A hospitality project is more than a row of guest units. Reception, housekeeping, staff space, food service, accessibility, utilities, maintenance and the journey from arrival to departure all affect whether the property works well.',
+      '旅游酒店项目不只是一排客房。接待、清洁、员工空间、餐饮、无障碍、公用设施、维护，以及宾客从抵达到离开的完整动线，都会影响项目能否顺利运营。',
+      'Un projet hôtelier ne se résume pas à une rangée d’unités. Réception, entretien ménager, espaces du personnel, restauration, accessibilité, services, maintenance et parcours du client déterminent si le site fonctionne bien.'
+    ),
+    blocks: [
+      {
+        title: t('Define the guest and business model', '明确客群与商业模式', 'Définir la clientèle et le modèle d’affaires'),
+        body: t(
+          'Start with the target guest, length of stay, season, nightly rate, service level and expected occupancy. A simple campground cabin, a premium resort suite and staff accommodation should not be planned from the same brief.',
+          '应先明确目标客群、停留时间、运营季节、房价、服务水平及预计入住率。普通营地小屋、高端度假套房及员工住宿不应使用同一份简报。',
+          'Commencez par la clientèle, la durée des séjours, la saison, le tarif, le niveau de service et l’occupation prévue. Un chalet simple, une suite haut de gamme et un logement du personnel ne doivent pas partir du même dossier.'
+        )
+      },
+      {
+        title: t('Plan the whole site', '规划整个场地', 'Planifier tout le site'),
+        body: t(
+          'Roads, parking, paths, lighting, reception, common areas, washrooms, staff facilities, waste, utilities and emergency access all compete for space. The first phase should also leave a workable route for future units and shared services.',
+          '道路、停车、步道、照明、接待、公共空间、卫生间、员工设施、垃圾、公用设施及应急通道都会占用场地。第一期还应为未来单元及共享服务预留可行扩展路径。',
+          'Routes, stationnement, sentiers, éclairage, réception, espaces communs, sanitaires, installations du personnel, déchets, services et accès d’urgence se partagent le terrain. La première phase doit aussi laisser une voie réaliste pour les futures unités.'
+        )
+      },
+      {
+        title: t('Guest flow and staff flow are different', '宾客动线与员工动线不同', 'Le parcours client et celui du personnel sont différents'),
+        body: t(
+          'Guests need a comfortable arrival and private access. Staff need efficient routes for cleaning, laundry, supplies, waste, maintenance and emergency response. Good planning keeps those movements from interfering with each other.',
+          '宾客需要舒适的抵达体验及私密通道；员工则需要高效完成清洁、洗衣、补给、垃圾、维护及应急响应。良好规划应避免两类动线彼此干扰。',
+          'Les clients ont besoin d’une arrivée simple et d’un accès privé. Le personnel doit circuler efficacement pour le ménage, la buanderie, les fournitures, les déchets, l’entretien et les urgences. Un bon plan évite que ces parcours se gênent.'
+        )
+      },
+      {
+        title: t('Shared infrastructure can limit unit count', '共享基础设施可能限制单元数量', 'L’infrastructure commune peut limiter le nombre d’unités'),
+        body: t(
+          'Power, potable water, wastewater, fire access, snow management, roads and staff housing can determine how many guest units the site supports. Adding rooms before checking those systems can create a plan that looks good but cannot operate.',
+          '电力、饮用水、污水、消防通道、积雪管理、道路及员工住宿可能决定场地可承载多少客房。在核实这些系统前增加房间，可能得到一个漂亮但无法运营的方案。',
+          'Électricité, eau potable, eaux usées, accès incendie, neige, routes et logement du personnel peuvent déterminer le nombre d’unités possibles. Ajouter des chambres avant de vérifier ces systèmes peut produire un beau plan impossible à exploiter.'
+        )
+      },
+      {
+        title: t('What should be clear before a quote', '报价前应明确什么', 'Ce qui doit être clair avant un devis'),
+        body: t(
+          'The site, room mix, unit count, season, service level, common facilities, utility strategy, accessibility needs, target opening and responsibility for site work should be clear enough to support a meaningful scope. Otherwise, the number may be little more than a factory price.',
+          '场地、房型组合、单元数量、运营季节、服务水平、公共设施、公用设施策略、无障碍需求、目标开业时间及现场工作责任应足够清晰，才能形成有意义的范围。否则，报价可能只是一个工厂价格。',
+          'Le site, la combinaison de chambres, le nombre d’unités, la saison, le niveau de service, les espaces communs, les services, l’accessibilité, la date d’ouverture et les responsabilités de chantier doivent être assez clairs pour établir une vraie portée.'
+        )
+      }
+    ]
+  },
+  'commercial-solutions': {
+    eyebrow: t('Commercial Solutions', '商业解决方案', 'Solutions commerciales'),
+    title: t(
+      'Build the unit around the business, not the other way around.',
+      '让空间适应业务，而不是让业务迁就空间。',
+      'Concevoir l’unité autour de l’entreprise, et non l’inverse.'
+    ),
+    intro: t(
+      'A small kiosk or modular workplace leaves little room for mistakes. Equipment, staff movement, storage, customers, deliveries, cleaning and approvals all compete for the same area. The operating plan should be settled before the shell is ordered.',
+      '小型售卖亭或模块化工作空间几乎没有容错空间。设备、员工动线、仓储、顾客、补货、清洁及审批都在争夺有限面积。因此在订购外壳前，必须先明确运营计划。',
+      'Un petit kiosque ou espace de travail laisse peu de marge d’erreur. Équipements, personnel, stockage, clients, livraisons, nettoyage et approbations se partagent le même espace. Le plan d’exploitation doit être établi avant de commander l’enveloppe.'
+    ),
+    blocks: [
+      {
+        title: t('Write the operating brief first', '先写清运营简报', 'Rédiger d’abord le dossier d’exploitation'),
+        body: t(
+          'Describe what is sold or delivered, expected customer volume, peak periods, service time, staffing and hours. A walk-up coffee kiosk, food counter, retail unit and appointment-based office need different circulation and equipment.',
+          '应说明销售或提供什么、预计客流、高峰时段、服务时间、人员配置及营业时间。步入式咖啡亭、餐饮柜台、零售单元及预约制办公室需要不同的动线和设备。',
+          'Décrivez l’offre, le volume de clients, les périodes de pointe, le temps de service, le personnel et les heures. Un kiosque café, un comptoir alimentaire, un commerce et un bureau sur rendez-vous exigent des flux et équipements différents.'
+        )
+      },
+      {
+        title: t('Confirm major equipment early', '尽早确认主要设备', 'Confirmer tôt les équipements importants'),
+        body: t(
+          'List appliances, electrical loads, plumbing, ventilation, heat-producing equipment, data connections and clearances. A late change can alter panels, wiring, ducts, counters, approvals, cost and delivery time.',
+          '应列出家电、电气负荷、给排水、通风、发热设备、数据连接及净空。后期变更可能改变配电箱、布线、风管、台面、审批、成本及交期。',
+          'Dressez la liste des appareils, charges électriques, plomberie, ventilation, équipements produisant de la chaleur, connexions et dégagements. Un changement tardif peut modifier panneaux, câblage, conduits, comptoirs, approbations, coût et délai.'
+        )
+      },
+      {
+        title: t('Map customer and staff movement', '规划顾客与员工动线', 'Cartographier les déplacements'),
+        body: t(
+          'Ordering, payment, preparation, pickup, seating, waste, deliveries and emergency exits should be mapped before walls and counters are fixed. Attractive finishes cannot repair a poor workflow.',
+          '点单、付款、制作、取餐、座位、垃圾、补货及紧急出口应在墙体和柜台定稿前完成规划。漂亮饰面无法弥补糟糕流程。',
+          'Commande, paiement, préparation, retrait, places assises, déchets, livraisons et sorties doivent être cartographiés avant de fixer murs et comptoirs. De belles finitions ne corrigent pas un mauvais fonctionnement.'
+        )
+      },
+      {
+        title: t('The site is part of the business', '场地属于业务的一部分', 'Le site fait partie de l’activité'),
+        body: t(
+          'Parking, pedestrian access, queues, accessibility, weather protection, signage, lighting, security, waste pickup and delivery vehicles all affect how the business works. A small building can still need a carefully planned site.',
+          '停车、步行通道、排队、无障碍、防风雨、标识、照明、安防、垃圾清运及配送车辆都会影响业务运行。建筑可以很小，但场地仍需认真规划。',
+          'Stationnement, accès piéton, files, accessibilité, protection, signalisation, éclairage, sécurité, collecte des déchets et livraisons influencent l’activité. Un petit bâtiment exige malgré tout un site bien planifié.'
+        )
+      },
+      {
+        title: t('Separate every part of the quoted scope', '报价范围应逐项拆分', 'Distinguer chaque partie de la portée'),
+        body: t(
+          'The proposal should separate the shell, fixed equipment, loose equipment, branding, export packaging, freight, customs, foundation, site services, crane, installation, inspections and operating licences. One unexplained total hides gaps and makes comparison difficult.',
+          '方案应分别列明外壳、固定设备、活动设备、品牌、出口包装、运输、海关、基础、场地服务、吊车、安装、检查及运营许可。一个没有解释的总价会掩盖缺口并增加比较难度。',
+          'La proposition doit distinguer enveloppe, équipements fixes et mobiles, marque, emballage export, fret, douane, fondations, services de site, grue, installation, inspections et licences. Un total sans explication cache les lacunes.'
+        )
+      }
+    ]
+  },
+  'industrial-solutions': {
+    eyebrow: t('Industrial & Remote Operations', '工业与偏远运营', 'Opérations industrielles et éloignées'),
+    title: t(
+      'Remote sites need dependable systems and a clear deployment plan.',
+      '偏远场地需要可靠系统和清晰的部署计划。',
+      'Les sites éloignés exigent des systèmes fiables et un plan de déploiement clair.'
+    ),
+    intro: t(
+      'Mining, construction and remote projects often need accommodation and operational space before permanent infrastructure is available. The solution has to work for the people, climate, transport route, utility plan, maintenance team and sequence in which the site grows.',
+      '矿业、建筑及偏远项目通常在永久基础设施建成前就需要住宿和运营空间。方案必须适合人员、气候、运输路线、公用设施计划、维护团队及场地扩展顺序。',
+      'Les projets miniers, de construction et éloignés ont souvent besoin d’hébergement et d’espaces opérationnels avant l’infrastructure permanente. La solution doit convenir aux personnes, au climat, au transport, aux services, à l’équipe d’entretien et à la croissance du site.'
+    ),
+    blocks: [
+      {
+        title: t('Plan the workforce, not only the beds', '规划人员体系，而不只是床位', 'Planifier les effectifs, pas seulement les lits'),
+        body: t(
+          'Define headcount by shift, room standard, rotation, privacy needs, dining, recreation, laundry, medical, administration and security. A camp is an operating environment, not a collection of sleeping boxes.',
+          '应按班次明确人数、房间标准、轮班、隐私需求、餐饮、娱乐、洗衣、医疗、行政及安保。营地是一个运营环境，而不是一组睡眠盒子。',
+          'Définissez les effectifs par quart, le type de chambres, les rotations, l’intimité, la restauration, les loisirs, la buanderie, le médical, l’administration et la sécurité. Un camp est un environnement d’exploitation, pas une série de boîtes-dortoirs.'
+        )
+      },
+      {
+        title: t('Design for real climate and hazards', '针对真实气候与风险设计', 'Concevoir pour le climat et les risques réels'),
+        body: t(
+          'Cold, wind, snow, dust, mud, wildfire smoke, long darkness or limited water can change the envelope and mechanical systems. Freeze protection, redundancy, emergency power, monitoring and safe shutdown procedures may be essential.',
+          '寒冷、强风、积雪、粉尘、泥泞、野火烟雾、长时间黑暗或水资源有限都会改变围护和机电系统。防冻、冗余、应急电源、监测及安全停机程序可能至关重要。',
+          'Froid, vent, neige, poussière, boue, fumée, longues périodes d’obscurité ou manque d’eau peuvent modifier l’enveloppe et la mécanique. Protection contre le gel, redondance, alimentation d’urgence, surveillance et arrêt sécuritaire peuvent être essentiels.'
+        )
+      },
+      {
+        title: t('Deployment order matters', '部署顺序很重要', 'L’ordre de déploiement compte'),
+        body: t(
+          'Road limits, seasonal access, escorts, cranes, staging areas and receiving capacity affect module size and delivery order. Power, water, kitchen, medical, administration and accommodation may need to arrive in a specific sequence so the site can start safely.',
+          '道路限制、季节通行、护送、吊车、暂存区及收货能力会影响模块尺寸和交付顺序。电力、供水、厨房、医疗、行政及住宿可能需要按特定顺序到场，确保现场安全启动。',
+          'Limites routières, accès saisonnier, escortes, grues, zones de dépôt et capacité de réception influencent la taille et l’ordre des modules. Énergie, eau, cuisine, médical, administration et hébergement doivent parfois arriver dans un ordre précis.'
+        )
+      },
+      {
+        title: t('Utilities need clear owners and interfaces', '公用设施需要明确责任方与接口', 'Les services exigent des responsables et interfaces clairs'),
+        body: t(
+          'Power generation, fuel, potable water, wastewater, waste storage and communications may sit inside the modular scope or in separate site infrastructure. The split and connection points must be documented before procurement.',
+          '发电、燃料、饮用水、污水、垃圾储存及通信可能属于模块范围，也可能属于独立场地基础设施。采购前必须记录责任划分及连接点。',
+          'Production d’énergie, carburant, eau potable, eaux usées, déchets et communications peuvent faire partie du module ou de l’infrastructure du site. La séparation et les points de connexion doivent être documentés avant l’achat.'
+        )
+      },
+      {
+        title: t('Handover should prepare the operator', '移交应让运营方做好准备', 'La remise doit préparer l’exploitant'),
+        body: t(
+          'Remote downtime is expensive. The handover package should include operating procedures, preventive maintenance, critical spares, warranty contacts, issue escalation, training and records that remain useful after staff changes.',
+          '偏远项目停机成本很高。移交资料应包括操作程序、预防性维护、关键备件、质保联系人、问题升级、培训及在人事变化后仍可使用的记录。',
+          'Les arrêts en région éloignée coûtent cher. La remise doit comprendre procédures, entretien préventif, pièces critiques, contacts de garantie, escalade, formation et dossiers qui restent utiles malgré les changements de personnel.'
+        )
+      }
+    ]
+  },
+  'public-community': {
+    eyebrow: t('Public & Community Spaces', '公共与社区空间', 'Espaces publics et communautaires'),
+    title: t(
+      'Public-serving spaces have to work for more people, for longer.',
+      '服务公众的空间必须适用于更多人，并经得起更长期使用。',
+      'Les espaces publics doivent servir davantage de personnes, plus longtemps.'
+    ),
+    intro: t(
+      'Education, administration and community buildings carry responsibilities that go beyond the room layout. Accessibility, safeguarding, durability, acoustics, procurement, records and long-term maintenance should be considered from the beginning.',
+      '教育、行政及社区建筑的责任远不止房间布局。无障碍、安全保护、耐用性、声学、采购、记录及长期维护都应从一开始考虑。',
+      'Les bâtiments d’éducation, d’administration et communautaires impliquent plus qu’un plan. Accessibilité, protection, durabilité, acoustique, approvisionnement, dossiers et entretien à long terme doivent être intégrés dès le départ.'
+    ),
+    blocks: [
+      {
+        title: t('Start with the people and program', '从使用者与功能开始', 'Commencer par les personnes et le programme'),
+        body: t(
+          'Define who will use the building, in what numbers, for how long and under whose supervision. Children, seniors, staff, visitors and people with disabilities may need different circulation, washrooms, visibility, security and comfort.',
+          '应明确谁来使用建筑、人数、使用时长及监督责任。儿童、老年人、员工、访客及残障人士在动线、卫生间、可视性、安全及舒适方面可能有不同需求。',
+          'Précisez qui utilisera le bâtiment, en quel nombre, pendant combien de temps et sous quelle supervision. Enfants, aînés, personnel, visiteurs et personnes handicapées peuvent avoir des besoins différents.'
+        )
+      },
+      {
+        title: t('Plan accessibility from the start', '从一开始规划无障碍', 'Planifier l’accessibilité dès le début'),
+        body: t(
+          'Entrances, routes, doors, washrooms, controls, signage, acoustics and emergency procedures should be planned for inclusive use. Adding them later is usually more expensive, more disruptive and less effective.',
+          '入口、路径、门、卫生间、控制装置、标识、声学及应急程序都应按包容性使用进行规划。后期增加通常成本更高、干扰更大且效果更差。',
+          'Entrées, parcours, portes, sanitaires, commandes, signalisation, acoustique et procédures d’urgence doivent être planifiés pour un usage inclusif. Les ajouter plus tard coûte généralement plus cher et fonctionne moins bien.'
+        )
+      },
+      {
+        title: t('Choose materials for daily reality', '根据日常现实选择材料', 'Choisir les matériaux pour la réalité quotidienne'),
+        body: t(
+          'High-use buildings need robust surfaces, replaceable components, practical storage, easy cleaning and safe maintenance access. Material choices should reflect impact, moisture, snow, salt, cleaning products and the maintenance team actually available.',
+          '高频使用建筑需要耐用表面、可更换部件、实用储物、便于清洁及安全维护通道。材料选择应考虑撞击、潮湿、积雪、融雪盐、清洁剂及实际可用的维护团队。',
+          'Les bâtiments très fréquentés ont besoin de surfaces robustes, de composants remplaçables, de rangement, d’un nettoyage simple et d’un accès sûr. Les matériaux doivent tenir compte des chocs, de l’humidité, de la neige, du sel et de l’équipe disponible.'
+        )
+      },
+      {
+        title: t('Visibility and safeguarding affect the layout', '可视性与安全保护会影响布局', 'La visibilité et la protection influencent le plan'),
+        body: t(
+          'Reception, entry control, sightlines, secure storage, staff-only areas, exterior lighting and emergency exits should support the way the organization supervises and protects users. These are planning decisions, not accessories.',
+          '接待、门禁、视线、安全储物、员工专用区、外部照明及紧急出口应支持机构监督和保护使用者的实际方式。这些属于规划决策，而不是附加配件。',
+          'Réception, contrôle d’accès, lignes de vue, rangement sécurisé, zones réservées, éclairage extérieur et sorties doivent soutenir la façon dont l’organisation supervise et protège les usagers. Ce sont des décisions de planification.'
+        )
+      },
+      {
+        title: t('A responsible proposal connects all the pieces', '负责任的方案应连接所有要素', 'Une proposition responsable relie tous les éléments'),
+        body: t(
+          'The proposal should connect the program and users to the layout, accessibility, safety, durability, maintenance, site work, document status, approval path, responsibilities and cost assumptions. A public-serving building should not be sold from a photograph and a square-metre price alone.',
+          '方案应把功能与使用者同布局、无障碍、安全、耐用性、维护、现场工作、文件状态、审批路径、责任及成本假设连接起来。服务公众的建筑不能只凭一张图片和每平方米价格销售。',
+          'La proposition doit relier le programme et les usagers au plan, à l’accessibilité, la sécurité, la durabilité, l’entretien, les travaux de site, l’état des documents, le parcours d’approbation, les responsabilités et les hypothèses de coût.'
+        )
+      }
+    ]
+  },
+
   industries: {
     eyebrow: t('Industries', '行业方案', 'Secteurs'),
     title: t(
