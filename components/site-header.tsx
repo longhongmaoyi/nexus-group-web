@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowUpRight, ChevronDown, LayoutDashboard } from 'lucide-react'
+import { ArrowUpRight, ChevronDown, LayoutDashboard, Menu } from 'lucide-react'
 
 import { BrandMark } from '@/components/brand-mark'
 import { LocaleSwitcher } from '@/components/locale-switcher'
@@ -25,6 +25,7 @@ const secondary = [
 
 const copy = {
   more: t('More', '更多', 'Plus'),
+  menu: t('Menu', '菜单', 'Menu'),
   portal: t('Portal', '门户', 'Portail'),
   start: t('Start a Project', '启动项目', 'Démarrer un projet'),
 }
@@ -34,25 +35,35 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   const moreLinks = isPhase5PublicComplianceEnabled()
     ? [...secondary, { slug: 'compliance', label: t('Compliance Centre', '合规中心', 'Centre de conformité') }]
     : secondary
+  const mobileLinks = [...primary, ...moreLinks]
 
   return (
-    <header className="absolute inset-x-0 top-0 z-50 overflow-x-hidden border-b border-white/15 bg-[linear-gradient(180deg,rgba(7,13,15,.76),rgba(7,13,15,.2))] text-white">
-      <div className="mx-auto flex min-h-[82px] max-w-[1760px] items-center justify-between gap-4 px-5 py-3 sm:px-8 lg:px-12">
-        <BrandMark href={`/${locale}`} adaptive />
+    <header className="absolute inset-x-0 top-0 z-50 border-b border-white/15 bg-[linear-gradient(180deg,rgba(7,13,15,.94),rgba(7,13,15,.84))] text-white">
+      <div className="mx-auto flex min-h-[76px] max-w-[1760px] items-center gap-1.5 px-3 py-3 sm:min-h-[82px] sm:gap-3 sm:px-8 lg:px-12">
+        <BrandMark href={`/${locale}`} adaptive compactOnMobile />
 
-        <nav className="hidden items-center gap-6 xl:flex" aria-label="Primary navigation">
+        <nav className="ml-auto hidden items-center gap-6 xl:flex" aria-label="Primary navigation">
           {primary.map((item) => (
-            <Link key={item.slug} href={`/${locale}/${item.slug}`} className="text-sm font-semibold text-white/76 transition hover:text-white">
+            <Link
+              key={item.slug}
+              href={`/${locale}/${item.slug}`}
+              className="text-sm font-semibold text-white/76 transition hover:text-white"
+            >
               {localized(item.label)}
             </Link>
           ))}
           <details className="group relative">
             <summary className="flex cursor-pointer list-none items-center gap-1.5 text-sm font-semibold text-white/76 transition hover:text-white">
-              {localized(copy.more)} <ChevronDown className="h-3.5 w-3.5 transition group-open:rotate-180" />
+              {localized(copy.more)}
+              <ChevronDown className="h-3.5 w-3.5 transition group-open:rotate-180" />
             </summary>
             <div className="absolute left-1/2 top-8 w-60 -translate-x-1/2 border border-black/10 bg-[#f4f1e9] p-2 text-[#11191b] shadow-2xl">
               {moreLinks.map((item) => (
-                <Link key={item.slug} href={`/${locale}/${item.slug}`} className="block px-4 py-3 text-sm font-semibold transition hover:bg-[#e3e0d7] hover:text-[#176b96]">
+                <Link
+                  key={item.slug}
+                  href={`/${locale}/${item.slug}`}
+                  className="block px-4 py-3 text-sm font-semibold transition hover:bg-[#e3e0d7] hover:text-[#176b96]"
+                >
                   {localized(item.label)}
                 </Link>
               ))}
@@ -60,26 +71,58 @@ export function SiteHeader({ locale }: { locale: Locale }) {
           </details>
         </nav>
 
-        <div className="flex items-center gap-2">
-          <div className="hidden rounded-full bg-white/95 text-[#11191b] lg:block"><LocaleSwitcher locale={locale} /></div>
-          <Link href={`/${locale}/portal`} className="inline-flex min-h-10 items-center gap-2 border border-white/35 px-3 text-xs font-bold uppercase tracking-[0.1em] text-white transition hover:bg-white/10 sm:px-4">
-            <LayoutDashboard className="h-3.5 w-3.5" /> <span className="hidden sm:inline">{localized(copy.portal)}</span>
+        <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2 xl:ml-0">
+          <div className="lg:hidden">
+            <LocaleSwitcher locale={locale} dark compact />
+          </div>
+          <div className="hidden rounded-full bg-white/95 text-[#11191b] lg:block">
+            <LocaleSwitcher locale={locale} />
+          </div>
+
+          <Link
+            href={`/${locale}/portal`}
+            aria-label={localized(copy.portal)}
+            className="inline-flex min-h-10 min-w-10 items-center justify-center gap-2 border border-white/35 px-2 text-xs font-bold uppercase tracking-[0.1em] text-white transition hover:bg-white/10 sm:px-4"
+          >
+            <LayoutDashboard className="h-4 w-4" />
+            <span className="hidden sm:inline">{localized(copy.portal)}</span>
           </Link>
-          <Link href={`/${locale}/contact`} className="inline-flex min-h-10 items-center gap-2 bg-white px-3 text-xs font-bold uppercase tracking-[0.1em] text-[#11191b] transition hover:bg-[#75bfe8] sm:px-4">
-            <span className="hidden sm:inline">{localized(copy.start)}</span><span className="sm:hidden">{localized(t('Start', '启动', 'Démarrer'))}</span> <ArrowUpRight className="h-3.5 w-3.5" />
+
+          <Link
+            href={`/${locale}/contact`}
+            className="inline-flex min-h-10 items-center gap-1.5 bg-white px-2.5 text-[0.65rem] font-bold uppercase tracking-[0.08em] text-[#11191b] transition hover:bg-[#75bfe8] sm:gap-2 sm:px-4 sm:text-xs sm:tracking-[0.1em]"
+          >
+            <span className="hidden sm:inline">{localized(copy.start)}</span>
+            <span className="sm:hidden">{localized(t('Start', '启动', 'Démarrer'))}</span>
+            <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
         </div>
       </div>
 
-      <nav className="mx-auto flex w-full max-w-full items-center gap-6 overflow-x-auto px-5 pb-3 text-xs font-semibold text-white/78 sm:px-8 lg:px-12 xl:hidden" aria-label="Primary navigation">
-        {primary.map((item) => (
-          <Link key={item.slug} href={`/${locale}/${item.slug}`} className="shrink-0 whitespace-nowrap hover:text-white">{localized(item.label)}</Link>
-        ))}
-        {moreLinks.map((item) => (
-          <Link key={item.slug} href={`/${locale}/${item.slug}`} className="shrink-0 whitespace-nowrap hover:text-white">{localized(item.label)}</Link>
-        ))}
-        <span className="shrink-0 lg:hidden"><LocaleSwitcher locale={locale} dark /></span>
-      </nav>
+      <details className="group border-t border-white/12 bg-[#06191d]/96 xl:hidden">
+        <summary className="mx-auto flex min-h-11 max-w-[1760px] cursor-pointer list-none items-center justify-between px-4 text-xs font-bold uppercase tracking-[0.14em] text-white/82 sm:px-8 lg:px-12">
+          <span className="inline-flex items-center gap-2">
+            <Menu className="h-4 w-4" />
+            {localized(copy.menu)}
+          </span>
+          <ChevronDown className="h-4 w-4 transition group-open:rotate-180" />
+        </summary>
+
+        <nav
+          className="mx-auto grid max-w-[1760px] grid-cols-2 gap-px bg-white/10 px-3 pb-3 sm:grid-cols-3 sm:px-8 lg:px-12"
+          aria-label="Mobile navigation"
+        >
+          {mobileLinks.map((item) => (
+            <Link
+              key={item.slug}
+              href={`/${locale}/${item.slug}`}
+              className="min-w-0 bg-[#06191d] px-3 py-3 text-sm font-semibold leading-5 text-white/78 transition hover:bg-white/10 hover:text-white"
+            >
+              {localized(item.label)}
+            </Link>
+          ))}
+        </nav>
+      </details>
     </header>
   )
 }
