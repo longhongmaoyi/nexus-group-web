@@ -581,6 +581,36 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
             ) : null}
 
 
+
+            {section === 'about' ? (
+              <section className="mt-14 rounded-[2.25rem] border border-ink/10 bg-[#edf2ef] p-7 sm:p-9">
+                <div className="max-w-3xl">
+                  <p className="eyebrow">{t('What is public today', '目前公开的信息', 'Ce qui est public aujourd’hui')[locale]}</p>
+                  <h2 className="section-title">{t('Clear contact details, clear claim boundaries.', '联系方式清晰，声明边界清楚。', 'Des coordonnées claires et des limites de déclaration claires.')[locale]}</h2>
+                  <p className="section-copy">
+                    {t(
+                      'This website publishes named contacts, domain-based email addresses and the current Canada and China contact locations. Legal registration records, licences, certifications, partner agreements and completed-project evidence will only be published when the supporting source is approved for public use.',
+                      '本网站公开具名联系人、公司域名邮箱及当前加拿大和中国联系地点。企业注册记录、执照、认证、伙伴协议及已完工项目证据，只有在支持资料获准公开后才会发布。',
+                      'Ce site publie des contacts nommés, des courriels du domaine et les lieux de contact actuels au Canada et en Chine. Les registres juridiques, licences, certifications, ententes de partenaires et preuves de projets livrés ne seront publiés qu’après approbation des sources.'
+                    )[locale]}
+                  </p>
+                </div>
+
+                <div className="mt-8 grid gap-4 lg:grid-cols-2">
+                  {publishedContacts.map((contact) => (
+                    <address key={contact.key} className="not-italic rounded-3xl border border-ink/10 bg-white p-6">
+                      <p className="text-xs font-black uppercase tracking-[0.15em] text-forest">{localized(contact.contactLabel, locale)}</p>
+                      <p className="mt-3 text-xl font-bold text-ink">{contact.name}</p>
+                      <p className="mt-1 text-sm font-semibold text-slate-500">{localized(contact.role, locale)}</p>
+                      <a href={`mailto:${contact.email}`} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-forest hover:text-ink">
+                        <Mail className="h-4 w-4" /> {contact.email}
+                      </a>
+                    </address>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+
             {section === 'buyer-resources' ? (
               <div className="mt-14 grid gap-5 md:grid-cols-2">
                 {buyerResources.map((resource, index) => (
