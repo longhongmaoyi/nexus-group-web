@@ -30,14 +30,15 @@ type RevealStyle = CSSProperties & { '--reveal-delay'?: string }
 const t = (en: string, zh: string, fr: string): Localized => ({ en, zh, fr })
 
 const copy = {
-  heroEyebrow: t('Modular projects, from source to site', '模块化项目，从源头到现场', 'Des projets modulaires, de la source au site'),
-  heroTitle: t('Global Capability. Built for Canadian Business.', '全球能力，为加拿大企业而建。', 'Capacité mondiale. Conçue pour les entreprises canadiennes.'),
+  heroEyebrow: t('Workforce camps · commercial kiosks · multi-unit builds', '模块化项目，从源头到现场', 'Des projets modulaires, de la source au site'),
+  heroTitle: t('Modular Construction in Canada. From factory floor to working site.', '全球能力，为加拿大企业而建。', 'Capacité mondiale. Conçue pour les entreprises canadiennes.'),
   heroBody: t(
-    'A modular project is more than choosing a building. NEXUS helps define the need, compare realistic options and coordinate the work required to put the space into service in Canada.',
+    'Mr. Lin brings 20+ years of hands-on experience in sourcing, shipping, and assembly. Satya adds modern project tools and clear client communication, so fewer details get lost between the factory and the site.',
     '模块化项目不只是选择一栋建筑。NEXUS 协助明确需求、比较现实方案，并协调空间在加拿大投入使用所需的工作。',
     'Un projet modulaire ne consiste pas seulement à choisir un bâtiment. NEXUS aide à préciser le besoin, comparer des options réalistes et coordonner la mise en service au Canada.',
   ),
   start: t('Start a Project', '启动项目', 'Démarrer un projet'),
+  bookCall: t('Book a 15-min Call', '预约 15 分钟通话', 'Réserver un appel de 15 min'),
   explore: t('Explore Solutions', '探索解决方案', 'Explorer les solutions'),
   solutionsEyebrow: t('Start with the real need', '从真实需求出发', 'Partir du besoin réel'),
   solutionsTitle: t('The right space starts with the way it will be used.', '合适的空间从真实使用方式开始。', 'Le bon espace commence par la façon dont il sera utilisé.'),
@@ -48,8 +49,8 @@ const copy = {
   ),
   storiesEyebrow: t('How it could work', '方案如何落地', 'Comment cela pourrait fonctionner'),
   storiesTitle: t('The same modular system will not suit every site—or every operator.', '同一套模块化系统不会适合所有场地或所有运营方。', 'Le même système modulaire ne convient pas à tous les sites ni à tous les exploitants.'),
-  processEyebrow: t('Coordinated Delivery', '协同交付', 'Livraison coordonnée'),
-  processTitle: t('A clear route from the first conversation to handover and support.', '从首次沟通到移交和支持的清晰路径。', 'Un parcours clair, du premier échange à la remise et au soutien.'),
+  processEyebrow: t('How the work moves', '协同交付', 'Livraison coordonnée'),
+  processTitle: t('Six clear steps from the first brief to handover.', '从首次沟通到移交和支持的清晰路径。', 'Un parcours clair, du premier échange à la remise et au soutien.'),
   projectsEyebrow: t('Project Portfolio', '项目组合', 'Portfolio de projets'),
   projectsTitle: t('Concepts are labelled as concepts. Completed work needs proof.', '概念就标注为概念，已完工项目需要证据。', 'Les concepts restent des concepts. Une réalisation doit être prouvée.'),
   projectsBody: t(
@@ -58,16 +59,16 @@ const copy = {
     'NEXUS distingue les projets vérifiés, en développement et les concepts afin que chaque référence soit comprise dans son contexte.',
   ),
   viewProjects: t('Explore Projects', '探索项目', 'Explorer les projets'),
-  finalTitle: t('Tell us what is getting in the way.', '告诉我们目前的困难是什么。', 'Dites-nous ce qui bloque votre projet.'),
+  finalTitle: t('Have a site, a budget, or just a rough idea?', '告诉我们目前的困难是什么。', 'Dites-nous ce qui bloque votre projet.'),
   finalBody: t(
-    'We will turn the problem into a clear brief, identify what needs to be checked and suggest a practical next step.',
+    'Book a 15-minute call. We will tell you what information is missing and whether the project is worth taking further.',
     '我们会把问题整理成清晰简报，确定需要核实的事项，并提出务实的下一步。',
     'Nous transformerons le problème en dossier clair, identifierons les points à vérifier et proposerons une prochaine étape concrète.',
   ),
 }
 
 const heroLines: Record<Locale, string[]> = {
-  en: ['Global Capability.', 'Built for Canadian Business.'],
+  en: ['Modular Construction in Canada.', 'From factory floor to working site.'],
   zh: ['全球能力。', '为加拿大企业而建。'],
   fr: ['Capacité mondiale.', 'Conçue pour les entreprises canadiennes.'],
 }
@@ -160,12 +161,36 @@ const stories = [
 ]
 
 const process = [
-  { title: t('Assess', '评估', 'Évaluer'), body: t('Define the need, site, jurisdiction and responsibility map.', '明确需求、场地、司法辖区及责任矩阵。', 'Définir le besoin, le site, la juridiction et les responsabilités.'), icon: ClipboardCheck },
-  { title: t('Source', '寻源', 'Approvisionner'), body: t('Identify and evaluate suitable systems and supply partners.', '识别并评估合适的系统与供应伙伴。', 'Identifier et évaluer les systèmes et partenaires adaptés.'), icon: Globe2 },
-  { title: t('Import & Assemble', '进口与组装', 'Importer et assembler'), body: t('Coordinate logistics, receiving, assembly and quality records.', '协调物流、收货、组装及质量记录。', 'Coordonner la logistique, la réception, l’assemblage et les dossiers qualité.'), icon: Boxes },
-  { title: t('Compliance', '合规', 'Conformité'), body: t('Coordinate project-specific reviews, documentation and approvals.', '协调项目专项审查、文件及审批。', 'Coordonner les examens, documents et approbations propres au projet.'), icon: ShieldCheck },
-  { title: t('Install', '安装', 'Installer'), body: t('Plan site readiness, delivery, installation and handover.', '规划场地准备、交付、安装及移交。', 'Planifier le site, la livraison, l’installation et la remise.'), icon: Truck },
-  { title: t('Support', '支持', 'Soutenir'), body: t('Maintain a clear channel for service and lifecycle records.', '建立清晰的服务及生命周期记录渠道。', 'Maintenir un canal clair pour le service et les dossiers du cycle de vie.'), icon: Wrench },
+  {
+    title: t("Tell us what you're building", '告诉我们您要建设什么', 'Dites-nous ce que vous construisez'),
+    body: t('We start with the location, intended use, capacity, budget range, target date and site conditions. We also flag what is still unknown.', '我们先确认地点、用途、容量、预算范围、目标日期及场地条件，同时标出仍不明确的事项。', 'Nous commençons par le lieu, l’usage, la capacité, le budget, la date cible et les conditions du site, puis nous relevons les inconnues.'),
+    icon: ClipboardCheck,
+  },
+  {
+    title: t('Check the supplier and the drawings', '核查供应商与图纸', 'Vérifier le fournisseur et les plans'),
+    body: t('We review the manufacturer, past work, drawings, documents, exclusions and what the quote actually includes.', '我们审查制造商、过往项目、图纸、文件、排除项，以及报价实际包含的内容。', 'Nous examinons le fabricant, ses réalisations, les plans, les documents, les exclusions et le contenu réel du devis.'),
+    icon: Globe2,
+  },
+  {
+    title: t('Price the whole job', '核算项目总成本', 'Chiffrer le projet au complet'),
+    body: t('We look beyond the factory price and map freight, customs, inland transport, assembly and site work.', '我们不只看工厂价格，还会梳理运费、清关、内陆运输、组装及现场施工成本。', 'Nous allons au-delà du prix usine et recensons le fret, les douanes, le transport intérieur, l’assemblage et les travaux sur site.'),
+    icon: Boxes,
+  },
+  {
+    title: t('Plan the move', '规划运输', 'Planifier le transport'),
+    body: t('We confirm module dimensions, packing, loading, delivery routes, unloading needs and access to the site.', '我们确认模块尺寸、包装、装载、运输路线、卸货需求及现场通行条件。', 'Nous confirmons les dimensions, l’emballage, le chargement, l’itinéraire, le déchargement et l’accès au site.'),
+    icon: ShieldCheck,
+  },
+  {
+    title: t('Prepare the site and assembly team', '准备场地与组装团队', 'Préparer le site et l’équipe d’assemblage'),
+    body: t('We connect factory information with the people handling foundations, utilities, lifting, installation, inspections and finishing.', '我们把工厂信息与负责基础、公用设施、吊装、安装、检查及收尾工作的团队连接起来。', 'Nous relions les données de l’usine aux équipes responsables des fondations, services, levage, installation, inspections et finitions.'),
+    icon: Truck,
+  },
+  {
+    title: t('Hand over and follow up', '移交并持续跟进', 'Remettre le projet et assurer le suivi'),
+    body: t('We track final documents, open items, spare parts, warranties and supplier follow-up after the building is in use.', '建筑投入使用后，我们继续跟踪最终文件、未结事项、备件、保修及供应商后续工作。', 'Après la mise en service, nous suivons les documents finaux, les points ouverts, les pièces, les garanties et les échanges avec le fournisseur.'),
+    icon: Wrench,
+  },
 ]
 
 export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapshot | null }) {
@@ -271,7 +296,7 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
             <p className="mt-7 max-w-2xl text-base leading-7 text-white/75 sm:text-lg sm:leading-8">{localized(copy.heroBody)}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href={`/${locale}/contact`} className="premium-button-light">{localized(copy.start)} <ArrowUpRight className="h-4 w-4" /></Link>
-              <Link href={`/${locale}/products`} className="premium-button-ghost">{localized(copy.explore)} <ArrowRight className="h-4 w-4" /></Link>
+              <Link href={`/${locale}/contact?intent=15-minute-call`} className="premium-button-ghost">{localized(copy.bookCall)} <ArrowRight className="h-4 w-4" /></Link>
             </div>
           </div>
 

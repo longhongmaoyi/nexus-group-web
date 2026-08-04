@@ -32,7 +32,7 @@ const groups = [
 
 const copy = {
   body: t(
-    'NEXUS helps clients turn a site and operating need into a clearer modular-project brief, then coordinates the people and information needed to move it forward.',
+    'We handle the hard parts between the factory and your site, and we tell you what still needs an answer.',
     'NEXUS 帮助客户把场地与运营需求整理成更清晰的模块化项目简报，并协调推进项目所需的人员与信息。',
     'NEXUS aide ses clients à transformer un site et un besoin opérationnel en dossier de projet modulaire plus clair, puis coordonne les personnes et l’information nécessaires pour avancer.',
   ),
