@@ -3,6 +3,7 @@ import { getEmailProvider, sanitizeEmailError, type EmailProvider } from '@/lib/
 import { NEXUS_ORGANIZATION_KEY } from '@/lib/phase3-core.mjs'
 
 type ProcessEmailOutboxOptions = {
+  dedupeKey?: string
   releaseTestDedupePrefix?: string
   provider?: EmailProvider
 }
@@ -19,6 +20,7 @@ export async function processEmailOutbox(limit = 10, options: ProcessEmailOutbox
   const candidates = await prisma.emailOutbox.findMany({
     where: {
       organizationKey: NEXUS_ORGANIZATION_KEY,
+      ...(options.dedupeKey ? { dedupeKey: options.dedupeKey } : {}),
       ...(options.releaseTestDedupePrefix ? { dedupeKey: { startsWith: options.releaseTestDedupePrefix } } : {}),
       attempts: { lt: 5 },
       OR: [

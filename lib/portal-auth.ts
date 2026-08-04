@@ -5,6 +5,7 @@ import type { PortalMembershipRole, PortalTokenKind } from '@prisma/client'
 import { hashPassword, verifyPassword } from '@/lib/auth-core.mjs'
 import { asJson } from '@/lib/cms'
 import { getPrisma } from '@/lib/prisma'
+import { processEmailOutbox } from '@/lib/email-outbox'
 import {
   canPortal,
   createOpaqueToken,
@@ -121,12 +122,13 @@ export async function queuePortalAccessEmail(input: { userId: string; email: str
     fr: input.purpose === 'INVITE' ? 'Configurez votre compte portail NEXUS' : 'Réinitialisez votre mot de passe NEXUS',
   }
   const subject = subjects[locale as keyof typeof subjects]
-  await prisma.emailOutbox.create({ data: {
+  const outbox = await prisma.emailOutbox.create({ data: {
     dedupeKey: `portal:${record.id}:${input.purpose.toLowerCase()}`,
     templateKey: `PORTAL_${input.purpose}_V1`, locale, recipient: input.email, subject,
     textBody: `${subject}\n\n${link}\n\nThis single-use link expires in 60 minutes.`,
     htmlBody: `<p>${subject}</p><p><a href="${link}">Continue securely</a></p><p>This single-use link expires in 60 minutes.</p>`,
   } })
+  return processEmailOutbox(1, { dedupeKey: outbox.dedupeKey })
 }
 
 export async function consumeVerificationToken(rawToken: string) {
