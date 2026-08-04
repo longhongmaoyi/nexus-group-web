@@ -171,7 +171,7 @@ export const metrics = [
 export const conceptProjects = [
   { image: '/images/tourism.jpg', title: t('Lakefront Modular Retreat', '湖畔模块化度假区', 'Retraite modulaire au bord du lac'), meta: t('Tourism & Hospitality · Concept', '旅游与酒店 · 概念项目', 'Tourisme et hôtellerie · Concept') },
   { image: '/images/industrial.jpg', title: t('Northern Workforce Campus', '北方工人营地', 'Campus nordique pour travailleurs'), meta: t('Industrial · Concept', '工业 · 概念项目', 'Industriel · Concept') },
-  { image: '/images/project-cabin.jpg', title: t('Four-Season Cabin Collection', '四季小屋系列', 'Collection de chalets quatre saisons'), meta: t('Modular Living · Concept', '模块化生活 · 概念项目', 'Habitat modulaire · Concept') },
+  { image: '/images/modular-living.jpg', title: t('Four-Season Cabin Collection', '四季小屋系列', 'Collection de chalets quatre saisons'), meta: t('Modular Living · Concept', '模块化生活 · 概念项目', 'Habitat modulaire · Concept') },
   { image: '/images/commercial.jpg', title: t('Urban Coffee Pavilion', '城市咖啡亭', 'Pavillon café urbain'), meta: t('Commercial · Concept', '商业 · 概念项目', 'Commercial · Concept') },
 ]
 

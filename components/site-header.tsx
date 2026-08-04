@@ -38,11 +38,11 @@ export function SiteHeader({ locale }: { locale: Locale }) {
   const mobileLinks = [...primary, ...moreLinks]
 
   return (
-    <header className="absolute inset-x-0 top-0 z-50 border-b border-white/15 bg-[linear-gradient(180deg,rgba(7,13,15,.94),rgba(7,13,15,.84))] text-white">
-      <div className="mx-auto flex min-h-[76px] max-w-[1760px] items-center gap-1.5 px-3 py-3 sm:min-h-[82px] sm:gap-3 sm:px-8 lg:px-12">
+    <header className="absolute inset-x-0 top-0 z-[100] isolate overflow-visible border-b border-white/15 bg-[linear-gradient(180deg,rgba(7,13,15,.94),rgba(7,13,15,.84))] text-white">
+      <div className="relative z-[110] mx-auto flex min-h-[76px] max-w-[1760px] items-center gap-1.5 overflow-visible px-3 py-3 sm:min-h-[82px] sm:gap-3 sm:px-8 lg:px-12">
         <BrandMark href={`/${locale}`} adaptive compactOnMobile />
 
-        <nav className="ml-auto hidden items-center gap-6 xl:flex" aria-label="Primary navigation">
+        <nav className="relative z-[120] ml-auto hidden items-center gap-6 overflow-visible xl:flex" aria-label="Primary navigation">
           {primary.map((item) => (
             <Link
               key={item.slug}
@@ -52,12 +52,12 @@ export function SiteHeader({ locale }: { locale: Locale }) {
               {localized(item.label)}
             </Link>
           ))}
-          <details className="group relative">
+          <details className="group relative z-[130] overflow-visible">
             <summary className="flex cursor-pointer list-none items-center gap-1.5 text-sm font-semibold text-white/76 transition hover:text-white">
               {localized(copy.more)}
               <ChevronDown className="h-3.5 w-3.5 transition group-open:rotate-180" />
             </summary>
-            <div className="absolute left-1/2 top-8 w-60 -translate-x-1/2 border border-black/10 bg-[#f4f1e9] p-2 text-[#11191b] shadow-2xl">
+            <div className="absolute right-0 top-full z-[200] mt-4 w-72 border border-black/10 bg-[#f4f1e9] p-2 text-[#11191b] shadow-2xl">
               {moreLinks.map((item) => (
                 <Link
                   key={item.slug}
