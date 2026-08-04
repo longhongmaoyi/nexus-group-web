@@ -1,7 +1,7 @@
 'use client'
 
 import type { CSSProperties } from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -9,6 +9,8 @@ import {
   ArrowRight,
   ArrowUpRight,
   Boxes,
+  ChevronLeft,
+  ChevronRight,
   ClipboardCheck,
   Globe2,
   MapPin,
@@ -69,6 +71,24 @@ const heroLines: Record<Locale, string[]> = {
   zh: ['全球能力。', '为加拿大企业而建。'],
   fr: ['Capacité mondiale.', 'Conçue pour les entreprises canadiennes.'],
 }
+
+// Restored from the pre-premium homepage hero in 3b4f0c6/41ad0b1.
+const heroSlides = [
+  {
+    image: '/images/nexus-lakeside-community-hero-v1.jpg',
+    label: t('Living together, naturally', '自然相伴，共同生活', 'Vivre ensemble, naturellement'),
+  },
+  {
+    image: '/images/hero-slide-02.jpg',
+    label: t('Spaces made for real life', '为真实生活打造的空间', 'Des espaces faits pour la vraie vie'),
+  },
+  {
+    image: '/images/hero-slide-03.jpg',
+    label: t('Modular design with a human heart', '以人为本的模块化设计', 'Un design modulaire profondément humain'),
+  },
+] as const
+
+const HERO_AUTOPLAY_MS = 5000
 
 const products = [
   {
@@ -155,9 +175,35 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
   const categoryContent = cmsSection('categories')
   const featuredContent = cmsSection('featured')
   const closingContent = cmsSection('closing')
-  const heroImage = heroContent?.items?.find((item) => item.image)?.image || heroContent?.image || '/images/hero-slide-01.jpg'
-  const heroAlt = heroContent?.items?.find((item) => item.image)?.title?.[locale] || localized(t('NEXUS modular project environment', 'NEXUS 模块化项目环境', 'Environnement de projet modulaire NEXUS'))
   const cmsImages = categoryContent?.items?.filter((item) => item.image).map((item) => item.image!) || []
+  const [activeHeroSlide, setActiveHeroSlide] = useState(0)
+  const [heroPaused, setHeroPaused] = useState(false)
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    let timer: number | undefined
+
+    const updateAutoplay = () => {
+      if (timer) window.clearInterval(timer)
+      if (reducedMotion.matches || heroPaused) return
+
+      timer = window.setInterval(() => {
+        setActiveHeroSlide((current) => (current + 1) % heroSlides.length)
+      }, HERO_AUTOPLAY_MS)
+    }
+
+    updateAutoplay()
+    reducedMotion.addEventListener('change', updateAutoplay)
+
+    return () => {
+      reducedMotion.removeEventListener('change', updateAutoplay)
+      if (timer) window.clearInterval(timer)
+    }
+  }, [heroPaused])
+
+  const changeHeroSlide = (next: number) => {
+    setActiveHeroSlide((next + heroSlides.length) % heroSlides.length)
+  }
 
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'))
@@ -180,17 +226,42 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
 
   return (
     <main className="overflow-hidden bg-[#f4f1e9] text-[#11191b]">
-      <section className="relative flex min-h-[760px] items-end overflow-hidden bg-[#101719] text-white sm:min-h-[820px] lg:min-h-[min(920px,100vh)]">
-        <Image src={heroImage} alt={heroAlt} fill priority quality={95} sizes="100vw" className="hero-drift object-cover object-[58%_center]" />
+      <section
+        className="relative flex min-h-[720px] items-end overflow-hidden bg-[#101719] text-white sm:min-h-[760px] lg:min-h-[680px]"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label={localized(t('NEXUS featured environments', 'NEXUS 精选环境', 'Environnements NEXUS en vedette'))}
+        onMouseEnter={() => setHeroPaused(true)}
+        onMouseLeave={() => setHeroPaused(false)}
+        onFocusCapture={() => setHeroPaused(true)}
+        onBlurCapture={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) setHeroPaused(false)
+        }}
+      >
+        {heroSlides.map((item, index) => (
+          <Image
+            key={item.image}
+            src={item.image}
+            alt={localized(item.label)}
+            fill
+            priority={index === 0}
+            quality={95}
+            sizes="100vw"
+            aria-hidden={index !== activeHeroSlide}
+            className={`object-cover object-[62%_center] transition-opacity duration-1000 ease-in-out lg:object-center ${
+              index === activeHeroSlide ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+        ))}
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,14,16,.92)_0%,rgba(8,14,16,.7)_43%,rgba(8,14,16,.16)_76%),linear-gradient(180deg,rgba(8,14,16,.62)_0%,transparent_32%,rgba(8,14,16,.72)_100%)]" />
         <div className="absolute inset-x-0 bottom-0 h-px bg-white/25" />
 
-        <div className="relative mx-auto w-full max-w-[1760px] px-5 pb-12 pt-40 sm:px-8 sm:pb-16 lg:px-12 lg:pb-20">
+        <div className="relative mx-auto w-full max-w-[1760px] px-5 pb-9 pt-36 sm:px-8 sm:pb-11 lg:px-12 lg:pb-8 lg:pt-20">
           <div className="max-w-5xl" data-reveal>
             <p className="mb-6 flex items-center gap-3 text-[0.68rem] font-bold uppercase tracking-[0.24em] text-white/66">
               <span className="h-px w-10 bg-[#4ba3d3]" /> {localized(copy.heroEyebrow)}
             </p>
-            <h1 className="max-w-[16ch] text-[clamp(3.2rem,7.1vw,7.4rem)] font-semibold leading-[0.91] tracking-[-0.065em]" aria-label={localized(copy.heroTitle)}>
+            <h1 className="max-w-[16ch] text-[clamp(3.2rem,6vw,6.5rem)] font-semibold leading-[0.91] tracking-[-0.065em]" aria-label={localized(copy.heroTitle)}>
               {heroLines[locale].map((line, index) => (
                 <span key={line} className="mask-line" aria-hidden="true">
                   <span style={{ transitionDelay: `${120 + index * 110}ms` }}>{line}</span>
@@ -204,9 +275,56 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
             </div>
           </div>
 
-          <div className="mt-14 flex items-center justify-between border-t border-white/22 pt-5 text-[0.66rem] font-bold uppercase tracking-[0.2em] text-white/52">
+          <div className="absolute right-12 top-1/2 hidden -translate-y-1/2 flex-col items-center gap-3 lg:flex">
+            <span className="text-xs font-bold">{String(activeHeroSlide + 1).padStart(2, '0')}</span>
+            <div className="h-20 w-px bg-white/25">
+              <div className="w-px bg-white transition-all duration-700" style={{ height: `${((activeHeroSlide + 1) / heroSlides.length) * 100}%` }} />
+            </div>
+            <span className="text-xs text-white/55">{String(heroSlides.length).padStart(2, '0')}</span>
+            <div className="mt-2 flex gap-2">
+              <button
+                type="button"
+                onClick={() => changeHeroSlide(activeHeroSlide - 1)}
+                aria-label={localized(t('Previous hero image', '上一张主图', 'Image précédente'))}
+                className="grid h-11 w-11 touch-manipulation place-items-center rounded-full border border-white/40 bg-black/10 transition hover:bg-white/10"
+              >
+                <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                onClick={() => changeHeroSlide(activeHeroSlide + 1)}
+                aria-label={localized(t('Next hero image', '下一张主图', 'Image suivante'))}
+                className="grid h-11 w-11 touch-manipulation place-items-center rounded-full border border-white/40 bg-black/10 transition hover:bg-white/10"
+              >
+                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-8 flex items-center justify-between gap-4 border-t border-white/22 pt-5 text-[0.66rem] font-bold uppercase tracking-[0.2em] text-white/52">
             <span>Global Supply / Canadian Coordination</span>
-            <a href="#solutions" className="hidden items-center gap-3 transition hover:text-white sm:flex">{localized(copy.explore)} <ArrowDown className="h-4 w-4" /></a>
+            <div className="flex shrink-0 items-center gap-2 lg:hidden">
+              <button
+                type="button"
+                onClick={() => changeHeroSlide(activeHeroSlide - 1)}
+                aria-label={localized(t('Previous hero image', '上一张主图', 'Image précédente'))}
+                className="grid h-11 w-11 touch-manipulation place-items-center rounded-full border border-white/40 text-white transition hover:bg-white/10"
+              >
+                <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+              </button>
+              <span aria-live="polite" className="min-w-9 text-center text-white/75">
+                {activeHeroSlide + 1}/{heroSlides.length}
+              </span>
+              <button
+                type="button"
+                onClick={() => changeHeroSlide(activeHeroSlide + 1)}
+                aria-label={localized(t('Next hero image', '下一张主图', 'Image suivante'))}
+                className="grid h-11 w-11 touch-manipulation place-items-center rounded-full border border-white/40 text-white transition hover:bg-white/10"
+              >
+                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+              </button>
+            </div>
+            <a href="#solutions" className="hidden items-center gap-3 transition hover:text-white lg:flex">{localized(copy.explore)} <ArrowDown className="h-4 w-4" /></a>
           </div>
         </div>
       </section>

@@ -21,12 +21,13 @@ export function MotionProductCard({ number, title, description, facts, image, hr
       className="motion-product-card group relative isolate flex min-h-[31rem] overflow-hidden bg-[#101719] text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#4ba3d3] focus-visible:ring-offset-4 focus-visible:ring-offset-[#f4f1e9]"
       aria-label={`${title}. ${cta}`}
     >
+      {/* The fixed-height portrait crop needs a wider raster than the card box to avoid vertical upscaling. */}
       <Image
         src={image}
         alt=""
         fill
-        quality={90}
-        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+        quality={92}
+        sizes="900px"
         className="motion-product-image object-cover"
       />
       <span className="motion-product-shade absolute inset-0" aria-hidden="true" />
