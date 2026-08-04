@@ -16,7 +16,7 @@ export function BrandMark({
     >
       <Image
         src="/images/nexus-header-logo.png"
-        alt="NEXUS GROUP — North America Modular Living Infrastructure"
+        alt="NEXUS GROUP"
         width={2181}
         height={415}
         priority

@@ -8,11 +8,11 @@ import { CONSENT_TEXT_VERSION, consentCopy } from '@/lib/legal-content'
 
 const copies = {
   en: {
-    title: 'Guided Project Assessment',
-    intro: 'Share the essential facts so the first NEXUS consultation begins with a useful project brief.',
-    organization: '1. Organization',
+    title: 'Tell us about your project',
+    intro: 'Share what you know so far. We use it to understand the site, the business need and what needs checking next.',
+    organization: '1. Your details',
     project: '2. Project & location',
-    commercial: '3. Commercial plan',
+    commercial: '3. Budget, timing and scope',
     name: 'Your name',
     email: 'Business email',
     phone: 'Phone / WhatsApp',
@@ -29,16 +29,16 @@ const copies = {
     model: 'Preferred commercial model',
     details: 'Describe the business problem, site and required outcome',
     consent: consentCopy.en,
-    submit: 'Submit Project Assessment',
-    success: 'Thank you. Your structured project assessment has been received.',
-    error: 'The assessment could not be saved. Please verify the production database connection.',
+    submit: 'Send project details',
+    success: 'Thanks. We received your project details.',
+    error: 'We could not send your details. Please try again or contact us directly.',
   },
   zh: {
-    title: '项目引导评估',
-    intro: '请提供关键资料，让 NEXUS 的首次沟通从清晰、有效的项目简报开始。',
-    organization: '1. 机构信息',
+    title: '告诉我们您的项目情况',
+    intro: '请提供您目前掌握的信息。我们会据此了解场地、业务需求及下一步需要核实的事项。',
+    organization: '1. 您的联系信息',
     project: '2. 项目与地点',
-    commercial: '3. 商业计划',
+    commercial: '3. 预算、时间与范围',
     name: '您的姓名',
     email: '商务邮箱',
     phone: '电话 / WhatsApp',
@@ -55,16 +55,16 @@ const copies = {
     model: '首选合作模式',
     details: '请描述业务问题、场地情况及预期成果',
     consent: consentCopy.zh,
-    submit: '提交项目评估',
-    success: '感谢您，项目评估资料已收到。',
-    error: '评估资料暂时无法保存，请检查生产数据库连接。',
+    submit: '发送项目资料',
+    success: '感谢您，我们已收到项目资料。',
+    error: '暂时无法发送资料，请重试或直接联系我们。',
   },
   fr: {
-    title: 'Évaluation guidée du projet',
-    intro: 'Communiquez les faits essentiels afin que la première consultation NEXUS commence avec un dossier utile.',
-    organization: '1. Organisation',
+    title: 'Parlez-nous de votre projet',
+    intro: 'Partagez ce que vous savez déjà. Cela nous aide à comprendre le site, le besoin et les points à vérifier.',
+    organization: '1. Vos coordonnées',
     project: '2. Projet et emplacement',
-    commercial: '3. Plan commercial',
+    commercial: '3. Budget, calendrier et portée',
     name: 'Votre nom',
     email: 'Courriel professionnel',
     phone: 'Téléphone / WhatsApp',
@@ -81,9 +81,9 @@ const copies = {
     model: 'Modèle commercial privilégié',
     details: 'Décrivez le problème, le site et le résultat recherché',
     consent: consentCopy.fr,
-    submit: 'Soumettre l’évaluation',
-    success: 'Merci. Votre évaluation structurée a été reçue.',
-    error: 'L’évaluation ne peut pas être enregistrée. Vérifiez la base de données de production.',
+    submit: 'Envoyer les détails du projet',
+    success: 'Merci. Nous avons reçu les détails de votre projet.',
+    error: 'Nous n’avons pas pu envoyer vos renseignements. Réessayez ou contactez-nous directement.',
   },
 }
 
@@ -184,7 +184,7 @@ export function InquiryForm({ locale }: { locale: Locale }) {
   return (
     <form onSubmit={submit} className="rounded-4xl border border-slate-200 bg-white p-6 shadow-soft sm:p-8">
       <div className="max-w-2xl">
-        <p className="eyebrow">NEXUS PROJECT INTAKE</p>
+        <p className="eyebrow">{locale === 'zh' ? '项目咨询' : locale === 'fr' ? 'DEMANDE DE PROJET' : 'PROJECT INQUIRY'}</p>
         <h3 className="mt-3 text-2xl font-semibold tracking-tight text-ink">{copy.title}</h3>
         <p className="mt-3 text-sm leading-6 text-slate-600">{copy.intro}</p>
       </div>

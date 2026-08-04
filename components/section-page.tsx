@@ -14,6 +14,9 @@ import {
   FileCheck2,
   Globe2,
   HardHat,
+  Mail,
+  MapPin,
+  MessageCircle,
   PackageCheck,
   ShieldCheck,
   Truck,
@@ -23,7 +26,8 @@ import {
 
 import { InquiryForm } from '@/components/inquiry-form'
 import { BusinessIntakeWizard } from '@/components/business-intake-wizard'
-import { conceptProjects, homeCopy, localized, sectionPages, type SectionSlug } from '@/lib/content'
+import { buyerResources, conceptProjects, homeCopy, localized, sectionPages, solutionCards, type SectionSlug } from '@/lib/content'
+import { companyContactNote, publishedContacts } from '@/lib/company-profile'
 import type { CmsPageSnapshot } from '@/lib/cms-types'
 import type { Locale } from '@/lib/i18n'
 
@@ -33,11 +37,11 @@ type IconType = typeof Globe2
 const t = (en: string, zh: string, fr: string): Localized => ({ en, zh, fr })
 
 const common = {
-  select: t('Select a stage to view responsibilities and evidence', '选择阶段查看责任与证明文件', 'Sélectionnez une étape pour voir les responsabilités et les preuves'),
-  nexusCoordinates: t('What NEXUS coordinates', 'NEXUS 协调内容', 'Ce que NEXUS coordonne'),
-  clientInputs: t('Information required from the client', '客户需提供的信息', 'Renseignements requis du client'),
-  evidence: t('Typical evidence and documents', '典型证明与文件', 'Preuves et documents typiques'),
-  outcome: t('Stage outcome', '阶段成果', 'Résultat de l’étape'),
+  select: t('Choose a stage to see who does what and what gets recorded', '选择一个阶段，查看各方职责及需要记录的内容', 'Choisissez une étape pour voir qui fait quoi et ce qui doit être documenté'),
+  nexusCoordinates: t('What NEXUS helps coordinate', 'NEXUS 协助协调的内容', 'Ce que NEXUS aide à coordonner'),
+  clientInputs: t('What we need from the client', '我们需要客户提供什么', 'Ce dont nous avons besoin du client'),
+  evidence: t('Typical documents and records', '常见文件与记录', 'Documents et dossiers habituels'),
+  outcome: t('What this stage should achieve', '这一阶段应达到什么结果', 'Ce que cette étape doit accomplir'),
   projectSpecific: t(
     'Requirements are project-specific and must be confirmed by the responsible authority, qualified professional or certification organization.',
     '具体要求因项目而异，必须由主管机构、合格专业人士或认证机构确认。',
@@ -254,14 +258,14 @@ const sectionContext: Partial<Record<SectionSlug, {
   },
   suppliers: {
     icon: BadgeCheck,
-    heading: t('Qualified partner onboarding', '合格伙伴入驻', 'Intégration de partenaires qualifiés'),
+    heading: t('What we ask from suppliers', '我们对供应商的要求', 'Ce que nous demandons aux fournisseurs'),
     points: [t('Company, factory and export capability review', '公司、工厂及出口能力审查', 'Examen de l’entreprise, de l’usine et de l’exportation'), t('Structured product and document submission', '结构化产品与文件提交', 'Soumission structurée des produits et documents'), t('Project matching and Canadian market-readiness review', '项目匹配及加拿大市场准备度审查', 'Jumelage de projets et préparation au marché canadien')],
     evidence: [t('Business and factory records', '企业与工厂记录', 'Dossiers d’entreprise et d’usine'), t('Test reports, certificates and quality procedures', '测试报告、证书及质量程序', 'Rapports, certificats et procédures qualité'), t('References, capacity and after-sales commitment', '案例、产能及售后承诺', 'Références, capacité et engagement après-vente')],
     outcome: t('A curated partner ecosystem based on evidence, capability and accountability.', '形成基于证据、能力及责任的精选伙伴生态。', 'Un écosystème sélectionné selon les preuves, capacités et responsabilités.'),
   },
   news: {
     icon: FileCheck2,
-    heading: t('Publish useful, source-based intelligence', '发布有用且有来源的洞察', 'Publier des analyses utiles et sourcées'),
+    heading: t('Publish useful information, with sources', '发布有用且有来源的信息', 'Publier de l’information utile, avec des sources'),
     points: [t('Canadian market and policy developments', '加拿大市场与政策动态', 'Évolutions du marché et des politiques'), t('Global product and technology evaluation', '全球产品与技术评估', 'Évaluation mondiale des produits et technologies'), t('Practical project-delivery lessons', '实用项目交付经验', 'Leçons pratiques de livraison')],
     evidence: [t('Named author and publication date', '作者与发布日期', 'Auteur et date de publication'), t('Source links and technical review where needed', '来源链接及必要技术审查', 'Sources et examen technique au besoin'), t('Clear distinction between fact, guidance and opinion', '清楚区分事实、指导及观点', 'Distinction claire entre fait, conseil et opinion')],
     outcome: t('A trusted knowledge centre rather than a generic company-news feed.', '形成可信知识中心，而非普通公司新闻流。', 'Un centre de connaissances crédible plutôt qu’un fil d’actualités générique.'),
@@ -321,9 +325,9 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
     }
 
     return [
-      t('Clear responsibilities', '责任清晰', 'Responsabilités claires'),
-      t('Evidence-based decisions', '基于证据的决策', 'Décisions fondées sur des preuves'),
-      t('Qualified next action', '合格的下一步', 'Prochaine action qualifiée'),
+      t('Who is responsible', '谁负责什么', 'Qui est responsable'),
+      t('What supports the decision', '决策依据是什么', 'Ce qui appuie la décision'),
+      t('What happens next', '下一步是什么', 'Ce qui vient ensuite'),
     ]
   }, [isAssembly, section])
 
@@ -342,7 +346,7 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
 
           <div className="rounded-3xl border border-white/12 bg-white/[0.06] p-5 backdrop-blur">
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-white/45">
-              {isAssembly ? common.select[locale] : t('What this page establishes', '本页面说明内容', 'Ce que cette page établit')[locale]}
+              {isAssembly ? common.select[locale] : t('On this page', '本页内容', 'Sur cette page')[locale]}
             </p>
             <div className="mt-4 space-y-3">
               {quickFacts.map((fact, index) => (
@@ -361,9 +365,9 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
           <div className="mx-auto max-w-[1760px]">
             <div className="flex flex-col gap-5 border-b border-black/15 pb-10 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="premium-eyebrow">{t('Status-led portfolio', '状态导向项目组合', 'Portfolio guidé par le statut')[locale]}</p>
+                <p className="premium-eyebrow">{t('Project status', '项目状态', 'Statut des projets')[locale]}</p>
                 <h2 className="mt-5 max-w-4xl text-4xl font-semibold leading-[0.98] tracking-[-0.045em] text-[#11191b] sm:text-5xl lg:text-6xl">
-                  {t('A clear distinction between direction and delivered evidence.', '清晰区分项目方向与交付证据。', 'Une distinction claire entre orientation et preuves de livraison.')[locale]}
+                  {t('Concepts, active work and completed projects are not the same thing.', '概念、推进中项目和已完工项目不是一回事。', 'Les concepts, les projets actifs et les réalisations ne sont pas la même chose.')[locale]}
                 </h2>
               </div>
               <div className="flex flex-wrap gap-2 text-[0.62rem] font-bold uppercase tracking-[0.16em]">
@@ -396,7 +400,7 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
 
             <div className="mt-14 grid gap-6 border-t border-black/15 pt-10 lg:grid-cols-[0.66fr_0.34fr] lg:items-end">
               <div>
-                <p className="premium-eyebrow">{t('Evidence standard', '证据标准', 'Norme de preuve')[locale]}</p>
+                <p className="premium-eyebrow">{t('What counts as proof', '什么才算证据', 'Ce qui compte comme preuve')[locale]}</p>
                 <h2 className="mt-5 max-w-4xl text-3xl font-semibold tracking-[-0.04em] sm:text-4xl">{enhancement?.outcome[locale]}</h2>
               </div>
               <Link href={`/${locale}/contact`} className="premium-button-dark justify-self-start lg:justify-self-end">
@@ -409,8 +413,8 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
         <section className="bg-[#f3f1e9] py-16 lg:py-24">
           <div className="mx-auto max-w-8xl px-5 sm:px-8 lg:px-12">
             <div className="max-w-4xl">
-              <p className="eyebrow">{t('Interactive Delivery System', '互动交付体系', 'Système de livraison interactif')[locale]}</p>
-              <h2 className="section-title">{t('Every stage has defined inputs, responsibilities, evidence and outcomes.', '每个阶段都有明确输入、责任、证明及成果。', 'Chaque étape comporte des intrants, responsabilités, preuves et résultats définis.')[locale]}</h2>
+              <p className="eyebrow">{t('How the work moves', '工作如何推进', 'Comment le travail avance')[locale]}</p>
+              <h2 className="section-title">{t('Each stage has a clear purpose, owner and paper trail.', '每个阶段都有明确目的、责任方及记录。', 'Chaque étape a un objectif, un responsable et une trace documentaire clairs.')[locale]}</h2>
               <p className="section-copy">{common.select[locale]}</p>
             </div>
 
@@ -488,9 +492,9 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
           <div className="mx-auto max-w-8xl px-5 sm:px-8 lg:px-12">
             <div className="grid gap-8 lg:grid-cols-[0.34fr_0.66fr]">
               <div>
-                <p className="eyebrow">{t('Explore the Details', '探索详细内容', 'Explorer les détails')[locale]}</p>
-                <h2 className="section-title">{t('Clear information. Useful next actions.', '信息清晰，行动明确。', 'Information claire. Actions utiles.')[locale]}</h2>
-                <p className="section-copy">{t('Select a topic to understand what it means, what evidence supports it and how NEXUS moves it forward.', '选择主题，了解其含义、支持证据及 NEXUS 如何推进。', 'Sélectionnez un sujet pour comprendre sa signification, ses preuves et la façon dont NEXUS le fait avancer.')[locale]}</p>
+                <p className="eyebrow">{t('What you need to know', '您需要了解的内容', 'Ce qu’il faut savoir')[locale]}</p>
+                <h2 className="section-title">{t('Start with the details that affect the project.', '从真正影响项目的细节开始。', 'Commencez par les détails qui influencent le projet.')[locale]}</h2>
+                <p className="section-copy">{t('Choose a topic for a practical explanation, the decisions it affects and the information needed to move forward.', '选择一个主题，了解实际含义、受影响的决策及推进所需的信息。', 'Choisissez un sujet pour une explication pratique, les décisions concernées et l’information nécessaire pour avancer.')[locale]}</p>
 
                 <div className="mt-7 space-y-3">
                   {page.blocks.map((block, index) => (
@@ -535,6 +539,124 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
                 )}
               </div>
             </div>
+
+
+            {section === 'products' ? (
+              <div className="mt-14">
+                <div className="max-w-3xl">
+                  <p className="eyebrow">{t('Choose a solution family', '选择方案类别', 'Choisir une famille de solutions')[locale]}</p>
+                  <h2 className="section-title">{t('Go straight to the details that match the project.', '直接查看与项目匹配的详细内容。', 'Accédez directement aux détails qui correspondent au projet.')[locale]}</h2>
+                  <p className="section-copy">{t('Each page explains the operating questions, site conditions, documents and responsibilities that should be settled before a reliable proposal is prepared.', '每个页面都会说明在准备可靠方案前应明确的运营问题、场地条件、文件及责任。', 'Chaque page explique les questions d’exploitation, les conditions du site, les documents et les responsabilités à régler avant de préparer une proposition fiable.')[locale]}</p>
+                </div>
+
+                <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                  {solutionCards.map((item) => (
+                    <Link
+                      key={item.slug}
+                      href={`/${locale}/${item.slug}`}
+                      className="group overflow-hidden rounded-[2rem] border border-ink/10 bg-white shadow-soft transition duration-300 hover:-translate-y-1 hover:border-ink/20 hover:shadow-lift"
+                    >
+                      <div className="relative aspect-[1.5/1] overflow-hidden bg-slate-100">
+                        <Image
+                          src={item.image}
+                          alt={localized(item.title, locale)}
+                          fill
+                          quality={90}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                          className="object-cover transition duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
+                      </div>
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold tracking-tight text-ink">{localized(item.title, locale)}</h3>
+                        <p className="mt-3 text-sm leading-7 text-slate-600">{localized(item.description, locale)}</p>
+                        <span className="mt-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-forest">
+                          {t('View details', '查看详情', 'Voir les détails')[locale]} <ArrowRight className="h-4 w-4" />
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+
+
+
+            {section === 'about' ? (
+              <section className="mt-14 rounded-[2.25rem] border border-ink/10 bg-[#edf2ef] p-7 sm:p-9">
+                <div className="max-w-3xl">
+                  <p className="eyebrow">{t('What is public today', '目前公开的信息', 'Ce qui est public aujourd’hui')[locale]}</p>
+                  <h2 className="section-title">{t('Clear contact details, clear claim boundaries.', '联系方式清晰，声明边界清楚。', 'Des coordonnées claires et des limites de déclaration claires.')[locale]}</h2>
+                  <p className="section-copy">
+                    {t(
+                      'This website publishes named contacts, domain-based email addresses and the current Canada and China contact locations. Legal registration records, licences, certifications, partner agreements and completed-project evidence will only be published when the supporting source is approved for public use.',
+                      '本网站公开具名联系人、公司域名邮箱及当前加拿大和中国联系地点。企业注册记录、执照、认证、伙伴协议及已完工项目证据，只有在支持资料获准公开后才会发布。',
+                      'Ce site publie des contacts nommés, des courriels du domaine et les lieux de contact actuels au Canada et en Chine. Les registres juridiques, licences, certifications, ententes de partenaires et preuves de projets livrés ne seront publiés qu’après approbation des sources.'
+                    )[locale]}
+                  </p>
+                </div>
+
+                <div className="mt-8 grid gap-4 lg:grid-cols-2">
+                  {publishedContacts.map((contact) => (
+                    <address key={contact.key} className="not-italic rounded-3xl border border-ink/10 bg-white p-6">
+                      <p className="text-xs font-black uppercase tracking-[0.15em] text-forest">{localized(contact.contactLabel, locale)}</p>
+                      <p className="mt-3 text-xl font-bold text-ink">{contact.name}</p>
+                      <p className="mt-1 text-sm font-semibold text-slate-500">{localized(contact.role, locale)}</p>
+                      <a href={`mailto:${contact.email}`} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-forest hover:text-ink">
+                        <Mail className="h-4 w-4" /> {contact.email}
+                      </a>
+                    </address>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+
+            {section === 'buyer-resources' ? (
+              <div className="mt-14 grid gap-5 md:grid-cols-2">
+                {buyerResources.map((resource, index) => (
+                  <Link key={resource.slug} href={`/${locale}/${resource.slug}`} className="group rounded-[2rem] border border-ink/10 bg-white p-7 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-ink/25 hover:shadow-lift">
+                    <span className="text-xs font-black tracking-[0.18em] text-forest">{String(index + 1).padStart(2, '0')}</span>
+                    <h3 className="mt-5 text-2xl font-bold tracking-tight text-ink">{localized(resource.title, locale)}</h3>
+                    <p className="mt-4 text-sm leading-7 text-slate-600">{localized(resource.description, locale)}</p>
+                    <span className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-forest">{t('Open guide', '打开指南', 'Ouvrir le guide')[locale]} <ArrowRight className="h-4 w-4" /></span>
+                  </Link>
+                ))}
+              </div>
+            ) : null}
+
+            {(section === 'products' || section === 'news') ? (
+              <Link href={`/${locale}/buyer-resources`} className="mt-14 grid gap-5 rounded-[2.25rem] border border-ink/10 bg-[#e8efec] p-7 transition hover:border-ink/25 sm:p-9 lg:grid-cols-[1fr_auto] lg:items-center">
+                <div>
+                  <p className="eyebrow">{t('Buyer resources', '买家资源', 'Ressources pour acheteurs')[locale]}</p>
+                  <h2 className="mt-4 text-3xl font-bold tracking-tight text-ink">{t('Prepare the brief, cost view, timeline and document list before comparing offers.', '在比较方案前，先准备项目简报、成本视图、时间表及文件清单。', 'Préparez le dossier, le coût, l’échéancier et la liste de documents avant de comparer les offres.')[locale]}</h2>
+                </div>
+                <span className="inline-flex items-center gap-2 text-sm font-bold text-forest">{t('View buyer guides', '查看买家指南', 'Voir les guides')[locale]} <ArrowRight className="h-4 w-4" /></span>
+              </Link>
+            ) : null}
+
+            {section === 'contact' ? (
+              <div className="mt-14">
+                <div className="max-w-3xl">
+                  <p className="eyebrow">{t('Published contact points', '公开联系方式', 'Coordonnées publiques')[locale]}</p>
+                  <h2 className="section-title">{t('Choose the contact closest to the conversation you need.', '选择最适合您沟通需求的联系人。', 'Choisissez le contact le plus proche de votre besoin.')[locale]}</h2>
+                </div>
+                <div className="mt-8 grid gap-5 lg:grid-cols-2">
+                  {publishedContacts.map((contact) => (
+                    <address key={contact.key} className="not-italic rounded-[2rem] border border-ink/10 bg-white p-7 shadow-soft">
+                      <p className="text-xs font-black uppercase tracking-[0.16em] text-forest">{localized(contact.contactLabel, locale)}</p>
+                      <h3 className="mt-4 text-2xl font-bold tracking-tight text-ink">{contact.name}</h3>
+                      <p className="mt-1 text-sm font-semibold text-slate-500">{localized(contact.role, locale)}</p>
+                      <div className="mt-6 grid gap-3 text-sm leading-6 text-slate-700">
+                        <a href={`mailto:${contact.email}`} className="flex items-start gap-3 hover:text-forest"><Mail className="mt-1 h-4 w-4 shrink-0 text-forest" /><span>{contact.email}</span></a>
+                        <a href={contact.whatsappUrl} target="_blank" rel="noreferrer" className="flex items-start gap-3 hover:text-forest"><MessageCircle className="mt-1 h-4 w-4 shrink-0 text-forest" /><span>{contact.phoneDisplay}</span></a>
+                        <p className="flex items-start gap-3"><MapPin className="mt-1 h-4 w-4 shrink-0 text-forest" /><span>{localized(contact.location, locale)}</span></p>
+                      </div>
+                    </address>
+                  ))}
+                </div>
+                <p className="mt-5 max-w-4xl text-xs leading-6 text-slate-500">{localized(companyContactNote, locale)}</p>
+              </div>
+            ) : null}
 
             {section === 'contact' ? (
               <div className="mt-14 max-w-5xl">{businessToolsEnabled ? <BusinessIntakeWizard locale={locale} /> : <InquiryForm locale={locale} />}</div>
