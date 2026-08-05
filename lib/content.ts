@@ -18,16 +18,20 @@ export const navigation = [
 export const homeCopy = {
   utility: t('Canadian coordination for globally sourced modular systems.', '为全球采购的模块化系统提供加拿大本地协调。', 'Coordination canadienne de systèmes modulaires provenant du monde entier.'),
   heroEyebrow: t('Modular projects, coordinated from source to site', '模块化项目，从源头到现场全程协调', 'Des projets modulaires coordonnés de la source au site'),
-  heroTitle: t('Modular Construction in Canada. From factory floor to working site.', '加拿大模块化建筑。从工厂到项目现场。', 'Construction modulaire au Canada. De l’usine au chantier.'),
+  heroTitle: t(
+    'From factory planning to a working Canadian site.',
+    '从工厂规划到可投入使用的加拿大现场。',
+    'De la planification en usine à un site canadien opérationnel.'
+  ),
   heroSubtitle: t(
     'Spaces for accommodation, business, tourism and remote operations.',
     '面向住宿、商业、旅游及偏远地区运营的空间方案。',
     'Des espaces pour l’hébergement, les affaires, le tourisme et les activités éloignées.'
   ),
   heroBody: t(
-    'Mr. Lin brings 20+ years of hands-on modular sourcing, international logistics and Canadian assembly experience. Satya adds digital project tools and clear client communication so the factory, project team and site stay connected.',
-    '林建先生拥有 20 多年模块化采购、国际物流及加拿大现场组装经验。Satya 通过数字项目工具和清晰客户沟通连接工厂、项目团队及现场。',
-    'M. Lin apporte plus de 20 ans d’expérience en approvisionnement modulaire, logistique internationale et assemblage au Canada. Satya relie l’usine, l’équipe et le chantier grâce à des outils de projet et une communication claire.'
+    'NEXUS Life coordinates modular workforce camps, commercial kiosks, multi-unit buildings and remote-site facilities from supplier information and shipping to Canadian site preparation, assembly and handover.',
+    'NEXUS Life 协调模块化工人营地、商业售卖亭、多单元建筑及偏远场地设施，从供应商信息和运输，到加拿大场地准备、组装及移交。',
+    'NEXUS Life coordonne des camps de travailleurs, kiosques commerciaux, bâtiments multiunités et installations éloignées, des renseignements fournisseurs et du transport jusqu’au site canadien, à l’assemblage et à la remise.'
   ),
   primaryCta: t('Explore Products', '浏览产品', 'Découvrir les produits'),
   secondaryCta: t('Start a Project', '启动项目', 'Démarrer un projet'),

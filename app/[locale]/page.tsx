@@ -13,38 +13,20 @@ export const dynamic = 'force-dynamic'
 export async function generateMetadata(props: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const params = await props.params
   if (!isLocale(params.locale)) return {}
-
   const locale = params.locale as Locale
-  const cms = await getPublishedCmsPage('home')
-  const title = cms?.seoTitle[locale] || localized(homeCopy.heroTitle, locale)
-  const description = cms?.seoDescription[locale] || localized(homeCopy.heroBody, locale)
-
-  return buildPageMetadata({ locale, title, description })
+  return buildPageMetadata({ locale, title: localized(homeCopy.heroTitle, locale), description: localized(homeCopy.heroBody, locale) })
 }
 
 export default async function Page(props: { params: Promise<{ locale: string }> }) {
   const params = await props.params
   if (!isLocale(params.locale)) notFound()
-
   const locale = params.locale as Locale
   const cms = await getPublishedCmsPage('home')
-  const title = cms?.seoTitle[locale] || localized(homeCopy.heroTitle, locale)
-  const description = cms?.seoDescription[locale] || localized(homeCopy.heroBody, locale)
-
+  const title = localized(homeCopy.heroTitle, locale)
+  const description = localized(homeCopy.heroBody, locale)
   return (
     <>
-      <JsonLd
-        data={{
-          '@context': 'https://schema.org',
-          '@type': 'WebPage',
-          '@id': `${absoluteUrl(locale)}#webpage`,
-          url: absoluteUrl(locale),
-          name: title,
-          description,
-          isPartOf: { '@id': `${SITE_URL}/#website` },
-          inLanguage: locale === 'en' ? 'en-CA' : locale === 'zh' ? 'zh-CN' : 'fr-CA',
-        }}
-      />
+      <JsonLd data={{ '@context': 'https://schema.org', '@type': 'WebPage', '@id': `${absoluteUrl(locale)}#webpage`, url: absoluteUrl(locale), name: title, description, isPartOf: { '@id': `${SITE_URL}/#website` }, inLanguage: locale === 'en' ? 'en-CA' : locale === 'zh' ? 'zh-CN' : 'fr-CA' }} />
       <HomePage locale={locale} cms={cms} />
     </>
   )

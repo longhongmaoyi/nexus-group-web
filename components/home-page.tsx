@@ -30,47 +30,47 @@ type RevealStyle = CSSProperties & { '--reveal-delay'?: string }
 const t = (en: string, zh: string, fr: string): Localized => ({ en, zh, fr })
 
 const copy = {
-  heroEyebrow: t('Workforce camps · commercial kiosks · multi-unit builds', '工人营地 · 商业售卖亭 · 多单元建筑', 'Camps de travailleurs · kiosques commerciaux · bâtiments multiunités'),
-  heroTitle: t('Modular Construction in Canada. From factory floor to working site.', '加拿大模块化建筑。从工厂到项目现场。', 'Construction modulaire au Canada. De l’usine au chantier.'),
+  heroEyebrow: t('Modular construction coordination in Canada', '加拿大模块化建设协调', 'Coordination de construction modulaire au Canada'),
+  heroTitle: t('From factory planning to a working Canadian site.', '从工厂规划到可投入使用的加拿大现场。', 'De la planification en usine à un site canadien opérationnel.'),
   heroBody: t(
-    'Mr. Lin brings 20+ years of hands-on experience in sourcing, shipping, and assembly. Satya adds modern project tools and clear client communication, so fewer details get lost between the factory and the site.',
-    '林建先生拥有 20 多年模块化采购、国际物流及加拿大现场组装经验。Satya 以数字项目工具及清晰客户沟通连接工厂、项目团队和现场，减少重要信息在交接中丢失。',
-    'M. Lin apporte plus de 20 ans d’expérience en approvisionnement modulaire, logistique internationale et assemblage au Canada. Satya relie l’usine, l’équipe et le chantier grâce à des outils de projet et une communication claire.',
+    'NEXUS Life helps buyers plan and coordinate modular workforce camps, commercial kiosks, multi-unit buildings and remote-site facilities. We connect supplier information, shipping, site preparation, assembly and local project requirements. We do not replace architects, engineers, inspectors or licensed trades.',
+    'NEXUS Life 帮助买家规划及协调模块化工人营地、商业售卖亭、多单元建筑及偏远场地设施。我们连接供应商信息、运输、场地准备、组装及本地项目要求。我们不会取代建筑师、工程师、检查人员或持牌工种。',
+    'NEXUS Life aide les acheteurs à planifier et coordonner des camps de travailleurs, kiosques commerciaux, bâtiments multiunités et installations éloignées. Nous relions les renseignements fournisseurs, le transport, le site, l’assemblage et les exigences locales. Nous ne remplaçons pas les architectes, ingénieurs, inspecteurs ou métiers autorisés.',
   ),
-  start: t('Start a Project', '启动项目', 'Démarrer un projet'),
+  start: t('Discuss a Project', '讨论项目', 'Discuter d’un projet'),
   bookCall: t('Book a 15-min Call', '预约 15 分钟通话', 'Réserver un appel de 15 min'),
   explore: t('Explore Solutions', '探索解决方案', 'Explorer les solutions'),
-  solutionsEyebrow: t('Start with the real need', '从真实需求出发', 'Partir du besoin réel'),
-  solutionsTitle: t('The right space starts with the way it will be used.', '合适的空间从真实使用方式开始。', 'Le bon espace commence par la façon dont il sera utilisé.'),
+  solutionsEyebrow: t('Start with what the building must do', '从建筑需要完成的任务开始', 'Commencer par la fonction du bâtiment'),
+  solutionsTitle: t('Start with what the building must do.', '先明确建筑需要完成什么任务。', 'Commencez par ce que le bâtiment doit accomplir.'),
   solutionsBody: t(
-    'A cabin, a kiosk and a workforce camp may all be modular, but they do not need the same layout, documentation or delivery plan.',
-    '小屋、售卖亭和工人营地都可以采用模块化方案，但它们需要不同的布局、文件和交付计划。',
-    'Un chalet, un kiosque et un camp de travailleurs peuvent tous être modulaires, sans exiger le même plan, les mêmes documents ni la même livraison.',
+    'A modular project should begin with the people, operation, site and delivery constraints—not a product catalogue. Choose the project type closest to your need. Each section explains the questions that must be answered before reliable pricing can begin.',
+    '模块化项目应从人员、运营、场地及交付限制开始，而不是从产品目录开始。选择最接近您需求的项目类型。每个部分都会说明在可靠报价开始前必须回答的问题。',
+    'Un projet modulaire doit commencer par les personnes, l’exploitation, le site et les contraintes de livraison, pas par un catalogue. Choisissez le type le plus proche de votre besoin. Chaque section explique les questions à régler avant un prix fiable.',
   ),
-  storiesEyebrow: t('How it could work', '方案如何落地', 'Comment cela pourrait fonctionner'),
+  storiesEyebrow: t('How the operating brief changes the answer', '运营简报如何改变方案', 'Comment le dossier d’exploitation change la réponse'),
   storiesTitle: t('The same modular system will not suit every site—or every operator.', '同一套模块化系统不会适合所有场地或所有运营方。', 'Le même système modulaire ne convient pas à tous les sites ni à tous les exploitants.'),
-  processEyebrow: t('How the work moves', '协同交付', 'Livraison coordonnée'),
-  processTitle: t('Six clear steps from the first brief to handover.', '从首次沟通到移交和支持的清晰路径。', 'Un parcours clair, du premier échange à la remise et au soutien.'),
-  projectsEyebrow: t('Project Portfolio', '项目组合', 'Portfolio de projets'),
-  projectsTitle: t('Concepts are labelled as concepts. Completed work needs proof.', '概念就标注为概念，已完工项目需要证据。', 'Les concepts restent des concepts. Une réalisation doit être prouvée.'),
+  processEyebrow: t('How the work moves', '工作如何推进', 'Comment le travail avance'),
+  processTitle: t('Six clear steps from the first brief to handover.', '从首次简报到移交的六个清晰步骤。', 'Six étapes claires, du premier dossier à la remise.'),
+  projectsEyebrow: t('Current Work', '当前项目', 'Travaux en cours'),
+  projectsTitle: t('We are delivering our first projects—and showing the work honestly.', '我们正在交付首批项目，并如实展示工作。', 'Nous livrons nos premiers projets et montrons le travail honnêtement.'),
   projectsBody: t(
-    'NEXUS distinguishes verified work, projects in development and design concepts so every portfolio claim can be understood in context.',
-    'NEXUS 清晰区分已核验项目、开发中项目及设计概念，确保每项项目表述都有明确背景。',
-    'NEXUS distingue les projets vérifiés, en développement et les concepts afin que chaque référence soit comprise dans son contexte.',
+    'See the current pipeline, how we work and the factory, shipping and site-preparation evidence we will publish as it becomes available.',
+    '查看当前项目管线、我们的工作方式，以及在可用时将发布的工厂、运输及场地准备证据。',
+    'Consultez le pipeline, notre méthode et les preuves d’usine, de transport et de préparation du site publiées lorsqu’elles deviennent disponibles.',
   ),
-  viewProjects: t('Explore Projects', '探索项目', 'Explorer les projets'),
-  finalTitle: t('Have a site, a budget, or just a rough idea?', '告诉我们目前的困难是什么。', 'Dites-nous ce qui bloque votre projet.'),
+  viewProjects: t('See Current Work', '查看当前项目', 'Voir les travaux en cours'),
+  finalTitle: t('Have a site, a budget, or a rough operating need?', '已有场地、预算或初步运营需求？', 'Avez-vous un site, un budget ou un besoin opérationnel initial?'),
   finalBody: t(
-    'Book a 15-minute call. We will tell you what information is missing and whether the project is worth taking further.',
-    '我们会把问题整理成清晰简报，确定需要核实的事项，并提出务实的下一步。',
-    'Nous transformerons le problème en dossier clair, identifierons les points à vérifier et proposerons une prochaine étape concrète.',
+    'Share the location, intended use, approximate capacity, budget range and target date. We will identify the missing information and a sensible next step.',
+    '请提供地点、用途、大致容量、预算范围及目标日期。我们将识别缺失信息并提出合理的下一步。',
+    'Indiquez le lieu, l’usage, la capacité approximative, le budget et la date cible. Nous identifierons les renseignements manquants et une prochaine étape réaliste.',
   ),
 }
 
 const heroLines: Record<Locale, string[]> = {
-  en: ['Modular Construction in Canada.', 'From factory floor to working site.'],
-  zh: ['加拿大模块化建筑。', '从工厂到项目现场。'],
-  fr: ['Construction modulaire au Canada.', 'De l’usine au chantier.'],
+  en: ['From factory planning', 'to a working Canadian site.'],
+  zh: ['从工厂规划', '到可投入使用的加拿大现场。'],
+  fr: ['De la planification en usine', 'à un site canadien opérationnel.'],
 }
 
 // Restored from the pre-premium homepage hero in 3b4f0c6/41ad0b1.
@@ -93,53 +93,46 @@ const HERO_AUTOPLAY_MS = 5000
 
 const products = [
   {
-    title: t('Modular Living', '模块化生活', 'Habitat modulaire'),
-    description: t('Adaptable living environments for private, shared and destination settings.', '面向私人、共享及目的地场景的灵活生活空间。', 'Des espaces de vie adaptables aux contextes privés, partagés et de destination.'),
-    facts: [t('Cabins, compact homes and multi-unit configurations', '小屋、紧凑型住宅及多单元配置', 'Chalets, habitations compactes et configurations multiunités'), t('Site, utilities and code pathway confirmed per project', '场地、公用设施及规范路径按项目确认', 'Site, services et parcours réglementaire confirmés par projet')],
-    image: '/images/modular-living.jpg',
-    href: 'modular-living',
-  },
-  {
     title: t('Workforce Camps', '工人营地', 'Camps de travailleurs'),
-    description: t('Accommodation and support spaces planned around headcount, shifts, climate, utilities and site access.', '围绕人数、班次、气候、公用设施及场地通行规划住宿和配套空间。', 'Hébergement et espaces de soutien planifiés selon les effectifs, quarts, climat, services et accès.'),
+    description: t('Accommodation and support facilities planned around headcount, shifts, climate, utilities and site access.', '围绕人数、班次、气候、公用设施及场地通行规划住宿及配套设施。', 'Hébergement et soutien planifiés selon les effectifs, quarts, climat, services et accès.'),
     facts: [t('Rooms, dining, laundry, medical and operating support', '房间、餐饮、洗衣、医疗及运营配套', 'Chambres, restauration, buanderie, médical et soutien'), t('Transport, utilities, maintenance and expansion planned together', '运输、公用设施、维护及扩建同步规划', 'Transport, services, entretien et expansion planifiés ensemble')],
     image: '/images/industrial.jpg',
-    href: 'workforce-camps',
-  },
-  {
-    title: t('Tourism & Hospitality', '旅游与酒店', 'Tourisme et hôtellerie'),
-    description: t('Guest-focused modular environments shaped around the destination and service model.', '围绕目的地与服务模式打造以宾客为中心的模块化空间。', 'Des environnements modulaires centrés sur l’expérience client, adaptés à la destination et au modèle de service.'),
-    facts: [t('Cabins, suites and shared amenity concepts', '小屋、套房及共享配套概念', 'Chalets, suites et concepts d’espaces communs'), t('Configuration and finishes selected for each project', '配置与饰面按项目选择', 'Configuration et finitions choisies pour chaque projet')],
-    image: '/images/tourism.jpg',
-    href: 'tourism-hospitality',
+    href: 'solutions#workforce-camps',
   },
   {
     title: t('Commercial Kiosks', '商业售卖亭', 'Kiosques commerciaux'),
-    description: t('Coffee, food, retail and service units planned around equipment, workflow, utilities and approvals.', '围绕设备、工作流程、公用设施及审批规划咖啡、餐饮、零售和服务单元。', 'Unités de café, restauration, commerce et service planifiées selon équipements, flux, services et approbations.'),
-    facts: [t('Customer flow, staff movement and equipment confirmed first', '先确认顾客动线、员工移动及设备', 'Flux client, personnel et équipements confirmés d’abord'), t('Site access, services and operating approvals remain location-specific', '场地通行、公用设施及运营审批取决于地点', 'Accès, services et approbations propres au lieu')],
+    description: t('Coffee, food, retail and service units planned around equipment, customer flow, staff movement, utilities and approvals.', '围绕设备、顾客动线、员工移动、公用设施及审批规划咖啡、餐饮、零售和服务单元。', 'Unités de café, restauration, commerce et service planifiées selon équipements, flux, services et approbations.'),
+    facts: [t('Equipment and workflow confirmed before the shell', '在外壳定稿前确认设备及工作流程', 'Équipements et flux confirmés avant l’enveloppe'), t('Site services and approvals remain location-specific', '场地公用设施及审批取决于地点', 'Services et approbations propres au lieu')],
     image: '/images/commercial.jpg',
-    href: 'commercial-kiosks',
+    href: 'solutions#commercial-kiosks',
   },
   {
-    title: t('Community Infrastructure', '社区基础设施', 'Infrastructures communautaires'),
-    description: t('Flexible environments planned for community, public-service and shared uses.', '面向社区、公共服务及共享用途规划的灵活空间。', 'Des environnements flexibles pour les usages communautaires, publics et partagés.'),
-    facts: [t('Program and accessibility needs defined with stakeholders', '与利益相关方共同定义功能及无障碍需求', 'Programme et accessibilité définis avec les parties prenantes'), t('Authority and professional review remain project-specific', '主管机构及专业审查按项目进行', 'Examens des autorités et professionnels propres au projet')],
+    title: t('Multi-Unit Buildings', '多单元建筑', 'Bâtiments multiunités'),
+    description: t('Repeated units planned with structure, fire separation, services, foundations and delivery sequence.', '把可重复单元与结构、防火分隔、公用设施、基础及交付顺序一起规划。', 'Unités répétées planifiées avec structure, séparation incendie, services, fondations et livraison.'),
+    facts: [t('Unit mix, circulation and accessibility defined early', '尽早明确单元组合、流线及无障碍', 'Combinaison, circulation et accessibilité définies tôt'), t('Connections, crane sequence and inspections coordinated together', '连接、吊装顺序及检查同步协调', 'Connexions, grue et inspections coordonnées ensemble')],
     image: '/images/community.jpg',
-    href: 'public-community',
+    href: 'solutions#multi-unit-buildings',
   },
   {
-    title: t('Multi-Unit Modular Builds', '多单元模块化建筑', 'Bâtiments modulaires multiunités'),
-    description: t('Repeated units planned with the structure, fire separation, services, foundations and delivery sequence.', '把可重复单元与结构、防火分隔、公用设施、基础及交付顺序一起规划。', 'Unités répétées planifiées avec structure, séparation incendie, services, fondations et séquence de livraison.'),
-    facts: [t('Unit mix, circulation and accessibility defined early', '尽早明确单元组合、流线及无障碍', 'Combinaison, circulation et accessibilité définies tôt'), t('Connections, crane sequence and inspections coordinated as one project', '连接、吊装顺序及检查作为一个项目协调', 'Connexions, grue et inspections coordonnées comme un seul projet')],
+    title: t('Remote Operations', '偏远地区运营', 'Opérations éloignées'),
+    description: t('Offices, accommodation, change facilities, storage and support buildings for mining, energy and construction sites.', '面向矿业、能源及建筑现场的办公室、住宿、更衣、仓储及配套建筑。', 'Bureaux, hébergement, vestiaires, stockage et soutien pour les mines, l’énergie et la construction.'),
+    facts: [t('Operating use, hazards and site access defined first', '先明确运营用途、风险及场地通行', 'Usage, risques et accès définis d’abord'), t('Freight, utilities, maintenance and backup systems planned together', '运输、公用设施、维护及备用系统同步规划', 'Fret, services, entretien et secours planifiés ensemble')],
+    image: '/images/industrial.jpg',
+    href: 'solutions#remote-operations',
+  },
+  {
+    title: t('Tourism & Modular Living', '旅游及模块化生活', 'Tourisme et habitat modulaire'),
+    description: t('Cabins, guest accommodation and shared facilities planned around occupancy, operations, utilities and seasonal use.', '围绕入住、运营、公用设施及季节性使用规划小屋、客房及共享设施。', 'Chalets, hébergement et installations communes planifiés selon occupation, exploitation, services et saison.'),
+    facts: [t('Guest, resident and staff needs shape the unit mix', '宾客、住户及员工需求决定单元组合', 'Les besoins des usagers façonnent la combinaison'), t('Site servicing and operating approvals confirmed per project', '场地服务及运营审批按项目确认', 'Services et approbations confirmés par projet')],
+    image: '/images/tourism.jpg',
+    href: 'solutions#tourism-hospitality',
+  },
+  {
+    title: t('Community Facilities', '社区设施', 'Installations communautaires'),
+    description: t('Education, administration, housing and public-serving facilities planned around users, accessibility and maintenance.', '围绕使用者、无障碍及维护规划教育、行政、住房及公共服务设施。', 'Installations d’éducation, d’administration, de logement et de service public planifiées selon les usagers, l’accessibilité et l’entretien.'),
+    facts: [t('Community purpose and governance come first', '社区目标及治理优先', 'L’objectif et la gouvernance viennent d’abord'), t('Local participation, service and long-term operation stay visible', '本地参与、服务及长期运营保持清晰', 'Participation locale, service et fonctionnement restent visibles')],
     image: '/images/community.jpg',
-    href: 'multi-unit-builds',
-  },
-  {
-    title: t('Technology Services', '技术服务', 'Services technologiques'),
-    description: t('Websites, web and mobile app projects, digital marketing, CRM and business workflow tools led by Satya Sharma.', '由 Satya Sharma 负责的网站、网页及移动应用项目、数字营销、CRM 及业务流程工具。', 'Sites, projets web et mobiles, marketing numérique, CRM et outils de processus dirigés par Satya Sharma.'),
-    facts: [t('Website and application planning, development and handover', '网站及应用规划、开发及移交', 'Planification, développement et remise de sites et applications'), t('SEO, content, analytics, lead tracking and practical automation', 'SEO、内容、数据分析、线索跟踪及实用自动化', 'SEO, contenu, mesure, suivi des prospects et automatisation pratique')],
-    image: '/images/commercial.jpg',
-    href: 'technology-services',
+    href: 'solutions#community-facilities',
   },
 ]
 
@@ -205,7 +198,6 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
   const cmsSection = (key: string) => cms?.sections.find((section) => section.key === key && section.enabled)?.content
   const heroContent = cmsSection('hero')
   const categoryContent = cmsSection('categories')
-  const featuredContent = cmsSection('featured')
   const closingContent = cmsSection('closing')
   const cmsImages = categoryContent?.items?.filter((item) => item.image).map((item) => item.image!) || []
   const [activeHeroSlide, setActiveHeroSlide] = useState(0)
@@ -465,14 +457,14 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
             <Link href={`/${locale}/projects`} className="premium-button-dark mt-8">{localized(copy.viewProjects)} <ArrowUpRight className="h-4 w-4" /></Link>
           </div>
           <Link href={`/${locale}/projects`} className="group relative aspect-[1.3/1] overflow-hidden bg-[#11191b]" data-reveal>
-            <Image src={featuredContent?.image || '/images/tourism.jpg'} alt={localized(featuredContent?.title || t('Lakefront modular retreat design concept', '湖畔模块化度假区设计概念', 'Concept de retraite modulaire au bord du lac'))} fill quality={92} sizes="(max-width: 1024px) 100vw, 58vw" className="object-cover transition duration-700 ease-out group-hover:scale-[1.02]" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+            <Image src="/images/industrial.jpg" alt={localized(t('Current modular project coordination', '当前模块化项目协调', 'Coordination actuelle de projets modulaires'))} fill quality={92} sizes="(max-width: 1024px) 100vw, 58vw" className="object-cover transition duration-700 ease-out group-hover:scale-[1.02]" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8">
-              <span className="inline-flex bg-[#f4f1e9] px-3 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.18em] text-[#11191b]">{localized(t('Design Concept', '设计概念', 'Concept de design'))}</span>
+              <span className="inline-flex bg-[#f4f1e9] px-3 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.18em] text-[#11191b]">{localized(t('Current Work', '当前项目', 'Travaux en cours'))}</span>
               <div className="mt-4 flex items-end justify-between gap-6">
                 <div>
-                  <h3 className="text-3xl font-semibold tracking-[-0.04em]">{localized(featuredContent?.title || t('Lakefront Modular Retreat', '湖畔模块化度假区', 'Retraite modulaire au bord du lac'))}</h3>
-                  <p className="mt-2 flex items-center gap-2 text-sm text-white/65"><MapPin className="h-4 w-4" /> Canada / Proposed application</p>
+                  <h3 className="text-3xl font-semibold tracking-[-0.04em]">{localized(t('First Projects in Delivery', '首批项目交付中', 'Premiers projets en livraison'))}</h3>
+                  <p className="mt-2 flex items-center gap-2 text-sm text-white/65"><MapPin className="h-4 w-4" />{localized(t('Factory review / shipping / site preparation', '工厂审查 / 运输 / 场地准备', 'Usine / transport / préparation du site'))}</p>
                 </div>
                 <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-white/35 transition group-hover:bg-white group-hover:text-black"><ArrowUpRight className="h-5 w-5" /></span>
               </div>

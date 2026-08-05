@@ -15,8 +15,6 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 
-import { SiteFooter } from '@/components/site-footer'
-import { SiteHeader } from '@/components/site-header'
 import { getPrisma } from '@/lib/prisma'
 import { isLocale, type Locale } from '@/lib/i18n'
 import {
@@ -861,6 +859,11 @@ export default async function CompliancePage(props: {
   const checklist = checklistSections[locale]
   const sources = officialSources[locale]
   const checklistHref = checklistDownloads[locale]
+  const trustFacts = {
+    en: ['Last reviewed: August 2026', 'Content owner: NEXUS Life', 'Jurisdiction: Canada, with province-specific notes where stated', 'Purpose: Project preparation only—not legal, engineering or approval advice'],
+    zh: ['最后审查：2026 年 8 月', '内容负责人：NEXUS Life', '适用地区：加拿大；注明时包含省级说明', '用途：仅用于项目准备，不构成法律、工程或审批建议'],
+    fr: ['Dernière révision : août 2026', 'Responsable du contenu : NEXUS Life', 'Territoire : Canada, avec notes provinciales lorsqu’indiquées', 'But : préparation du projet seulement, sans avis juridique, d’ingénierie ou d’approbation'],
+  }[locale]
 
   const prisma = await getPrisma()
   const records = (
@@ -892,10 +895,8 @@ export default async function CompliancePage(props: {
     `publicSummary${locale === 'zh' ? 'Zh' : locale === 'fr' ? 'Fr' : 'En'}` as const
 
   return (
-    <>
-      <main className="min-h-screen bg-[#f5f6f5] text-[#11191b]">
+    <main className="min-h-screen bg-[#f5f6f5] text-[#11191b]">
         <section className="relative overflow-hidden bg-[#082328] pb-20 pt-36 text-white">
-          <SiteHeader locale={locale} />
           <div className="absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(circle_at_70%_35%,rgba(45,130,176,.28),transparent_62%)]" />
           <div className="relative mx-auto max-w-[1320px] px-5 sm:px-8 lg:px-12">
             <p className="eyebrow text-[#b8d683]">NEXUS · CANADA</p>
@@ -914,6 +915,10 @@ export default async function CompliancePage(props: {
             <p>
               <strong>{page.disclaimer}</strong>
             </p>
+          </div>
+
+          <div className="mt-5 grid gap-px bg-black/10 sm:grid-cols-2">
+            {trustFacts.map((fact) => <p key={fact} className="bg-white p-4 text-sm leading-6 text-slate-700">{fact}</p>)}
           </div>
 
           <div className="mt-12 max-w-4xl">
@@ -1137,9 +1142,6 @@ export default async function CompliancePage(props: {
             {text.growingBody}
           </div>
         </section>
-      </main>
-
-      <SiteFooter locale={locale} />
-    </>
+    </main>
   )
 }

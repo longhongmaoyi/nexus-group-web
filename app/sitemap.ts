@@ -1,70 +1,22 @@
 import type { MetadataRoute } from 'next'
-
-import { sectionSlugs } from '@/lib/content'
 import { locales } from '@/lib/i18n'
 import { absoluteUrl, languageAlternates } from '@/lib/seo'
 
-const redirectedPages = new Set([
-  'compliance-centre',
-])
-
-const dedicatedIndexablePages = [
-  'compliance',
-  'technology-services',
-  'workforce-camps',
-  'commercial-kiosks',
-  'multi-unit-builds',
-  'oil-gas-energy',
-  'indigenous-community-projects',
+const indexablePaths = [
+  '', 'solutions', 'assembly-centre', 'projects', 'compliance', 'buyer-resources',
+  'project-brief-guide', 'landed-cost-guide', 'delivery-timeline-guide',
+  'document-checklist', 'suppliers', 'about', 'contact',
 ] as const
 
-const highPriority = new Set([
-  'about',
-  'assembly-centre',
-  'compliance',
-  'products',
-  'industries',
-  'projects',
-  'contact',
-])
-
-const resourcePages = new Set([
-  'buyer-resources',
-  'technology-services',
-  'workforce-camps',
-  'commercial-kiosks',
-  'multi-unit-builds',
-  'oil-gas-energy',
-  'indigenous-community-projects',
-  'project-brief-guide',
-  'landed-cost-guide',
-  'delivery-timeline-guide',
-  'document-checklist',
-])
+const highPriority = new Set(['', 'solutions', 'assembly-centre', 'projects', 'compliance', 'about', 'contact'])
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const paths = [
-    '',
-    ...sectionSlugs.filter((slug) => !redirectedPages.has(slug)),
-    ...dedicatedIndexablePages,
-  ]
-
-  const uniquePaths = Array.from(new Set(paths))
-
-  return uniquePaths.flatMap((slug) =>
+  return indexablePaths.flatMap((slug) =>
     locales.map((locale) => ({
       url: absoluteUrl(locale, slug || undefined),
-      changeFrequency: slug === 'news' ? 'weekly' : 'monthly',
-      priority: !slug
-        ? 1
-        : highPriority.has(slug)
-          ? 0.85
-          : resourcePages.has(slug)
-            ? 0.75
-            : 0.65,
-      alternates: {
-        languages: languageAlternates(slug || undefined),
-      },
+      changeFrequency: slug === 'buyer-resources' ? 'weekly' : 'monthly',
+      priority: !slug ? 1 : highPriority.has(slug) ? 0.85 : 0.72,
+      alternates: { languages: languageAlternates(slug || undefined) },
     })),
   )
 }
