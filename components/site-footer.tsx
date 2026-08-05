@@ -12,19 +12,20 @@ const groups = [
   {
     title: t('Explore', '探索', 'Explorer'),
     links: [
-      { slug: 'products', label: t('Products', '产品', 'Produits') },
-      { slug: 'industries', label: t('Industries', '行业方案', 'Secteurs') },
-      { slug: 'projects', label: t('Projects', '项目', 'Projets') },
-      { slug: 'buyer-resources', label: t('Buyer Resources', '买家资源', 'Ressources acheteurs') },
+      { slug: 'products', label: t('Solutions', '解决方案', 'Solutions') },
+      { slug: 'industries', label: t('Industries', '行业', 'Secteurs') },
+      { slug: 'projects', label: t('Projects & Proof', '项目与证据', 'Projets et preuves') },
+      { slug: 'technology-services', label: t('Technology Services', '技术服务', 'Services technologiques') },
+      { slug: 'buyer-resources', label: t('Resources', '资源', 'Ressources') },
     ],
   },
   {
     title: t('NEXUS', 'NEXUS', 'NEXUS'),
     links: [
-      { slug: 'assembly-centre', label: t('How Delivery Works', '交付方式', 'Fonctionnement de la livraison') },
-      { slug: 'compliance-centre', label: t('Compliance Centre', '合规中心', 'Centre de conformité') },
+      { slug: 'assembly-centre', label: t('How We Deliver', '交付方式', 'Notre approche') },
+      { slug: 'compliance', label: t('Compliance Centre', '合规中心', 'Centre de conformité') },
       { slug: 'suppliers', label: t('Suppliers', '供应商', 'Fournisseurs') },
-      { slug: 'news', label: t('News & Insights', '新闻与洞察', 'Actualités et analyses') },
+      { slug: 'news', label: t('Guides & Insights', '指南与洞察', 'Guides et analyses') },
       { slug: 'about', label: t('About NEXUS', '关于 NEXUS', 'À propos de NEXUS') },
     ],
   },
@@ -32,9 +33,9 @@ const groups = [
 
 const copy = {
   body: t(
-    'We handle the hard parts between the factory and your site, and we tell you what still needs an answer.',
-    'NEXUS 帮助客户把场地与运营需求整理成更清晰的模块化项目简报，并协调推进项目所需的人员与信息。',
-    'NEXUS aide ses clients à transformer un site et un besoin opérationnel en dossier de projet modulaire plus clair, puis coordonne les personnes et l’information nécessaires pour avancer.',
+    'We connect the factory, the project information and the site—and we say clearly what still needs an answer.',
+    '我们连接工厂、项目信息及现场，并清楚说明仍需解决的问题。',
+    'Nous relions l’usine, l’information du projet et le site, et nous indiquons clairement ce qui reste à régler.',
   ),
   contact: t('Public Contacts', '公开联系方式', 'Coordonnées publiques'),
   privacy: t('Privacy & Data Use', '隐私与数据使用', 'Confidentialité et données'),
@@ -45,7 +46,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
 
   return (
     <footer className="border-t border-white/10 bg-[#06191d] text-white">
-      <div className="mx-auto grid max-w-[1760px] gap-8 px-5 py-8 sm:px-8 lg:grid-cols-[0.9fr_0.65fr_1.65fr] lg:gap-7 lg:px-12">
+      <div className="mx-auto grid max-w-[1760px] gap-8 px-5 py-8 sm:px-8 lg:grid-cols-[0.9fr_0.75fr_1.55fr] lg:gap-7 lg:px-12">
         <div>
           <BrandMark href={`/${locale}`} adaptive />
           <p className="mt-4 max-w-lg text-base leading-7 text-white/64">{localized(copy.body)}</p>

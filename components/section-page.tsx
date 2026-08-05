@@ -390,7 +390,7 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
                           <h3 className="text-2xl font-semibold tracking-[-0.035em] sm:text-3xl">{localized(project.title, locale)}</h3>
                           <p className="mt-2 text-sm text-white/66">{localized(project.meta, locale)}</p>
                         </div>
-                        <span className="hidden h-11 w-11 shrink-0 place-items-center rounded-full border border-white/40 sm:grid"><ArrowRight className="h-4 w-4" /></span>
+                        
                       </div>
                     </div>
                   </div>
@@ -511,7 +511,17 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
                 </div>
               </div>
 
-              <div className="rounded-[2.25rem] border border-ink/10 bg-white p-7 shadow-soft sm:p-9">
+              <div className="grid gap-4 lg:hidden">
+                {page.blocks.map((block, index) => (
+                  <article key={localized(block.title, locale)} className="border border-ink/10 bg-white p-5">
+                    <span className="text-xs font-black tracking-[0.16em] text-forest">{String(index + 1).padStart(2, '0')}</span>
+                    <h3 className="mt-3 text-xl font-bold tracking-tight text-ink">{localized(block.title, locale)}</h3>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">{localized(block.body, locale)}</p>
+                  </article>
+                ))}
+              </div>
+
+              <div className="hidden rounded-[2.25rem] border border-ink/10 bg-white p-7 shadow-soft sm:p-9 lg:block">
                 <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#e8efec] text-sm font-black text-forest">{String(active + 1).padStart(2, '0')}</span>
                 <h3 className="mt-7 text-3xl font-bold tracking-tight text-ink">{localized(activeBlock.title, locale)}</h3>
                 <p className="mt-4 text-base leading-8 text-slate-600">{localized(activeBlock.body, locale)}</p>
@@ -635,6 +645,27 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
             ) : null}
 
             {section === 'contact' ? (
+              <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <Link href={`/${locale}/contact#project-inquiry`} className="border border-ink/10 bg-white p-5 transition hover:border-ink/30">
+                  <p className="text-sm font-bold text-ink">{t('Start a Project', '启动项目', 'Démarrer un projet')[locale]}</p>
+                  <p className="mt-2 text-xs leading-5 text-slate-600">{t('Use the detailed project brief.', '填写详细项目简报。', 'Utilisez le dossier de projet détaillé.')[locale]}</p>
+                </Link>
+                <Link href={`/${locale}/book-a-call`} className="border border-ink/10 bg-white p-5 transition hover:border-ink/30">
+                  <p className="text-sm font-bold text-ink">{t('Book a 15-min Call', '预约 15 分钟通话', 'Réserver un appel de 15 min')[locale]}</p>
+                  <p className="mt-2 text-xs leading-5 text-slate-600">{t('Use the short first-conversation form.', '使用简短首次沟通表单。', 'Utilisez le formulaire court.')[locale]}</p>
+                </Link>
+                <Link href={`/${locale}/supplier-application`} className="border border-ink/10 bg-white p-5 transition hover:border-ink/30">
+                  <p className="text-sm font-bold text-ink">{t('Supplier Application', '供应商申请', 'Candidature fournisseur')[locale]}</p>
+                  <p className="mt-2 text-xs leading-5 text-slate-600">{t('For factories and manufacturers.', '适用于工厂及制造商。', 'Pour usines et fabricants.')[locale]}</p>
+                </Link>
+                <Link href={`/${locale}/partner-application`} className="border border-ink/10 bg-white p-5 transition hover:border-ink/30">
+                  <p className="text-sm font-bold text-ink">{t('Canadian Project Partner', '加拿大项目伙伴', 'Partenaire de projet au Canada')[locale]}</p>
+                  <p className="mt-2 text-xs leading-5 text-slate-600">{t('For professionals, contractors and delivery firms.', '适用于专业人士、承包商及交付企业。', 'Pour professionnels, entrepreneurs et entreprises de livraison.')[locale]}</p>
+                </Link>
+              </div>
+            ) : null}
+
+            {section === 'contact' ? (
               <div className="mt-14">
                 <div className="max-w-3xl">
                   <p className="eyebrow">{t('Published contact points', '公开联系方式', 'Coordonnées publiques')[locale]}</p>
@@ -659,15 +690,15 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
             ) : null}
 
             {section === 'contact' ? (
-              <div className="mt-14 max-w-5xl">{businessToolsEnabled ? <BusinessIntakeWizard locale={locale} /> : <InquiryForm locale={locale} />}</div>
+              <div id="project-inquiry" className="mt-14 max-w-5xl">{businessToolsEnabled ? <BusinessIntakeWizard locale={locale} /> : <InquiryForm locale={locale} />}</div>
             ) : section !== 'privacy' ? (
               <div className="mt-14 rounded-[2.25rem] bg-ink p-8 text-white sm:p-10 lg:flex lg:items-center lg:justify-between">
                 <div>
                   <h2 className="text-3xl font-bold tracking-tight">{localized(homeCopy.ctaTitle, locale)}</h2>
                   <p className="mt-3 max-w-2xl text-sm leading-7 text-white/62">{localized(homeCopy.ctaBody, locale)}</p>
                 </div>
-                <Link href={`/${locale}/contact`} className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#2b83b4] px-6 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 lg:mt-0">
-                  {localized(homeCopy.contactCta, locale)} <ArrowRight className="h-4 w-4" />
+                <Link href={section === 'suppliers' ? `/${locale}/supplier-application` : `/${locale}/contact`} className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#2b83b4] px-6 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 lg:mt-0">
+                  {section === 'suppliers' ? t('Apply as a Supplier', '申请成为供应商', 'Devenir fournisseur')[locale] : localized(homeCopy.contactCta, locale)} <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
             ) : null}

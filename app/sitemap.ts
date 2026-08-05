@@ -16,6 +16,15 @@ const highPriority = new Set([
 
 const resourcePages = new Set([
   'buyer-resources',
+  'technology-services',
+  'workforce-camps',
+  'commercial-kiosks',
+  'multi-unit-builds',
+  'oil-gas-energy',
+  'indigenous-community-projects',
+  'book-a-call',
+  'supplier-application',
+  'partner-application',
   'project-brief-guide',
   'landed-cost-guide',
   'delivery-timeline-guide',

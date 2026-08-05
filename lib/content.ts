@@ -18,16 +18,16 @@ export const navigation = [
 export const homeCopy = {
   utility: t('Canadian coordination for globally sourced modular systems.', '为全球采购的模块化系统提供加拿大本地协调。', 'Coordination canadienne de systèmes modulaires provenant du monde entier.'),
   heroEyebrow: t('Modular projects, coordinated from source to site', '模块化项目，从源头到现场全程协调', 'Des projets modulaires coordonnés de la source au site'),
-  heroTitle: t('Global Capability. Built for Canadian Business.', '全球能力，为加拿大企业而建。', 'Capacité mondiale. Conçue pour les entreprises canadiennes.'),
+  heroTitle: t('Modular Construction in Canada. From factory floor to working site.', '加拿大模块化建筑。从工厂到项目现场。', 'Construction modulaire au Canada. De l’usine au chantier.'),
   heroSubtitle: t(
     'Spaces for accommodation, business, tourism and remote operations.',
     '面向住宿、商业、旅游及偏远地区运营的空间方案。',
     'Des espaces pour l’hébergement, les affaires, le tourisme et les activités éloignées.'
   ),
   heroBody: t(
-    'A modular project is more than a product order. NEXUS helps define the need, compare suitable systems and coordinate the work required to bring them into service in Canada.',
-    '模块化项目不只是下单采购。NEXUS 协助明确需求、比较合适系统，并协调产品在加拿大投入使用所需的各项工作。',
-    'Un projet modulaire ne se résume pas à une commande. NEXUS aide à préciser le besoin, à comparer les systèmes adaptés et à coordonner leur mise en service au Canada.'
+    'Mr. Lin brings 20+ years of hands-on modular sourcing, international logistics and Canadian assembly experience. Satya adds digital project tools and clear client communication so the factory, project team and site stay connected.',
+    '林建先生拥有 20 多年模块化采购、国际物流及加拿大现场组装经验。Satya 通过数字项目工具和清晰客户沟通连接工厂、项目团队及现场。',
+    'M. Lin apporte plus de 20 ans d’expérience en approvisionnement modulaire, logistique internationale et assemblage au Canada. Satya relie l’usine, l’équipe et le chantier grâce à des outils de projet et une communication claire.'
   ),
   primaryCta: t('Explore Products', '浏览产品', 'Découvrir les produits'),
   secondaryCta: t('Start a Project', '启动项目', 'Démarrer un projet'),
@@ -177,64 +177,64 @@ export const conceptProjects = [
 
 export const sectionPages = {
   about: {
-    eyebrow: t('About Nexus Group', '关于 NEXUS 集团', 'À propos de NEXUS'),
+    eyebrow: t('About Nexus Life', '关于 NEXUS LIFE', 'À propos de NEXUS LIFE'),
     title: t(
-      'Modular construction, without the vague promises.',
-      '连接全球制造与加拿大项目交付的务实桥梁。',
-      'Un lien concret entre la fabrication mondiale et la livraison de projets au Canada.'
+      'Ground-level modular experience, backed by clear project communication.',
+      '一线模块化经验，加上清晰的项目沟通。',
+      'Une expérience modulaire de terrain, soutenue par une communication claire.'
     ),
     intro: t(
-      'Nexus Life handles modular construction in Canada for workforce camps, commercial kiosks, and multi-unit builds. We connect the factory, shipping plan, site team, documents, and client decisions. The aim is simple: fewer surprises between the first quote and the finished build.',
-      'NEXUS 协助加拿大机构评估全球制造商的模块化系统，并协调其在加拿大负责任落地所需的工作。我们的目标不是把所有产品卖给所有买家，而是找到可行匹配、明确责任，并减少可避免的问题。',
-      'NEXUS aide les organisations canadiennes à évaluer des systèmes modulaires fabriqués à l’étranger et à coordonner leur utilisation responsable au Canada. Il ne s’agit pas de vendre n’importe quel produit à n’importe quel client, mais de trouver une solution viable, de clarifier les responsabilités et de réduire les mauvaises surprises.'
+      'Nexus Life coordinates modular construction work for workforce camps, commercial kiosks, multi-unit builds and other project-specific uses in Canada. We connect supplier information, shipping, site planning, assembly and client decisions. We also say clearly where architects, engineers, inspectors, licensed trades and authorities must take responsibility.',
+      'NEXUS LIFE 协调加拿大工人营地、商业售卖亭、多单元建筑及其他项目专项模块化工作。我们连接供应商信息、运输、场地规划、组装及客户决策，并清楚说明建筑师、工程师、检查人员、持牌工种及主管部门必须承担的责任。',
+      'NEXUS LIFE coordonne des projets modulaires au Canada pour camps de travailleurs, kiosques commerciaux, bâtiments multiunités et autres usages. Nous relions les renseignements fournisseurs, le transport, le site, l’assemblage et les décisions du client, tout en précisant les responsabilités des architectes, ingénieurs, inspecteurs, métiers autorisés et autorités.'
     ),
     blocks: [
       {
-        title: t('Mr. Lin Jian — Founder', 'NEXUS 实际做什么', 'Ce que fait réellement NEXUS'),
+        title: t('Mr. Lin Jian — Founder & Canadian Operations Lead', '林建先生 — 创始人兼加拿大运营负责人', 'M. Lin Jian — Fondateur et responsable des opérations au Canada'),
         body: t(
-          'Mr. Lin has spent more than 20 years working with modular suppliers, international shipping, and on-site assembly in Canada. He checks what a quote includes, questions weak packing and loading plans, and looks for problems before they reach the site. His value is practical: he has seen how small factory and logistics mistakes turn into expensive delays, and he works to catch them early.',
-          '我们从运营需求出发：空间需要完成什么功能、在哪里使用、由谁使用、何时需要。随后协调产品研究、供应商沟通、文件审查、商业比较、进口规划及加拿大交付路径。',
-          'Nous partons du besoin opérationnel : fonction de l’espace, lieu d’utilisation, occupants et échéance. Nous coordonnons ensuite la recherche de produits, les échanges avec les fournisseurs, l’examen des documents, la comparaison commerciale, l’importation et le parcours de livraison au Canada.'
+          'Mr. Lin has more than 20 years of hands-on experience with modular suppliers, international shipping and on-site assembly in Canada. He checks what a quote really includes, questions weak packing and loading plans, and looks for problems before they reach the site. His value is practical: he has seen how small factory and logistics mistakes become expensive delays.',
+          '林建先生拥有 20 多年模块化供应商、国际运输及加拿大现场组装的一线经验。他会核实报价真正包含什么，质疑薄弱的包装及装载方案，并在问题到达现场前尽量发现。',
+          'M. Lin possède plus de 20 ans d’expérience directe avec les fournisseurs modulaires, le transport international et l’assemblage au Canada. Il vérifie ce que le devis comprend réellement et cherche les problèmes avant leur arrivée sur le chantier.'
         )
       },
       {
-        title: t('Satya Sharma — Technical Lead & Client Relations', '我们服务的客户', 'Les clients que nous accompagnons'),
+        title: t('Satya Sharma — Technical Lead & Client Relations', 'Satya Sharma — 技术负责人兼客户关系', 'Satya Sharma — Responsable technique et relations clients'),
         body: t(
-          'I\'m Satya Sharma. I keep the client side of the project clear. I organize updates, track open decisions, follow up on documents, and turn technical discussions into plain English. My job is to make sure you know what\'s happening, what we\'re waiting for, and what comes next. I connect the supplier, project team, site, and client so important details don\'t disappear between conversations.',
-          '我们的模式适合开发商、酒店与旅游运营商、矿业及建筑企业、机构、零售商，以及因速度、可复制性或复杂场地条件而考虑模块化交付的业主。',
-          'Notre modèle s’adresse aux promoteurs, exploitants hôteliers, sociétés minières et de construction, institutions, détaillants et propriétaires qui envisagent le modulaire pour gagner du temps, répéter un concept ou intervenir sur un site complexe.'
+          'I’m Satya Sharma. I organize project information, track open decisions, follow up on documents and turn technical discussions into plain English. I also lead Nexus technology services, including websites, web and mobile app projects, digital marketing, CRM and business workflow tools. My job is to keep the supplier, project team, site and client connected.',
+          '我是 Satya Sharma。我负责整理项目信息、跟踪待决事项、跟进文件，并把技术讨论转化成容易理解的内容。我也负责 NEXUS 的技术服务，包括网站、网页及移动应用项目、数字营销、CRM 及业务流程工具。',
+          'Je suis Satya Sharma. J’organise l’information, je suis les décisions ouvertes, je relance les documents et je transforme les discussions techniques en langage simple. Je dirige aussi les sites, projets web et mobiles, le marketing numérique, le CRM et les outils de processus.'
         )
       },
       {
-        title: t('How we work together', '加拿大全球模式如何运作', 'Fonctionnement du modèle Canada–monde'),
+        title: t('How we work together', '我们如何协同工作', 'Comment nous travaillons ensemble'),
         body: t(
-          'Lin focuses on the physical job: supplier capability, drawings, packing, freight, assembly, and site conditions. I focus on the information around it: decisions, documents, deadlines, and client updates. Together, we keep the factory plan and the site plan connected. That helps us spot missing responsibilities before they become schedule problems or unexpected costs.',
-          '全球制造商可能具备很强的产品能力，但项目仍需要在加拿大完成场地、设计、许可、公用设施、安装及服务等决策。NEXUS 连接两端，避免技术和商业决策彼此脱节。',
-          'Les fabricants mondiaux peuvent offrir d’excellents produits, mais le projet exige encore des décisions canadiennes sur le site, la conception, les permis, les services, l’installation et l’entretien. NEXUS relie ces deux réalités afin que les décisions techniques et commerciales ne soient pas prises séparément.'
+          'Lin focuses on the physical job: supplier capability, drawings, packing, freight, assembly and site conditions. Satya focuses on the information around it: scope, decisions, documents, deadlines, client updates and digital tools. Together, they keep the factory plan and the site plan connected.',
+          '林建重点关注实体工作：供应商能力、图纸、包装、运输、组装及场地条件。Satya 重点关注范围、决策、文件、期限、客户更新及数字工具。两者共同保持工厂计划与现场计划的连接。',
+          'Lin se concentre sur le travail physique : capacité du fournisseur, plans, emballage, fret, assemblage et site. Satya se concentre sur la portée, les décisions, documents, délais, nouvelles au client et outils numériques.'
         )
       },
       {
-        title: t('What we handle', '我们的职责边界', 'Les limites de notre rôle'),
+        title: t('What Nexus handles', 'NEXUS 负责什么', 'Ce que NEXUS prend en charge'),
         body: t(
-          'We handle supplier checks, factory communication, quote comparisons, document follow-up, packing and loading plans, shipping coordination, Canadian assembly planning, site coordination, and handover records. We don\'t replace architects, engineers, inspectors, customs professionals, or local authorities. We make sure the right people have the right information and that open questions stay visible.',
-          'NEXUS 可协调信息、供应商、物流、本地伙伴及项目记录，但不会取代主管机构、客户的法律责任，或项目所需的持牌建筑师、工程师、专业工种及检查人员。',
-          'NEXUS peut coordonner l’information, les fournisseurs, la logistique, les partenaires locaux et les dossiers. Nous ne remplaçons ni l’autorité compétente, ni les obligations légales du client, ni les architectes, ingénieurs, métiers et inspecteurs autorisés lorsque leur intervention est requise.'
+          'We coordinate supplier checks, factory communication, quote comparison, document follow-up, packing and loading plans, shipping, Canadian assembly planning, site communication and handover records. Technology work can also be scoped separately.',
+          '我们协调供应商核查、工厂沟通、报价比较、文件跟进、包装及装载计划、运输、加拿大组装规划、现场沟通及移交记录。技术工作也可单独确定范围。',
+          'Nous coordonnons les fournisseurs, l’usine, les devis, documents, emballage, chargement, transport, assemblage au Canada, communication chantier et remise. Les travaux technologiques peuvent être définis séparément.'
         )
       },
       {
-        title: t('Who we work with', '如何评估供应商', 'Comment les fournisseurs sont évalués'),
+        title: t('What Nexus does not replace', 'NEXUS 不会取代什么', 'Ce que NEXUS ne remplace pas'),
         body: t(
-          'We work with developers, mining and oil and gas companies, Indigenous communities, construction firms, hospitality operators, and businesses planning modular kiosks or multi-unit builds. Some clients arrive with drawings. Others have a site, a budget range, and an urgent need. Both are valid starting points. We begin by separating what is known from what still needs an answer.',
-          '价格很重要，但只是决策的一部分。我们还关注制造能力、图纸质量、材料追溯、测试记录、出口经验、响应速度、变更控制、包装、备件及供应商承担产品责任的意愿。',
-          'Le prix compte, mais il ne suffit pas. Nous examinons aussi la capacité de fabrication, la qualité des plans, la traçabilité des matériaux, les essais, l’expérience export, la réactivité, le contrôle des changements, l’emballage, les pièces et la volonté d’assumer la responsabilité du produit.'
+          'We do not replace architects, engineers, inspectors, customs professionals, licensed trades, legal advisers or local authorities. We help keep the responsibilities visible and make sure the right people receive the right information.',
+          '我们不会取代建筑师、工程师、检查人员、海关专业人士、持牌工种、法律顾问或地方主管部门。我们帮助保持责任清晰。',
+          'Nous ne remplaçons pas les architectes, ingénieurs, inspecteurs, professionnels des douanes, métiers autorisés, conseillers juridiques ou autorités. Nous gardons les responsabilités visibles.'
         )
       },
       {
-        title: t('What you can expect', '如何建立信任', 'Comment la confiance se construit'),
+        title: t('What you can expect', '您可以期待什么', 'Ce que vous pouvez attendre'),
         body: t(
-          'You\'ll get direct answers. When something is uncertain, we\'ll say so. When a supplier\'s claim needs proof, we\'ll ask for it. When timing depends on permits, freight, weather, or site readiness, we\'ll explain that clearly. And when we see a likely problem, we\'ll tell you before you commit more money.',
-          '所有声明都应有证据支持。概念项目始终标注为概念。产品信息会明确假设及缺失文件。随着项目推进，我们将尽可能用经核验的照片、批准文件、交付记录及可衡量结果取代宣传语言。',
-          'Les affirmations seront liées à des preuves. Les concepts resteront identifiés comme tels. Les fiches produits préciseront les hypothèses et les documents manquants. À mesure que les projets avanceront, des photos vérifiées, approbations, dossiers de livraison et résultats mesurables remplaceront le langage promotionnel.'
+          'You will get direct answers. When something is uncertain, we will say so. When a supplier claim needs proof, we will ask for it. When timing depends on permits, freight, weather or site readiness, we will explain that before you commit more money.',
+          '您会得到直接回答。当事项不确定时，我们会明确说明。当供应商声明需要证明时，我们会索取。当时间取决于许可、运输、天气或场地准备时，我们会在您投入更多资金前说明。',
+          'Vous recevrez des réponses directes. Si un point est incertain, nous le dirons. Si une affirmation exige une preuve, nous la demanderons. Si le délai dépend des permis, du fret, de la météo ou du site, nous l’expliquerons avant un engagement supplémentaire.'
         )
       }
     ]
@@ -247,9 +247,9 @@ export const sectionPages = {
       'Le lien opérationnel canadien entre l’usine et le site.'
     ),
     intro: t(
-      'Imported modules arrive with factory drawings, components and assumptions. Canadian projects add local requirements, trades, inspections and site conditions. The Assembly Centre coordinates that handoff through documented stages from assessment to lifecycle support.',
-      '进口模块带有工厂图纸、部件及既有假设；加拿大项目则增加本地要求、专业工种、检查及场地条件。组装中心通过从评估到生命周期支持的有记录阶段协调这一交接。',
-      'Les modules importés arrivent avec des plans, composants et hypothèses d’usine. Les projets canadiens ajoutent des exigences locales, des métiers, des inspections et des conditions de site. Le Centre d’assemblage coordonne cette transition par des étapes documentées, de l’évaluation au soutien du cycle de vie.'
+      'The NEXUS Assembly Centre is our Canadian delivery and coordination model. It connects factory information with local project professionals, logistics, site preparation, assembly, inspections and handover. It is not presented as an owned nationwide physical facility; the exact facilities, partners and responsibilities are confirmed for each project.',
+      'NEXUS 组装中心是我们的加拿大交付及协调模式。它连接工厂信息、本地项目专业人士、物流、场地准备、组装、检查及移交。我们不会把它描述成自有的全国性实体设施；每个项目都会单独确认实际设施、伙伴及责任。',
+      'Le Centre d’assemblage NEXUS est notre modèle canadien de livraison et de coordination. Il relie l’information d’usine aux professionnels locaux, à la logistique, au site, à l’assemblage, aux inspections et à la remise. Il n’est pas présenté comme une installation physique nationale détenue par NEXUS; les installations, partenaires et responsabilités sont confirmés par projet.'
     ),
     blocks: deliverySteps.map((step) => ({ title: step.title, body: step.body }))
   },
@@ -317,7 +317,7 @@ export const sectionPages = {
     ]
   },
   products: {
-    eyebrow: t('Products', '产品', 'Produits'),
+    eyebrow: t('Solutions', '解决方案', 'Solutions'),
     title: t(
       'Choose a system by use, site and evidence—not by appearance alone.',
       '根据用途、场地和证据选择系统，而不是只看外观。',
@@ -632,7 +632,7 @@ export const sectionPages = {
       {
         title: t('Choose materials for daily reality', '根据日常现实选择材料', 'Choisir les matériaux pour la réalité quotidienne'),
         body: t(
-          'High-use buildings need robust surfaces, replaceable components, practical storage, easy cleaning and safe maintenance access. Material choices should reflect impact, moisture, snow, salt, cleaning products and the maintenance team actually available.',
+          'High-use buildings need durable surfaces, replaceable components, practical storage, easy cleaning and safe maintenance access. Material choices should reflect impact, moisture, snow, salt, cleaning products and the maintenance team actually available.',
           '高频使用建筑需要耐用表面、可更换部件、实用储物、便于清洁及安全维护通道。材料选择应考虑撞击、潮湿、积雪、融雪盐、清洁剂及实际可用的维护团队。',
           'Les bâtiments très fréquentés ont besoin de surfaces robustes, de composants remplaçables, de rangement, d’un nettoyage simple et d’un accès sûr. Les matériaux doivent tenir compte des chocs, de l’humidité, de la neige, du sel et de l’équipe disponible.'
         )
@@ -854,7 +854,7 @@ export const sectionPages = {
     ]
   },
   news: {
-    eyebrow: t('News & Insights', '新闻与洞察', 'Actualités et analyses'),
+    eyebrow: t('Guides & Insights', '指南与洞察', 'Guides et analyses'),
     title: t(
       'Useful guidance for people planning modular projects.',
       '为模块化项目规划者提供真正有用的指导。',

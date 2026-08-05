@@ -7,8 +7,8 @@ export const publishedContacts = [
   {
     key: 'canada',
     name: 'Mr. Lin Jian',
-    role: t('Director', '董事', 'Directeur'),
-    contactLabel: t('Canada contact', '加拿大联系人', 'Contact Canada'),
+    role: t('Founder & Canadian Operations Lead', '创始人兼加拿大运营负责人', 'Fondateur et responsable des opérations au Canada'),
+    contactLabel: t('Canada project contact', '加拿大项目联系人', 'Contact projets au Canada'),
     email: 'leo@nexuslife.ca',
     phoneDisplay: '+1 416 846 3253',
     whatsappUrl: 'https://wa.me/14168463253',
@@ -21,16 +21,12 @@ export const publishedContacts = [
   {
     key: 'china',
     name: 'Satya Sharma',
-    role: t('General Manager', '总经理', 'Directeur général'),
-    contactLabel: t('China sourcing contact', '中国采购联系人', 'Contact approvisionnement en Chine'),
+    role: t('Technical Lead & Client Relations', '技术负责人兼客户关系', 'Responsable technique et relations clients'),
+    contactLabel: t('Technology, sourcing & client relations', '技术、采购及客户关系', 'Technologie, approvisionnement et relations clients'),
     email: 'satya@nexuslife.ca',
     phoneDisplay: '+91 9517149685',
     whatsappUrl: 'https://wa.me/919517149685',
-    location: t(
-      'Yiwu International Trade City, Zhejiang, China',
-      '中国浙江义乌国际商贸城',
-      'Yiwu International Trade City, Zhejiang, Chine',
-    ),
+    location: t('Yiwu International Trade City, Zhejiang, China', '中国浙江义乌国际商贸城', 'Yiwu International Trade City, Zhejiang, Chine'),
   },
 ]
 

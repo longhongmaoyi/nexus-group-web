@@ -1007,7 +1007,7 @@ export default async function CompliancePage(props: {
                   {text.download}
                 </a>
                 <Link
-                  href={`/${locale}/contact?intent=15-minute-call`}
+                  href={`/${locale}/book-a-call`}
                   className="premium-button-ghost"
                 >
                   <Phone className="h-4 w-4" />
@@ -1077,7 +1077,7 @@ export default async function CompliancePage(props: {
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
               <Link
-                href={`/${locale}/contact?intent=15-minute-call`}
+                href={`/${locale}/book-a-call`}
                 className="inline-flex min-h-11 items-center gap-2 border border-[#11191b]/20 px-5 text-sm font-bold uppercase tracking-[0.08em] text-[#11191b] transition hover:bg-[#11191b] hover:text-white"
               >
                 {text.call}

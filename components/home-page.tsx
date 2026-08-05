@@ -30,12 +30,12 @@ type RevealStyle = CSSProperties & { '--reveal-delay'?: string }
 const t = (en: string, zh: string, fr: string): Localized => ({ en, zh, fr })
 
 const copy = {
-  heroEyebrow: t('Workforce camps · commercial kiosks · multi-unit builds', '模块化项目，从源头到现场', 'Des projets modulaires, de la source au site'),
-  heroTitle: t('Modular Construction in Canada. From factory floor to working site.', '全球能力，为加拿大企业而建。', 'Capacité mondiale. Conçue pour les entreprises canadiennes.'),
+  heroEyebrow: t('Workforce camps · commercial kiosks · multi-unit builds', '工人营地 · 商业售卖亭 · 多单元建筑', 'Camps de travailleurs · kiosques commerciaux · bâtiments multiunités'),
+  heroTitle: t('Modular Construction in Canada. From factory floor to working site.', '加拿大模块化建筑。从工厂到项目现场。', 'Construction modulaire au Canada. De l’usine au chantier.'),
   heroBody: t(
     'Mr. Lin brings 20+ years of hands-on experience in sourcing, shipping, and assembly. Satya adds modern project tools and clear client communication, so fewer details get lost between the factory and the site.',
-    '模块化项目不只是选择一栋建筑。NEXUS 协助明确需求、比较现实方案，并协调空间在加拿大投入使用所需的工作。',
-    'Un projet modulaire ne consiste pas seulement à choisir un bâtiment. NEXUS aide à préciser le besoin, comparer des options réalistes et coordonner la mise en service au Canada.',
+    '林建先生拥有 20 多年模块化采购、国际物流及加拿大现场组装经验。Satya 以数字项目工具及清晰客户沟通连接工厂、项目团队和现场，减少重要信息在交接中丢失。',
+    'M. Lin apporte plus de 20 ans d’expérience en approvisionnement modulaire, logistique internationale et assemblage au Canada. Satya relie l’usine, l’équipe et le chantier grâce à des outils de projet et une communication claire.',
   ),
   start: t('Start a Project', '启动项目', 'Démarrer un projet'),
   bookCall: t('Book a 15-min Call', '预约 15 分钟通话', 'Réserver un appel de 15 min'),
@@ -69,8 +69,8 @@ const copy = {
 
 const heroLines: Record<Locale, string[]> = {
   en: ['Modular Construction in Canada.', 'From factory floor to working site.'],
-  zh: ['全球能力。', '为加拿大企业而建。'],
-  fr: ['Capacité mondiale.', 'Conçue pour les entreprises canadiennes.'],
+  zh: ['加拿大模块化建筑。', '从工厂到项目现场。'],
+  fr: ['Construction modulaire au Canada.', 'De l’usine au chantier.'],
 }
 
 // Restored from the pre-premium homepage hero in 3b4f0c6/41ad0b1.
@@ -100,11 +100,11 @@ const products = [
     href: 'modular-living',
   },
   {
-    title: t('Industrial & Remote Operations', '工业与偏远地区运营', 'Opérations industrielles et éloignées'),
-    description: t('Coordinated environments for workforce accommodation and remote-site operations.', '面向劳动力住宿及偏远现场运营的协同空间。', 'Des environnements coordonnés pour l’hébergement des équipes et les opérations en régions éloignées.'),
-    facts: [t('Accommodation, office and support-space planning', '住宿、办公及配套空间规划', 'Planification des logements, bureaux et espaces de soutien'), t('Capacity and logistics defined from the operating brief', '根据运营要求定义容量与物流', 'Capacité et logistique définies selon le mandat')],
+    title: t('Workforce Camps', '工人营地', 'Camps de travailleurs'),
+    description: t('Accommodation and support spaces planned around headcount, shifts, climate, utilities and site access.', '围绕人数、班次、气候、公用设施及场地通行规划住宿和配套空间。', 'Hébergement et espaces de soutien planifiés selon les effectifs, quarts, climat, services et accès.'),
+    facts: [t('Rooms, dining, laundry, medical and operating support', '房间、餐饮、洗衣、医疗及运营配套', 'Chambres, restauration, buanderie, médical et soutien'), t('Transport, utilities, maintenance and expansion planned together', '运输、公用设施、维护及扩建同步规划', 'Transport, services, entretien et expansion planifiés ensemble')],
     image: '/images/industrial.jpg',
-    href: 'industrial-solutions',
+    href: 'workforce-camps',
   },
   {
     title: t('Tourism & Hospitality', '旅游与酒店', 'Tourisme et hôtellerie'),
@@ -114,11 +114,11 @@ const products = [
     href: 'tourism-hospitality',
   },
   {
-    title: t('Commercial Solutions', '商业解决方案', 'Solutions commerciales'),
-    description: t('Compact, configurable spaces for customer service, retail and workplace use.', '面向客户服务、零售及办公用途的紧凑可配置空间。', 'Des espaces compacts et configurables pour le service, le commerce et le travail.'),
-    facts: [t('Kiosk, office and modular workspace formats', '商业亭、办公室及模块化工作空间', 'Formats kiosque, bureau et espace de travail modulaire'), t('Brand, equipment and utility needs coordinated early', '前期协调品牌、设备及公用设施需求', 'Marque, équipements et services coordonnés en amont')],
+    title: t('Commercial Kiosks', '商业售卖亭', 'Kiosques commerciaux'),
+    description: t('Coffee, food, retail and service units planned around equipment, workflow, utilities and approvals.', '围绕设备、工作流程、公用设施及审批规划咖啡、餐饮、零售和服务单元。', 'Unités de café, restauration, commerce et service planifiées selon équipements, flux, services et approbations.'),
+    facts: [t('Customer flow, staff movement and equipment confirmed first', '先确认顾客动线、员工移动及设备', 'Flux client, personnel et équipements confirmés d’abord'), t('Site access, services and operating approvals remain location-specific', '场地通行、公用设施及运营审批取决于地点', 'Accès, services et approbations propres au lieu')],
     image: '/images/commercial.jpg',
-    href: 'commercial-solutions',
+    href: 'commercial-kiosks',
   },
   {
     title: t('Community Infrastructure', '社区基础设施', 'Infrastructures communautaires'),
@@ -128,11 +128,18 @@ const products = [
     href: 'public-community',
   },
   {
+    title: t('Multi-Unit Modular Builds', '多单元模块化建筑', 'Bâtiments modulaires multiunités'),
+    description: t('Repeated units planned with the structure, fire separation, services, foundations and delivery sequence.', '把可重复单元与结构、防火分隔、公用设施、基础及交付顺序一起规划。', 'Unités répétées planifiées avec structure, séparation incendie, services, fondations et séquence de livraison.'),
+    facts: [t('Unit mix, circulation and accessibility defined early', '尽早明确单元组合、流线及无障碍', 'Combinaison, circulation et accessibilité définies tôt'), t('Connections, crane sequence and inspections coordinated as one project', '连接、吊装顺序及检查作为一个项目协调', 'Connexions, grue et inspections coordonnées comme un seul projet')],
+    image: '/images/community.jpg',
+    href: 'multi-unit-builds',
+  },
+  {
     title: t('Technology Services', '技术服务', 'Services technologiques'),
-    description: t('Digital coordination and operational tools that support the project and its lifecycle.', '支持项目及其全生命周期的数字化协调与运营工具。', 'Coordination numérique et outils opérationnels au service du projet et de son cycle de vie.'),
-    facts: [t('Structured documents, workflows and project visibility', '结构化文件、工作流程及项目可视性', 'Documents structurés, flux de travail et visibilité du projet'), t('Services scoped to the client and operating environment', '服务范围依据客户及运营环境确定', 'Services définis selon le client et l’environnement opérationnel')],
+    description: t('Websites, web and mobile app projects, digital marketing, CRM and business workflow tools led by Satya Sharma.', '由 Satya Sharma 负责的网站、网页及移动应用项目、数字营销、CRM 及业务流程工具。', 'Sites, projets web et mobiles, marketing numérique, CRM et outils de processus dirigés par Satya Sharma.'),
+    facts: [t('Website and application planning, development and handover', '网站及应用规划、开发及移交', 'Planification, développement et remise de sites et applications'), t('SEO, content, analytics, lead tracking and practical automation', 'SEO、内容、数据分析、线索跟踪及实用自动化', 'SEO, contenu, mesure, suivi des prospects et automatisation pratique')],
     image: '/images/commercial.jpg',
-    href: 'about',
+    href: 'technology-services',
   },
 ]
 
@@ -296,7 +303,7 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
             <p className="mt-7 max-w-2xl text-base leading-7 text-white/75 sm:text-lg sm:leading-8">{localized(copy.heroBody)}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href={`/${locale}/contact`} className="premium-button-light">{localized(copy.start)} <ArrowUpRight className="h-4 w-4" /></Link>
-              <Link href={`/${locale}/contact?intent=15-minute-call`} className="premium-button-ghost">{localized(copy.bookCall)} <ArrowRight className="h-4 w-4" /></Link>
+              <Link href={`/${locale}/book-a-call`} className="premium-button-ghost">{localized(copy.bookCall)} <ArrowRight className="h-4 w-4" /></Link>
             </div>
           </div>
 
