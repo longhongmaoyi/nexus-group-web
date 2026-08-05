@@ -19,7 +19,7 @@ export async function generateMetadata({
     supplier: { en: 'Supplier application', zh: '供应商申请', fr: 'Candidature fournisseur' },
     partner: { en: 'Canadian project partner application', zh: '加拿大项目伙伴申请', fr: 'Candidature partenaire de projet au Canada' },
   } as const
-  return { title: titles[mode][locale], robots: { index: true, follow: true } }
+  return { title: titles[mode][locale], robots: { index: false, follow: true } }
 }
 
 export default async function Page({

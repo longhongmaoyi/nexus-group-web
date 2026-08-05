@@ -4,10 +4,24 @@ import { sectionSlugs } from '@/lib/content'
 import { locales } from '@/lib/i18n'
 import { absoluteUrl, languageAlternates } from '@/lib/seo'
 
+const redirectedPages = new Set([
+  'compliance-centre',
+])
+
+const dedicatedIndexablePages = [
+  'compliance',
+  'technology-services',
+  'workforce-camps',
+  'commercial-kiosks',
+  'multi-unit-builds',
+  'oil-gas-energy',
+  'indigenous-community-projects',
+] as const
+
 const highPriority = new Set([
   'about',
   'assembly-centre',
-  'compliance-centre',
+  'compliance',
   'products',
   'industries',
   'projects',
@@ -22,9 +36,6 @@ const resourcePages = new Set([
   'multi-unit-builds',
   'oil-gas-energy',
   'indigenous-community-projects',
-  'book-a-call',
-  'supplier-application',
-  'partner-application',
   'project-brief-guide',
   'landed-cost-guide',
   'delivery-timeline-guide',
@@ -32,13 +43,25 @@ const resourcePages = new Set([
 ])
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const paths = ['', ...sectionSlugs]
+  const paths = [
+    '',
+    ...sectionSlugs.filter((slug) => !redirectedPages.has(slug)),
+    ...dedicatedIndexablePages,
+  ]
 
-  return paths.flatMap((slug) =>
+  const uniquePaths = Array.from(new Set(paths))
+
+  return uniquePaths.flatMap((slug) =>
     locales.map((locale) => ({
       url: absoluteUrl(locale, slug || undefined),
       changeFrequency: slug === 'news' ? 'weekly' : 'monthly',
-      priority: !slug ? 1 : highPriority.has(slug) ? 0.85 : resourcePages.has(slug) ? 0.75 : 0.65,
+      priority: !slug
+        ? 1
+        : highPriority.has(slug)
+          ? 0.85
+          : resourcePages.has(slug)
+            ? 0.75
+            : 0.65,
       alternates: {
         languages: languageAlternates(slug || undefined),
       },
