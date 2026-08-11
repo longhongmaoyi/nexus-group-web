@@ -17,6 +17,7 @@ import {
 
 import { getPrisma } from '@/lib/prisma'
 import { isLocale, type Locale } from '@/lib/i18n'
+import { buildPageMetadata } from '@/lib/seo'
 import {
   PHASE5_ORGANIZATION_KEY,
   isPhase5PublicComplianceEnabled,
@@ -838,11 +839,12 @@ export async function generateMetadata(props: {
   const { locale } = await props.params
   if (!isLocale(locale) || !isPhase5PublicComplianceEnabled()) return {}
 
-  return {
+  return buildPageMetadata({
+    locale,
+    slug: 'compliance',
     title: pageCopy[locale].title,
     description: pageCopy[locale].intro,
-    robots: { index: true, follow: true },
-  }
+  })
 }
 
 export default async function CompliancePage(props: {

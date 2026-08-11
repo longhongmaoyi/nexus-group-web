@@ -4,6 +4,7 @@ import { absoluteUrl, languageAlternates } from '@/lib/seo'
 
 const indexablePaths = [
   '', 'solutions', 'assembly-centre', 'projects', 'compliance', 'buyer-resources',
+  'technology-services',
   'project-brief-guide', 'landed-cost-guide', 'delivery-timeline-guide',
   'document-checklist', 'suppliers', 'about', 'contact',
 ] as const
