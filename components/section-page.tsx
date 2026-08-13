@@ -334,10 +334,10 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
   return (
     <main>
       <section className="relative overflow-hidden bg-ink text-white">
-        <div className="absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(circle_at_70%_35%,rgba(45,130,176,.28),transparent_60%)]" />
+        <div className="absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(circle_at_70%_35%,rgba(61,147,184,.28),transparent_60%)]" />
         <div className="relative mx-auto grid max-w-8xl gap-10 px-5 pb-16 pt-36 sm:px-8 lg:grid-cols-[1fr_0.42fr] lg:items-end lg:px-12 lg:pb-24 lg:pt-40">
           <div>
-            <p className="eyebrow text-[#8dc8e8]">{localized(page.eyebrow, locale)}</p>
+            <p className="eyebrow text-brand-frost">{localized(page.eyebrow, locale)}</p>
             <h1 className="mt-5 max-w-5xl text-5xl font-semibold leading-[1.02] tracking-[-0.05em] sm:text-6xl lg:text-7xl">
               {localized(page.title, locale)}
             </h1>
@@ -351,7 +351,7 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
             <div className="mt-4 space-y-3">
               {quickFacts.map((fact, index) => (
                 <div key={fact.en} className="flex items-center gap-3 rounded-2xl bg-white/[0.06] px-4 py-3 text-sm font-semibold">
-                  <span className="text-[#8dc8e8]">0{index + 1}</span>
+                  <span className="text-brand-frost">0{index + 1}</span>
                   <span>{fact[locale]}</span>
                 </div>
               ))}
@@ -431,14 +431,14 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
                     className={`group rounded-[2rem] border p-6 text-left transition duration-300 sm:p-7 ${selected ? 'border-ink bg-ink text-white shadow-lift' : 'border-ink/10 bg-white text-ink hover:-translate-y-1 hover:border-ink/25 hover:shadow-soft'}`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className={`grid h-12 w-12 place-items-center rounded-2xl ${selected ? 'bg-white/10 text-[#8dc8e8]' : 'bg-[#e8efec] text-forest'}`}>
+                      <span className={`grid h-12 w-12 place-items-center rounded-2xl ${selected ? 'bg-white/10 text-brand-frost' : 'bg-[#e8efec] text-forest'}`}>
                         <Icon className="h-6 w-6" />
                       </span>
                       <span className={`text-xs font-black tracking-[0.16em] ${selected ? 'text-white/45' : 'text-slate-400'}`}>{stage.key}</span>
                     </div>
                     <h3 className="mt-7 text-xl font-bold tracking-tight">{stage.title[locale]}</h3>
                     <p className={`mt-3 text-sm leading-7 ${selected ? 'text-white/62' : 'text-slate-600'}`}>{stage.summary[locale]}</p>
-                    <span className={`mt-6 inline-flex items-center gap-2 text-xs font-bold ${selected ? 'text-[#8dc8e8]' : 'text-forest'}`}>
+                    <span className={`mt-6 inline-flex items-center gap-2 text-xs font-bold ${selected ? 'text-brand-frost' : 'text-forest'}`}>
                       {t('View stage details', '查看阶段详情', 'Voir les détails')[locale]} <ChevronRight className="h-4 w-4" />
                     </span>
                   </button>
@@ -449,7 +449,7 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
             <div className="mt-8 overflow-hidden rounded-[2.25rem] border border-ink/10 bg-white shadow-soft">
               <div className="grid lg:grid-cols-[0.42fr_0.58fr]">
                 <div className="bg-ink p-7 text-white sm:p-9">
-                  <span className="text-xs font-black tracking-[0.18em] text-[#8dc8e8]">STAGE {activeAssembly.key}</span>
+                  <span className="text-xs font-black tracking-[0.18em] text-brand-frost">STAGE {activeAssembly.key}</span>
                   <h3 className="mt-5 text-3xl font-bold tracking-tight">{activeAssembly.title[locale]}</h3>
                   <p className="mt-5 text-sm leading-7 text-white/65">{activeAssembly.summary[locale]}</p>
                   <div className="mt-8 rounded-3xl border border-white/10 bg-white/[0.06] p-5">
@@ -697,7 +697,7 @@ export function SectionPage({ locale, section, cms, businessToolsEnabled = false
                   <h2 className="text-3xl font-bold tracking-tight">{localized(homeCopy.ctaTitle, locale)}</h2>
                   <p className="mt-3 max-w-2xl text-sm leading-7 text-white/62">{localized(homeCopy.ctaBody, locale)}</p>
                 </div>
-                <Link href={section === 'suppliers' ? `/${locale}/supplier-application` : `/${locale}/contact`} className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#2b83b4] px-6 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 lg:mt-0">
+                <Link href={section === 'suppliers' ? `/${locale}/supplier-application` : `/${locale}/contact`} className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 lg:mt-0">
                   {section === 'suppliers' ? t('Apply as a Supplier', '申请成为供应商', 'Devenir fournisseur')[locale] : localized(homeCopy.contactCta, locale)} <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>

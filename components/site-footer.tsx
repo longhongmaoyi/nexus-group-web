@@ -52,7 +52,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
         <div className="grid gap-7 sm:grid-cols-2">
           {groups.map((group) => (
             <div key={group.title.en}>
-              <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-[#b8d683]">{localized(group.title)}</h3>
+              <h3 className="text-sm font-bold uppercase tracking-[0.15em] text-brand-frost">{localized(group.title)}</h3>
               <div className="mt-3 grid gap-2.5">
                 {group.links.map((item) => (
                   <Link key={item.slug} href={`/${locale}/${item.slug}`} className="text-[0.94rem] text-white/64 hover:text-white">{localized(item.label)}</Link>
@@ -67,11 +67,11 @@ export function SiteFooter({ locale }: { locale: Locale }) {
             {publishedContacts.map((contact, index) => (
               <address key={contact.key} className={`min-w-0 not-italic ${index ? 'border-t border-white/10 pt-4 md:border-l md:border-t-0 md:py-0 md:pl-5' : 'md:pr-5'}`}>
                 <p className="text-base font-semibold text-white">{contact.name}</p>
-                <p className="mt-0.5 text-sm font-medium text-[#b8d683]">{localized(contact.role)}</p>
+                <p className="mt-0.5 text-sm font-medium text-brand-frost">{localized(contact.role)}</p>
                 <div className="mt-2 grid gap-1.5 text-sm leading-5 text-white/68">
-                  <a href={`mailto:${contact.email}`} className="flex items-start gap-2 hover:text-white"><Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#b8d683]" /><span>{contact.email}</span></a>
-                  <a href={contact.whatsappUrl} target="_blank" rel="noreferrer" className="flex items-start gap-2 hover:text-white"><MessageCircle className="mt-0.5 h-4 w-4 shrink-0 text-[#b8d683]" /><span>{contact.phoneDisplay}</span></a>
-                  <p className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#b8d683]" /><span>{localized(contact.location)}</span></p>
+                  <a href={`mailto:${contact.email}`} className="flex items-start gap-2 hover:text-white"><Mail className="mt-0.5 h-4 w-4 shrink-0 text-brand-frost" /><span>{contact.email}</span></a>
+                  <a href={contact.whatsappUrl} target="_blank" rel="noreferrer" className="flex items-start gap-2 hover:text-white"><MessageCircle className="mt-0.5 h-4 w-4 shrink-0 text-brand-frost" /><span>{contact.phoneDisplay}</span></a>
+                  <p className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-frost" /><span>{localized(contact.location)}</span></p>
                 </div>
               </address>
             ))}

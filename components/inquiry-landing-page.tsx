@@ -15,10 +15,10 @@ const intro = {
 
 export function InquiryLandingPage({ locale, mode }: { locale: Locale; mode: InquiryMode }) {
   return (
-    <main className="min-h-screen bg-[#f4f1e9] text-[#11191b]">
-      <section className="relative overflow-hidden bg-[#082328] pb-16 pt-40 text-white">
+    <main className="min-h-screen bg-cream text-ink">
+      <section className="relative overflow-hidden bg-[#071b21] pb-16 pt-40 text-white">
         <div className="mx-auto max-w-[1120px] px-5 sm:px-8 lg:px-12">
-          <p className="eyebrow text-[#b8d683]">NEXUS / CONTACT</p>
+          <p className="eyebrow text-brand-frost">NEXUS / CONTACT</p>
           <h1 className="mt-5 max-w-4xl text-5xl font-semibold tracking-[-0.055em] sm:text-6xl">{heading[mode][locale]}</h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-white/70">{intro[mode][locale]}</p>
         </div>

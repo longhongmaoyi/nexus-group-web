@@ -94,7 +94,7 @@ export function BusinessIntakeWizard({ locale }: { locale: Locale }) {
   useEffect(() => { fetch('/api/business-tools/config').then((r) => r.ok ? r.json() : null).then(setConfig).catch(() => setConfig(null)) }, [])
   const cost = useMemo(() => config?.cost && baseCost > 0 ? calculateLandedCost(baseCost, config.cost.assumptions) : null, [baseCost, config])
   const duration = useMemo(() => config?.timeline ? calculateTimeline(config.timeline.stages, config.timeline.uncertaintyPct) : null, [config])
-  const field = 'rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-base outline-none transition focus:border-[#26688f] focus:bg-white'
+  const field = 'rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-base outline-none transition focus:border-brand focus:bg-white focus:ring-2 focus:ring-brand/20'
   const label = 'grid gap-2 text-sm font-semibold text-slate-700'
 
   async function submit(event: FormEvent<HTMLFormElement>) {
@@ -133,10 +133,10 @@ export function BusinessIntakeWizard({ locale }: { locale: Locale }) {
   return (
     <form onSubmit={submit} className="overflow-hidden rounded-[2.25rem] border border-slate-200 bg-white shadow-soft">
       <div className="bg-ink p-6 text-white sm:p-8">
-        <p className="text-xs font-black uppercase tracking-[0.18em] text-[#8dc8e8]">{t.eyebrow}</p>
+        <p className="text-xs font-black uppercase tracking-[0.18em] text-brand-frost">{t.eyebrow}</p>
         <h3 className="mt-3 max-w-3xl text-3xl font-semibold tracking-tight">{t.title}</h3>
         <p className="mt-3 max-w-3xl text-sm leading-7 text-white/65">{t.intro}</p>
-        <ol className="mt-7 grid grid-cols-4 gap-2" aria-label="Form progress">{t.steps.map((item, index) => <li key={item} className={`rounded-xl px-2 py-2 text-center text-[0.68rem] font-bold ${index === step ? 'bg-[#2b83b4]' : index < step ? 'bg-white/15' : 'bg-white/[0.06] text-white/45'}`}><span className="block">{index + 1}</span>{item}</li>)}</ol>
+        <ol className="mt-7 grid grid-cols-4 gap-2" aria-label="Form progress">{t.steps.map((item, index) => <li key={item} className={`rounded-xl px-2 py-2 text-center text-[0.68rem] font-bold ${index === step ? 'bg-brand-light' : index < step ? 'bg-white/15' : 'bg-white/[0.06] text-white/45'}`}><span className="block">{index + 1}</span>{item}</li>)}</ol>
       </div>
       <div className="p-6 sm:p-8">
         <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px]" />
@@ -151,7 +151,7 @@ export function BusinessIntakeWizard({ locale }: { locale: Locale }) {
             const invalid = current?.querySelector(':invalid') as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null
             if (invalid) return invalid.reportValidity()
             setStep((value) => Math.min(3, value + 1))
-          }} className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-bold text-white">{t.next}<ArrowRight className="h-4 w-4" /></button> : <button type="submit" disabled={state === 'loading'} className="inline-flex items-center gap-2 rounded-full bg-[#2b83b4] px-6 py-3 text-sm font-bold text-white disabled:opacity-60">{state === 'loading' ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <ShieldCheck className="h-4 w-4" />}{t.submit}</button>}
+          }} className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-bold text-white">{t.next}<ArrowRight className="h-4 w-4" /></button> : <button type="submit" disabled={state === 'loading'} className="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-bold text-white disabled:opacity-60">{state === 'loading' ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <ShieldCheck className="h-4 w-4" />}{t.submit}</button>}
         </div>
         {state === 'success' && <div className="mt-6 rounded-2xl bg-emerald-50 p-5 text-sm font-semibold text-emerald-900"><CheckCircle2 className="mb-2 h-5 w-5" />{t.success}. {t.reference} <strong>{reference}</strong>.</div>}
         {state === 'error' && <p className="mt-6 rounded-2xl bg-red-50 p-5 text-sm font-semibold text-red-800">{message || t.error}</p>}

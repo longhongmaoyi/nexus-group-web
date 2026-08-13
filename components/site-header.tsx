@@ -49,9 +49,9 @@ export function SiteHeader({ locale }: { locale: Locale }) {
               {localized(copy.more)}
               <ChevronDown className="h-3.5 w-3.5 transition group-open:rotate-180" />
             </summary>
-            <div className="absolute right-0 top-full z-[200] mt-4 w-64 border border-black/10 bg-[#f4f1e9] p-2 text-[#11191b] shadow-2xl">
+            <div className="absolute right-0 top-full z-[200] mt-4 w-64 border border-black/10 bg-cream p-2 text-ink shadow-2xl">
               {secondary.map((item) => (
-                <Link key={item.slug} href={`/${locale}/${item.slug}`} className="block px-4 py-3 text-sm font-semibold transition hover:bg-[#e3e0d7] hover:text-[#176b96]">
+                <Link key={item.slug} href={`/${locale}/${item.slug}`} className="block px-4 py-3 text-sm font-semibold transition hover:bg-[#e3e0d7] hover:text-brand">
                   {localized(item.label)}
                 </Link>
               ))}
@@ -61,12 +61,12 @@ export function SiteHeader({ locale }: { locale: Locale }) {
 
         <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2 xl:ml-0">
           <div className="lg:hidden"><LocaleSwitcher locale={locale} dark compact /></div>
-          <div className="hidden rounded-full bg-white/95 text-[#11191b] lg:block"><LocaleSwitcher locale={locale} /></div>
+          <div className="hidden rounded-full bg-white/95 text-ink lg:block"><LocaleSwitcher locale={locale} /></div>
           <Link href={`/${locale}/portal`} aria-label={localized(copy.portal)} className="inline-flex min-h-10 min-w-10 items-center justify-center gap-2 border border-white/35 px-2 text-xs font-bold uppercase tracking-[0.1em] text-white transition hover:bg-white/10 sm:px-4">
             <LayoutDashboard className="h-4 w-4" />
             <span className="hidden 2xl:inline">{localized(copy.portal)}</span>
           </Link>
-          <Link href={`/${locale}/contact`} className="inline-flex min-h-10 items-center gap-1.5 bg-white px-2.5 text-[0.65rem] font-bold uppercase tracking-[0.08em] text-[#11191b] transition hover:bg-[#75bfe8] sm:gap-2 sm:px-4 sm:text-xs sm:tracking-[0.1em]">
+          <Link href={`/${locale}/contact`} className="inline-flex min-h-10 items-center gap-1.5 bg-white px-2.5 text-[0.65rem] font-bold uppercase tracking-[0.08em] text-ink transition hover:bg-brand-light sm:gap-2 sm:px-4 sm:text-xs sm:tracking-[0.1em]">
             <span className="hidden sm:inline">{localized(copy.start)}</span>
             <span className="sm:hidden">{localized(t('Start', '启动', 'Démarrer'))}</span>
             <ArrowUpRight className="h-3.5 w-3.5" />

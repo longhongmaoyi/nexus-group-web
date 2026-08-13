@@ -249,9 +249,9 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
   }, [])
 
   return (
-    <main className="overflow-hidden bg-[#f4f1e9] text-[#11191b]">
+    <main className="overflow-hidden bg-cream text-ink">
       <section
-        className="relative flex min-h-[720px] items-end overflow-hidden bg-[#101719] text-white sm:min-h-[760px] lg:min-h-[680px]"
+        className="relative flex min-h-[720px] items-end overflow-hidden bg-ink text-white sm:min-h-[760px] lg:min-h-[680px]"
         role="region"
         aria-roledescription="carousel"
         aria-label={localized(t('NEXUS featured environments', 'NEXUS 精选环境', 'Environnements NEXUS en vedette'))}
@@ -283,7 +283,7 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
         <div className="relative mx-auto w-full max-w-[1760px] px-5 pb-9 pt-36 sm:px-8 sm:pb-11 lg:px-12 lg:pb-8 lg:pt-20">
           <div className="max-w-5xl" data-reveal>
             <p className="mb-6 flex items-center gap-3 text-[0.68rem] font-bold uppercase tracking-[0.24em] text-white/66">
-              <span className="h-px w-10 bg-[#4ba3d3]" /> {localized(copy.heroEyebrow)}
+              <span className="h-px w-10 bg-brand" /> {localized(copy.heroEyebrow)}
             </p>
             <h1 className="max-w-[16ch] text-[clamp(3.2rem,6vw,6.5rem)] font-semibold leading-[0.91] tracking-[-0.065em]" aria-label={localized(copy.heroTitle)}>
               {heroLines[locale].map((line, index) => (
@@ -384,7 +384,7 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
       <section className="bg-[#11191b] px-5 py-20 text-white sm:px-8 sm:py-24 lg:px-12 lg:py-32">
         <div className="mx-auto max-w-[1760px]">
           <div className="grid gap-8 lg:grid-cols-[0.34fr_0.66fr]" data-reveal>
-            <p className="premium-eyebrow text-[#75bfe8]">02 / {localized(copy.storiesEyebrow)}</p>
+            <p className="premium-eyebrow text-brand-frost">02 / {localized(copy.storiesEyebrow)}</p>
             <h2 className="premium-heading max-w-5xl text-white">{localized(copy.storiesTitle)}</h2>
           </div>
 
@@ -397,17 +397,17 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
                   <span className="absolute left-5 top-5 border border-white/35 bg-black/20 px-3 py-2 text-[0.65rem] font-bold uppercase tracking-[0.2em] backdrop-blur-sm">Application / {story.number}</span>
                 </div>
                 <div className={index % 2 ? 'lg:order-1 lg:pr-12' : 'lg:pl-2'}>
-                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#75bfe8]">{localized(t('What the project would need', '项目真正需要什么', 'Ce dont le projet aurait besoin'))}</p>
+                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-frost">{localized(t('What the project would need', '项目真正需要什么', 'Ce dont le projet aurait besoin'))}</p>
                   <h3 className="mt-5 max-w-[16ch] text-4xl font-semibold leading-[0.98] tracking-[-0.045em] sm:text-5xl">{localized(story.title)}</h3>
                   <p className="mt-6 max-w-xl text-base leading-8 text-white/65">{localized(story.body)}</p>
                   <ul className="mt-8 divide-y divide-white/12 border-y border-white/12">
                     {story.facts.map((fact, factIndex) => (
                       <li key={fact.en} className="flex gap-4 py-4 text-sm leading-6 text-white/78">
-                        <span className="text-[#75bfe8]">0{factIndex + 1}</span> {localized(fact)}
+                        <span className="text-brand-frost">0{factIndex + 1}</span> {localized(fact)}
                       </li>
                     ))}
                   </ul>
-                  <Link href={`/${locale}/contact`} className="mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-white hover:text-[#75bfe8]">
+                  <Link href={`/${locale}/contact`} className="mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-white hover:text-brand-frost">
                     {localized(copy.start)} <ArrowUpRight className="h-4 w-4" />
                   </Link>
                 </div>
@@ -417,13 +417,13 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
         </div>
       </section>
 
-      <section className="bg-[#e7e5de] px-5 py-20 sm:px-8 sm:py-24 lg:px-12 lg:py-32">
+      <section className="bg-[#e8e6de] px-5 py-20 sm:px-8 sm:py-24 lg:px-12 lg:py-32">
         <div className="mx-auto max-w-[1760px]">
           <div className="grid gap-8 lg:grid-cols-[0.34fr_0.66fr] lg:items-end" data-reveal>
             <p className="premium-eyebrow">03 / {localized(copy.processEyebrow)}</p>
             <div>
               <h2 className="premium-heading">{localized(copy.processTitle)}</h2>
-              <Link href={`/${locale}/assembly-centre`} className="mt-7 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#176b96] hover:text-[#11191b]">
+              <Link href={`/${locale}/assembly-centre`} className="mt-7 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-brand hover:text-ink">
                 {localized(t('Explore delivery details', '探索交付详情', 'Explorer la livraison'))} <ArrowUpRight className="h-4 w-4" />
               </Link>
             </div>
@@ -433,10 +433,10 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
             {process.map((step, index) => {
               const Icon = step.icon
               return (
-                <li key={step.title.en} className="relative border-l border-[#a7aaa6] pb-10 pl-8 last:pb-0 lg:border-l-0 lg:border-t lg:pb-0 lg:pl-0 lg:pr-7 lg:pt-10">
-                  <span className="absolute -left-[5px] top-0 h-[9px] w-[9px] rounded-full bg-[#176b96] lg:-top-[5px] lg:left-0" />
+                <li key={step.title.en} className="relative border-l border-[#a7aaa6]/40 pb-10 pl-8 last:pb-0 lg:border-l-0 lg:border-t lg:pb-0 lg:pl-0 lg:pr-7 lg:pt-10">
+                  <span className="absolute -left-[5px] top-0 h-[9px] w-[9px] rounded-full bg-brand lg:-top-[5px] lg:left-0" />
                   <div className="flex items-center justify-between">
-                    <Icon className="h-5 w-5 text-[#176b96]" />
+                    <Icon className="h-5 w-5 text-brand" />
                     <span className="text-[0.65rem] font-bold tracking-[0.18em] text-black/35">{String(index + 1).padStart(2, '0')}</span>
                   </div>
                   <h3 className="mt-5 text-lg font-semibold tracking-[-0.02em]">{localized(step.title)}</h3>
@@ -448,7 +448,7 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
         </div>
       </section>
 
-      <section className="bg-[#f4f1e9] px-5 py-20 sm:px-8 sm:py-24 lg:px-12 lg:py-32">
+      <section className="bg-cream px-5 py-20 sm:px-8 sm:py-24 lg:px-12 lg:py-32">
         <div className="mx-auto grid max-w-[1760px] gap-10 lg:grid-cols-[0.42fr_0.58fr] lg:items-center lg:gap-20">
           <div data-reveal>
             <p className="premium-eyebrow">04 / {localized(copy.projectsEyebrow)}</p>
@@ -456,11 +456,11 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
             <p className="premium-copy">{localized(copy.projectsBody)}</p>
             <Link href={`/${locale}/projects`} className="premium-button-dark mt-8">{localized(copy.viewProjects)} <ArrowUpRight className="h-4 w-4" /></Link>
           </div>
-          <Link href={`/${locale}/projects`} className="group relative aspect-[1.3/1] overflow-hidden bg-[#11191b]" data-reveal>
+          <Link href={`/${locale}/projects`} className="group relative aspect-[1.3/1] overflow-hidden bg-ink" data-reveal>
             <Image src="/images/industrial.jpg" alt={localized(t('Current modular project coordination', '当前模块化项目协调', 'Coordination actuelle de projets modulaires'))} fill quality={92} sizes="(max-width: 1024px) 100vw, 58vw" className="object-cover transition duration-700 ease-out group-hover:scale-[1.02]" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8">
-              <span className="inline-flex bg-[#f4f1e9] px-3 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.18em] text-[#11191b]">{localized(t('Current Work', '当前项目', 'Travaux en cours'))}</span>
+              <span className="inline-flex bg-cream px-3 py-1.5 text-[0.62rem] font-bold uppercase tracking-[0.18em] text-ink">{localized(t('Current Work', '当前项目', 'Travaux en cours'))}</span>
               <div className="mt-4 flex items-end justify-between gap-6">
                 <div>
                   <h3 className="text-3xl font-semibold tracking-[-0.04em]">{localized(t('First Projects in Delivery', '首批项目交付中', 'Premiers projets en livraison'))}</h3>
@@ -473,7 +473,7 @@ export function HomePage({ locale, cms }: { locale: Locale; cms?: CmsPageSnapsho
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-[#176b96] px-5 py-20 text-white sm:px-8 lg:px-12 lg:py-28">
+      <section className="relative overflow-hidden bg-brand-dark px-5 py-20 text-white sm:px-8 lg:px-12 lg:py-28">
         <div className="absolute right-0 top-0 h-full w-1/2 bg-[radial-gradient(circle_at_70%_30%,rgba(255,255,255,.2),transparent_62%)]" />
         <div className="relative mx-auto grid max-w-[1760px] gap-8 lg:grid-cols-[0.66fr_0.34fr] lg:items-end" data-reveal>
           <div>

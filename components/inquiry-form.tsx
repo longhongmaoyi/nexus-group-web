@@ -178,7 +178,7 @@ export function InquiryForm({ locale }: { locale: Locale }) {
     if (response.ok) form.reset()
   }
 
-  const fieldClass = 'rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 outline-none transition focus:border-[#26688f] focus:bg-white'
+  const fieldClass = 'rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3.5 outline-none transition focus:border-brand focus:bg-white focus:ring-2 focus:ring-brand/20'
   const labelClass = 'grid gap-2 text-sm font-semibold text-slate-700'
 
   return (
@@ -238,7 +238,7 @@ export function InquiryForm({ locale }: { locale: Locale }) {
         <span>{copy.consent} <a href={`/${locale}/privacy`} target="_blank" rel="noreferrer" className="font-semibold underline">{locale === 'zh' ? '查看隐私说明' : locale === 'fr' ? 'Lire l’avis de confidentialité' : 'Read the Privacy Notice'}</a>.</span>
       </label>
 
-      <button type="submit" disabled={state === 'loading'} className="mt-7 inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[#26688f] disabled:opacity-60">
+      <button type="submit" disabled={state === 'loading'} className="mt-7 inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-bold text-white transition hover:bg-brand-dark disabled:opacity-60">
         {state === 'loading' ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <ArrowRight className="h-4 w-4" />} {copy.submit}
       </button>
 

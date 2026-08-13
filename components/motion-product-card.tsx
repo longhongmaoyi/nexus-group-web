@@ -18,7 +18,7 @@ export function MotionProductCard({ number, title, description, facts, image, hr
   return (
     <Link
       href={href}
-      className="motion-product-card group relative isolate flex min-h-[31rem] overflow-hidden bg-[#101719] text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#4ba3d3] focus-visible:ring-offset-4 focus-visible:ring-offset-[#f4f1e9]"
+      className="motion-product-card group relative isolate flex min-h-[31rem] overflow-hidden bg-ink text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand focus-visible:ring-offset-4 focus-visible:ring-offset-cream"
       aria-label={`${title}. ${cta}`}
     >
       {/* The fixed-height portrait crop needs a wider raster than the card box to avoid vertical upscaling. */}
@@ -49,7 +49,7 @@ export function MotionProductCard({ number, title, description, facts, image, hr
             <span className="mt-4 grid gap-2">
               {facts.map((fact) => (
                 <span key={fact} className="flex items-start gap-2 text-xs leading-5 text-white/72">
-                  <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#75bfe8]" aria-hidden="true" />
+                  <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-frost" aria-hidden="true" />
                   {fact}
                 </span>
               ))}

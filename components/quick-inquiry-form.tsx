@@ -72,13 +72,13 @@ export function QuickInquiryForm({ locale, mode }: { locale: Locale; mode: Inqui
     if (response.ok) form.reset()
   }
 
-  const fieldClass = 'border border-slate-200 bg-slate-50 px-4 py-3.5 outline-none transition focus:border-[#176b96] focus:bg-white'
+  const fieldClass = 'border border-slate-200 bg-slate-50 px-4 py-3.5 outline-none transition focus:border-brand focus:bg-white focus:ring-2 focus:ring-brand/20'
   const labelClass = 'grid gap-2 text-sm font-semibold text-slate-700'
 
   return (
     <form onSubmit={submit} className="border border-slate-200 bg-white p-6 shadow-soft sm:p-8">
       <div className="max-w-2xl">
-        <h2 className="text-3xl font-semibold tracking-[-0.04em] text-[#11191b]">{copy.title}</h2>
+        <h2 className="text-3xl font-semibold tracking-[-0.04em] text-ink">{copy.title}</h2>
         <p className="mt-3 leading-7 text-slate-600">{copy.intro}</p>
       </div>
 
@@ -101,12 +101,12 @@ export function QuickInquiryForm({ locale, mode }: { locale: Locale; mode: Inqui
         </span>
       </label>
 
-      <button type="submit" disabled={state === 'loading'} className="mt-7 inline-flex min-h-11 items-center gap-2 bg-[#11191b] px-6 text-sm font-bold text-white transition hover:bg-[#176b96] disabled:opacity-60">
+      <button type="submit" disabled={state === 'loading'} className="mt-7 inline-flex min-h-11 items-center gap-2 bg-ink px-6 text-sm font-bold text-white transition hover:bg-brand disabled:opacity-60">
         {state === 'loading' ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <ArrowRight className="h-4 w-4" />}
         {copy.submit}
       </button>
 
-      {state === 'success' ? <p className="mt-5 flex items-center gap-2 text-sm font-semibold text-[#176b96]"><CheckCircle2 className="h-5 w-5" />{copy.success}</p> : null}
+      {state === 'success' ? <p className="mt-5 flex items-center gap-2 text-sm font-semibold text-brand"><CheckCircle2 className="h-5 w-5" />{copy.success}</p> : null}
       {state === 'error' ? <p className="mt-5 text-sm font-semibold text-red-700">{shared.error}</p> : null}
     </form>
   )
