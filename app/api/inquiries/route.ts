@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getPrisma } from '@/lib/prisma'
 import { CONSENT_TEXT_VERSION } from '@/lib/legal-content'
+import { notifyTelegramRegistration } from '@/lib/telegram'
 
 export async function POST(request: Request) {
   try {
@@ -30,6 +31,16 @@ export async function POST(request: Request) {
       },
       select: { id: true, createdAt: true },
     })
+
+    await notifyTelegramRegistration({
+      id: inquiry.id,
+      name,
+      email,
+      company: body.company || undefined,
+      interest: body.interest || undefined,
+      locale: body.locale || undefined,
+      source: 'inquiry',
+    }).catch((error) => console.error('Telegram inquiry notification failed', error))
 
     return NextResponse.json({ ok: true, inquiry }, { status: 201 })
   } catch (error) {

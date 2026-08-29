@@ -9,6 +9,7 @@ import {
   validateLeadSubmission,
   verifyCsrfToken,
 } from '@/lib/phase3-core.mjs'
+import { notifyTelegramRegistration } from '@/lib/telegram'
 
 export async function POST(request: Request) {
   if (!isPhase3PublicEnabled()) return NextResponse.json({ error: 'Not found' }, { status: 404 })
@@ -46,6 +47,17 @@ export async function POST(request: Request) {
       entityId: result.lead.id,
       metadata: { reference: result.lead.reference, type: result.lead.type, locale: result.lead.locale },
     })
+
+    await notifyTelegramRegistration({
+      id: result.lead.id,
+      name: result.lead.contactName,
+      email: result.lead.contactEmail,
+      company: result.lead.organizationName || undefined,
+      interest: input.type,
+      locale: result.lead.locale,
+      source: 'business-lead',
+    }).catch((error) => console.error('Telegram lead notification failed', error))
+
     return NextResponse.json({
       ok: true,
       reference: result.lead.reference,
