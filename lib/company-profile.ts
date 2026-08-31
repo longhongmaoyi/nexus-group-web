@@ -10,12 +10,10 @@ export const publishedContacts = [
     role: t('Founder & Canadian Operations Lead', '创始人兼加拿大运营负责人', 'Fondateur et responsable des opérations au Canada'),
     contactLabel: t('Canada project contact', '加拿大项目联系人', 'Contact projets au Canada'),
     email: 'leo@nexuslife.ca',
-    phoneDisplay: '+1 416 846 3253',
-    whatsappUrl: 'https://wa.me/14168463253',
     location: t(
-      '125 Cartmel Drive, Markham, Ontario, Canada, L3S 1K8',
-      '125 Cartmel Drive, Markham, Ontario, Canada, L3S 1K8',
-      '125 Cartmel Drive, Markham, Ontario, Canada, L3S 1K8',
+      'Markham, Ontario, Canada, L3S 1K8',
+      'Markham, Ontario, Canada, L3S 1K8',
+      'Markham, Ontario, Canada, L3S 1K8',
     ),
   },
   {

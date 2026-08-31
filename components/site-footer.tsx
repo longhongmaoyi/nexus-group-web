@@ -70,7 +70,9 @@ export function SiteFooter({ locale }: { locale: Locale }) {
                 <p className="mt-0.5 text-sm font-medium text-brand-frost">{localized(contact.role)}</p>
                 <div className="mt-2 grid gap-1.5 text-sm leading-5 text-white/68">
                   <a href={`mailto:${contact.email}`} className="flex items-start gap-2 hover:text-white"><Mail className="mt-0.5 h-4 w-4 shrink-0 text-brand-frost" /><span>{contact.email}</span></a>
-                  <a href={contact.whatsappUrl} target="_blank" rel="noreferrer" className="flex items-start gap-2 hover:text-white"><MessageCircle className="mt-0.5 h-4 w-4 shrink-0 text-brand-frost" /><span>{contact.phoneDisplay}</span></a>
+                  {contact.whatsappUrl && contact.phoneDisplay && (
+                    <a href={contact.whatsappUrl} target="_blank" rel="noreferrer" className="flex items-start gap-2 hover:text-white"><MessageCircle className="mt-0.5 h-4 w-4 shrink-0 text-brand-frost" /><span>{contact.phoneDisplay}</span></a>
+                  )}
                   <p className="flex items-start gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-frost" /><span>{localized(contact.location)}</span></p>
                 </div>
               </address>
